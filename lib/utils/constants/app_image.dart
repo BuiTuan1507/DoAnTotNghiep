@@ -1,0 +1,7 @@
+class MyImage{
+
+}
+
+class MyIcon{
+
+}
