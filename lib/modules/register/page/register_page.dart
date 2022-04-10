@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:do_an/config/config.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/utils.dart';
 
@@ -23,6 +25,9 @@ class RegisterPage extends GetView<RegisterController>{
                 height: height(30),
               ),
               buildTittle(),
+              SizedBox(
+                height: height(30),
+              ),
               buildTextEmailField(
                   tittle: "Tên của bạn",
                   textEditingController: controller.nameController,
@@ -50,7 +55,14 @@ class RegisterPage extends GetView<RegisterController>{
     return Container();
   }
   Widget buildTittle(){
-    return Container();
+    return  Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: paddingMedium, vertical: paddingMedium),
+      child: Text(
+        "Đăng kí",
+        style: AppStyles.textXLBlackSemiBold,
+      ),
+    );
   }
   Widget buildButtonRegister(){
     return ButtonApply(
@@ -71,12 +83,13 @@ class RegisterPage extends GetView<RegisterController>{
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start ,
         children: [
-          Checkbox(
+          Obx(() => Checkbox(
             value: controller.termCondition.value,
+            activeColor: greenMoney,
             onChanged: (value){
               controller.changeTermCondition(value);
             },
-          ),
+          )),
           SizedBox(
             width: width(8),
           ),
@@ -84,11 +97,11 @@ class RegisterPage extends GetView<RegisterController>{
             padding:  EdgeInsets.only(top: height(7),right: width(16)),
             child: RichText(
               text: TextSpan(
-                  text : "Khi bạn đăng ký, bạn đồng ý với chúng tôi về",
+                  text : "Khi bạn đăng ký, bạn đồng ý với chúng tôi về ",
                   style: AppStyles.textSmallBlackMedium,
                   children: <TextSpan>[
                     TextSpan(
-                      text: "điều khoản chính sách về dịch vụ và quy định của app",
+                      text: "điều khoản chính sách về dịch vụ và quy định của app. ",
                       style: AppStyles.textSmallGreenMedium,
                       recognizer: TapGestureRecognizer()..onTap = () => log("to privacy"),
                     )
@@ -102,7 +115,31 @@ class RegisterPage extends GetView<RegisterController>{
   }
 
 
-  Widget textHaveAccount(){
-    return Container();
+  Widget textHaveAccount() {
+    return Center(
+      child: Container(
+          padding: EdgeInsets.symmetric(vertical: height(20)),
+          child: RichText(
+            text: TextSpan(
+              text: 'Đã có tài khoản ?  ',
+              style: GoogleFonts.sarabun(
+                  fontSize: size(14),
+                  fontWeight: FontWeight.w400,
+                  color: lightDarkHintText),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Đăng nhập',
+                  style: GoogleFonts.sarabun(
+                      fontSize: size(14),
+                      fontWeight: FontWeight.w600,
+                      color:greenMoney),
+                  recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(RouterLink.login),
+
+                )
+              ],
+            ),
+          )),
+    );
   }
+
 }

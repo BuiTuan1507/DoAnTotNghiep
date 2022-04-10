@@ -6,8 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:do_an/config/url_api.dart';
 
 import '../models/response_model.dart';
-import '../utils/constants/constant.dart';
-import '../utils/constants/enum.dart';
+import '../utils/utils.dart';
 
 
 Map<MethodType, String> methods = {

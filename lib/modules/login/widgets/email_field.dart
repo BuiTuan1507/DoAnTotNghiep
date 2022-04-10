@@ -42,7 +42,7 @@ Widget buildTextEmailField(
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                  BorderSide(color: violet, width: 1.0),
+                  BorderSide(color: greenMoney, width: 1.0),
                   borderRadius: BorderRadius.circular(24.0),
                 ),
                 enabledBorder: OutlineInputBorder(
