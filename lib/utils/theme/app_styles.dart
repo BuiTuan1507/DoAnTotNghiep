@@ -72,5 +72,16 @@ class AppStyles{
   static TextStyle textSmallGreenSemiBold = GoogleFonts.sarabun(
       fontSize: fontSizeSmall,
       fontWeight: fontWeightSemiBold,
-      color: greenMoney);
+      color: greenMoney
+  );
+  static TextStyle textSmallBlackMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeSmall,
+      fontWeight: fontWeightMedium,
+      color: black
+  );
+  static TextStyle textSmallGreenMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeSmall,
+      fontWeight: fontWeightMedium,
+      color: greenMoney
+  );
 }

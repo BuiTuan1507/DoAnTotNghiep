@@ -12,3 +12,5 @@ export 'theme/app_color.dart';
 export 'theme/app_styles.dart';
 export 'theme/app_theme.dart';
 export 'utils.dart';
+export 'widget/button_apply.dart';
+export 'widget/loding_widget.dart';

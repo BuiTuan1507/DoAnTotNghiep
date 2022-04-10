@@ -28,7 +28,7 @@ final HexColor lightBlue = HexColor("#1DE9B6");
 final HexColor yellow = HexColor("#FFC400");
 final HexColor orange = HexColor("#FF6D00");
 final HexColor red = HexColor("#FF3D00");
-final HexColor green = HexColor("#1AC62B");
+
 final HexColor black = HexColor("#121212");
 final HexColor grey_2 = HexColor("#454545");
 final HexColor grey_3 = HexColor("#6B6B6B");

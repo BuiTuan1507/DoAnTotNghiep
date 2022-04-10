@@ -15,7 +15,7 @@ class AppRouters {
       GetPage(
         name: RouterLink.register,
         page: () =>  RegisterPage(),
-        binding: LoginBinding(),
+        binding: RegisterBindings(),
       ),
     ];
   }
