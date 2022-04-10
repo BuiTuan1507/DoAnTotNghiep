@@ -1,4 +1,9 @@
 export 'login/bindings/login_binding.dart';
 export 'login/controller/login_controller.dart';
 export 'login/page/login_page.dart';
+export 'login/widgets/email_field.dart';
+export 'login/widgets/password_filed.dart';
 export 'modules.dart';
+export 'register/bindings/register_bindings.dart';
+export 'register/controller/register_controller.dart';
+export 'register/page/register_page.dart';

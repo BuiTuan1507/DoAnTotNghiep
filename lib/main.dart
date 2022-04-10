@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         builder: () => GetMaterialApp(
           enableLog: true,
           debugShowCheckedModeBanner: false,
-          title: 'Spending Manager',
+          title: 'Market',
           theme: ThemeData(
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,

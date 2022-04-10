@@ -8,6 +8,6 @@ class LoginBinding extends Bindings{
   @override
   void dependencies() {
     Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<LoginPage>(() => const LoginPage());
+    Get.lazyPut<LoginPage>(() => LoginPage());
   }
 }

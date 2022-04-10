@@ -8,7 +8,7 @@ Future<void> main() async {
   print(dirAddress);
   bool exists = await Directory(dirAddress!).exists();
   if (exists) {
-    var dir = new Directory(dirAddress);
+    var dir = Directory(dirAddress);
     var nameOfDir = dirAddress.substring(dirAddress.lastIndexOf('\\'));
     var file = File(dirAddress + '\\' + nameOfDir + '.dart');
     var sink = file.openWrite();
