@@ -8,6 +8,7 @@ import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../models/user/user_model.dart';
 
 class LoginController extends GetxController {
@@ -37,7 +38,7 @@ class LoginController extends GetxController {
     String _phone = phoneController.text.trim();
     String _password = passwordController.text.trim();
     bool isLoginSuccess = false;
-
+    Get.toNamed(RouterLink.main);
     if (validateLogin()) {
       Map<String, dynamic> param = {
         "phoneNumber": _phone,
@@ -46,7 +47,7 @@ class LoginController extends GetxController {
       try {
         isLoading.value = true;
         ResponseModel responseModel =
-            await loginRepository.apiGetListComment(param);
+            await loginRepository.apiLogin(param);
         if (responseModel.status) {
 
           LoginDataResponse dataResponse =
