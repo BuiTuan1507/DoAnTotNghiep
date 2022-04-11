@@ -12,4 +12,10 @@ class LoginRepository {
     return res;
   }
 
+  Future<ResponseModel> apiLogout({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.logout;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
 }

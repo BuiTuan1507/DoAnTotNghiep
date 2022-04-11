@@ -30,5 +30,12 @@ class GlobalData{
       setUserModel(user ?? UserModel());
     }
   }
-
+  static Future<void> clearUser () async{
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.remove("token");
+    await _prefs.remove("username");
+    await _prefs.remove("phoneNumber");
+    await _prefs.remove("active");
+    setUserModel(UserModel());
+  }
 }

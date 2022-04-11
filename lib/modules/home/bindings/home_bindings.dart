@@ -1,6 +1,7 @@
-import 'package:do_an/modules/home/controller/home_controller.dart';
-import 'package:do_an/modules/home/home_page.dart';
+
 import 'package:get/get.dart';
+
+import '../../modules.dart';
 
 class HomeBindings extends Bindings{
   @override

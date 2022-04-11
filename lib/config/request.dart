@@ -54,6 +54,31 @@ class BaseRequest {
     }
   }
 
+  Future<ResponseModel> requestBearerApi({
+    required MethodType method,
+    required String url,
+    Map<String, dynamic>? param,
+    required String token,
+  }) async {
+    log("URL: " + url + "\n");
+    log("body: " + param.toString());
+    Map<String, dynamic> header = {};
+    header["authorization"] = token;
+    try {
+      var response = await _dio.request(
+        url,
+        data: param,
+        options: Options(method: methods[method], headers: header),
+      );
+      log("Response: " + response.toString());
+      return ResponseModel.fromJson(response.data);
+    } catch (e) {
+      log(e.toString());
+
+      return handleError(e);
+    }
+  }
+
 
   Future<ResponseModel> handleError(dynamic error) async {
     try {

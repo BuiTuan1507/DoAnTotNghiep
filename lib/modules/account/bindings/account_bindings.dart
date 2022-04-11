@@ -8,7 +8,7 @@ class AccountBindings extends Bindings{
   void dependencies() {
     Get.lazyPut<AccountController>(() => AccountController());
   //  Get.lazyPut<LoginRepository>(() => LoginRepository());
-    Get.lazyPut<AccountPage>(() => AccountPage());
+    Get.lazyPut<AccountPage>(() => const AccountPage());
   }
 
 }

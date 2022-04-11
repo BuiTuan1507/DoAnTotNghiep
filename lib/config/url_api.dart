@@ -13,5 +13,6 @@ final appEnvironment = ProdAppChatEnvironment();
 
 class UrlApi{
   static const login = "/login";
-
+  static const logout = "/logout";
+  static const String register = "/register";
 }
