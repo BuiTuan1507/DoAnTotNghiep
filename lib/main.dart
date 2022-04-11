@@ -21,17 +21,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
-        builder: () => GetMaterialApp(
-          enableLog: true,
-          debugShowCheckedModeBanner: false,
-          title: 'Market',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+        builder: () => GestureDetector(
+          onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: GetMaterialApp(
+            enableLog: true,
+            debugShowCheckedModeBanner: false,
+            title: 'Market',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            initialBinding: LoginBinding(),
+            initialRoute: '/login',
+            getPages: AppRouters.createRoutes(),
           ),
-          initialBinding: LoginBinding(),
-          initialRoute: '/login',
-          getPages: AppRouters.createRoutes(),
         ));
   }
 }

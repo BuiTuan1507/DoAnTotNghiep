@@ -1,41 +1,34 @@
+
+
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user/user_model.dart';
+import '../../utils/utils.dart';
+
 class GlobalData{
-  late SharedPreferences prefs;
-  final keyToken = "token";
-  final keyDeviceId = "deviceId";
-  final keyCity = "cityName";
-
-  void init() async {
-    prefs = await SharedPreferences.getInstance();
+  static  UserModel _userModel =  UserModel();
+  static  UserModel getUserModel() {
+    if(_userModel.token == '' || _userModel.token == null){
+      _userModel = UserModel();
+    }
+    return _userModel;
+  }
+  static setUserModel (UserModel userModel){
+    _userModel = userModel;
+  }
+  static setImageUserModel(String image) {
+    _userModel.avatar = image;
   }
 
-  void saveToken(String value) async {
-    await prefs.setString(keyToken, value);
+  static void setUserLogin(UserModel? user) async{
+    if(!CommonUtil.isEmpty(user)) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("token", user?.token ?? "");
+      prefs.setString("username", user?.username?? "");
+      prefs.setString("phoneNumber", user?.phoneNumber ?? "");
+      prefs.setBool("active", user?.active ?? true);
+      setUserModel(user ?? UserModel());
+    }
   }
 
-  String getToken() {
-    return prefs.getString(keyToken) ?? "";
-  }
-
-  void saveCityName(String value) async{
-    await prefs.setString(keyCity, value);
-  }
-
-  String getCityName(){
-    return prefs.getString(keyCity) ?? "";
-  }
-
-  void clear() async {
-    await prefs.clear();
-  }
-
-  // Singleton
-  static final GlobalData _appPreference = GlobalData._internal();
-
-  factory GlobalData() {
-    return _appPreference;
-  }
-
-  GlobalData._internal();
 }

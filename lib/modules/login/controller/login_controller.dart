@@ -3,10 +3,14 @@ import 'dart:developer';
 import 'package:do_an/models/login/login_model.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/login_repository.dart';
+import 'package:do_an/service/service.dart';
+import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController{
+import '../../../models/user/user_model.dart';
+
+class LoginController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -14,35 +18,59 @@ class LoginController extends GetxController{
 
   LoginRepository loginRepository = Get.find();
 
-  void changeVisibility (){
+  RxBool isLoading = false.obs;
+
+  void changeVisibility() {
     isVisibilityPassword.value = !isVisibilityPassword.value;
   }
 
-  void clear(){
+  void clear() {
     phoneController.clear();
     passwordController.clear();
   }
-  bool validateLogin(){
+
+  bool validateLogin() {
     return true;
   }
-  Future<void>login () async{
+
+  Future<bool> login(BuildContext buildContext) async {
     String _phone = phoneController.text.trim();
     String _password = passwordController.text.trim();
-    if(validateLogin()){
-      Map<String,dynamic> param = {
-        "phoneNumber":_phone,
-        "password":_password
+    bool isLoginSuccess = false;
+
+    if (validateLogin()) {
+      Map<String, dynamic> param = {
+        "phoneNumber": _phone,
+        "password": _password
       };
-      try{
-        ResponseModel responseModel = await loginRepository.apiGetListComment(param);
-        if(responseModel.status){
-          LoginDataResponse dataResponse = LoginDataResponse.fromJson(responseModel.data);
-          log(dataResponse.token.toString());
+      try {
+        isLoading.value = true;
+        ResponseModel responseModel =
+            await loginRepository.apiGetListComment(param);
+        if (responseModel.status) {
+
+          LoginDataResponse dataResponse =
+              LoginDataResponse.fromJson(responseModel.data);
+          UserModel newUser = UserModel(
+              id: dataResponse.id,
+              token: dataResponse.token,
+              username: dataResponse.username,
+              avatar: dataResponse.avatar,
+              active: dataResponse.active,
+            phoneNumber: dataResponse.phoneNumber
+          );
+          GlobalData.setUserLogin(newUser);
+          isLoginSuccess = true;
+        }else{
+          MyDialog.popUpErrorMessage(buildContext: buildContext, content: responseModel.message, tittle: "Đăng nhập thất bại");
         }
-      }catch(e){
+        isLoading.value = false;
+      } catch (e) {
+        isLoading.value = false;
+        MyDialog.popUpErrorMessage(buildContext: buildContext, content: "Lỗi không xác định", tittle: "Lỗi");
         log(e.toString());
       }
-
     }
+    return isLoginSuccess;
   }
 }

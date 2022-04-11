@@ -39,9 +39,10 @@ class LoginPage extends GetView<LoginController> {
                   isVisibility: controller.isVisibilityPassword.value,
                   changeVisibility: controller.changeVisibility)),
               buildForgetPassword(),
-              buttonLogin(),
+              buttonLogin(context),
               buildLoginAnotherMethod(),
-              textHaveAccount()
+              textHaveAccount(),
+              Obx(() => loadingLogin(controller.isLoading.value))
             ],
           ),
         ),
@@ -81,11 +82,11 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
-  Widget buttonLogin() {
+  Widget buttonLogin(BuildContext context) {
     return ButtonApply(
       tittle: "Đăng nhập",
       style: AppStyles.textNormalWhiteSemiBold,
-      onClick: controller.login,
+      onClick:() => controller.login(context),
       width: double.infinity,
       height: height(60),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),

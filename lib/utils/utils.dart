@@ -14,3 +14,4 @@ export 'theme/app_theme.dart';
 export 'utils.dart';
 export 'widget/button_apply.dart';
 export 'widget/loding_widget.dart';
+export 'widget/dialog.dart';
