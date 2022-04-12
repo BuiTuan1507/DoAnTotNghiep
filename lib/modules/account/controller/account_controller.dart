@@ -24,6 +24,9 @@ class AccountController extends GetxController{
   }
 
   Future<void> logout(BuildContext context) async{
+    Get.offAll(()=> LoginPage());
+
+    /*
     try {
       Map<String,dynamic> params = {
         "token":token.value
@@ -37,6 +40,9 @@ class AccountController extends GetxController{
       MyDialog.popUpErrorMessage(buildContext: context, content: "Lỗi không xác định", tittle: "Lỗi");
       log(e.toString());
     }
+     */
   }
+
+
 
 }

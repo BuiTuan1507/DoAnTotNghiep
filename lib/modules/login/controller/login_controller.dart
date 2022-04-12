@@ -34,11 +34,11 @@ class LoginController extends GetxController {
     return true;
   }
 
-  Future<bool> login(BuildContext buildContext) async {
+  Future<void> login(BuildContext buildContext) async {
     String _phone = phoneController.text.trim();
     String _password = passwordController.text.trim();
-    bool isLoginSuccess = false;
-    Get.toNamed(RouterLink.main);
+    bool isLoginSuccess = true;
+    /*
     if (validateLogin()) {
       Map<String, dynamic> param = {
         "phoneNumber": _phone,
@@ -72,6 +72,8 @@ class LoginController extends GetxController {
         log(e.toString());
       }
     }
-    return isLoginSuccess;
+
+     */
+    if(isLoginSuccess) Get.toNamed(RouterLink.main);
   }
 }

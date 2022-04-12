@@ -6,7 +6,7 @@ export 'add_post/controller/add_post_controller.dart';
 export 'add_post/page/add_post_page.dart';
 export 'home/bindings/home_bindings.dart';
 export 'home/controller/home_controller.dart';
-export 'home/home_page.dart';
+export 'home/page/home_page.dart';
 export 'login/bindings/login_binding.dart';
 export 'login/controller/login_controller.dart';
 export 'login/page/login_page.dart';
