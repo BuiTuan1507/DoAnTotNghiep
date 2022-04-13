@@ -6,5 +6,5 @@ class RouterLink {
   static const String postPage = '/postPage';
   static const String addPostPage = '/addPostPage';
   static const String accountPage = '/accountPage';
-
+  static const String searchPage = '/searchPage';
 }

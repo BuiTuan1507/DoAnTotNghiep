@@ -1,4 +1,6 @@
 import 'package:do_an/config/routes_link.dart';
+import 'package:do_an/modules/home/bindings/search_bindings.dart';
+import 'package:do_an/modules/home/page/search_page.dart';
 import 'package:do_an/modules/post/bindings/post_bindings.dart';
 import 'package:do_an/modules/post/page/post_page.dart';
 
@@ -26,7 +28,7 @@ class AppRouters {
       ),
       GetPage(
         name: RouterLink.homePage,
-        page: () =>  HomePage(),
+        page: () =>  const HomePage(),
         binding: HomeBindings(),
       ),
       GetPage(
@@ -43,6 +45,11 @@ class AppRouters {
         name: RouterLink.accountPage,
         page: () =>  const AccountPage(),
         binding: AccountBindings(),
+      ),
+      GetPage(
+        name: RouterLink.searchPage,
+        page: () =>   SearchPage(),
+        binding: SearchBindings()
       ),
     ];
   }

@@ -1,5 +1,6 @@
 class MyImage{
-
+ static String imageBanner = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb9GUG9jUGM2OqQFKOiltsFQmP5nKMnHiyOwMk2kjWvr4-tECmjRnYIcRPKBgIM79qsB8&usqp=CAU';
+ static String defaultImage = "assets/icon/default_image.svg";
 }
 
 class MyIcon{

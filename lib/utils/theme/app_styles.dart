@@ -59,6 +59,11 @@ class AppStyles{
       fontWeight:fontWeightSemiBold,
       color: black
   );
+  static TextStyle textXLGreenSemiBold = GoogleFonts.sarabun(
+      fontSize: fontSizeXL,
+      fontWeight:fontWeightSemiBold,
+      color: greenMoney
+  );
   static TextStyle textSmallGreenRegular = GoogleFonts.sarabun(
       fontSize: fontSizeSmall,
       fontWeight:fontWeightRegular,
@@ -67,7 +72,12 @@ class AppStyles{
   static TextStyle textNormalWhiteSemiBold = GoogleFonts.sarabun(
     fontSize:fontSizeNormal,
     fontWeight: fontWeightSemiBold,
-    color: Colors.white
+    color:Colors.white
+  );
+  static TextStyle textNormalDarkSemiBold = GoogleFonts.sarabun(
+      fontSize:fontSizeNormal,
+      fontWeight: fontWeightSemiBold,
+      color:lightDarkHintText
   );
   static TextStyle textSmallDarkRegular = GoogleFonts.sarabun(
       fontSize: fontSizeSmall,
