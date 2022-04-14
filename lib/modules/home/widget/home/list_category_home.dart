@@ -20,9 +20,9 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
         shrinkWrap: true,
         padding: EdgeInsets.all(5),
         crossAxisCount: 4,
-        crossAxisSpacing: 15.0,
+        crossAxisSpacing: width(5),
         mainAxisSpacing: 5.0,
-        childAspectRatio: 0.5,
+        childAspectRatio: 0.7,
         children: <Widget>[
           buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
           buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),

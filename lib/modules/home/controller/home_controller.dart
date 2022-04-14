@@ -18,6 +18,7 @@ class HomeController extends GetxController {
     IconFeature(icon: MyIcon.googleIcon, name: "hello"),
     IconFeature(icon: MyIcon.googleIcon, name: "hello"),
   ];
+
 }
 
 class IconFeature {

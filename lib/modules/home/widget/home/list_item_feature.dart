@@ -17,13 +17,13 @@ class _ListItemFeatureState extends State<ListItemFeature> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height(100),
+      height: height(60),
       padding: EdgeInsets.symmetric(horizontal: width(10)),
       child: ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: controller.listIcon.length ?? 0,
+          itemCount: controller.listIcon.length,
           itemBuilder: (context, index) => Container(
               padding: EdgeInsets.symmetric(horizontal: width(10)),
               width: width(100),
