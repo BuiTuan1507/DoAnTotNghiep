@@ -51,7 +51,8 @@ Widget buildTextEmailField(
                   borderRadius: BorderRadius.circular(24.0),
                 ),
               ),
-            ))
+            )
+        )
       ],
     ),
   );

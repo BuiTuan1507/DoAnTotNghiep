@@ -1,12 +1,12 @@
 import 'package:do_an/config/routes_link.dart';
 import 'package:do_an/modules/home/bindings/search_bindings.dart';
 import 'package:do_an/modules/home/page/search_page.dart';
-import 'package:do_an/modules/post/bindings/post_bindings.dart';
-import 'package:do_an/modules/post/page/post_page.dart';
+import 'package:do_an/modules/register/page/tittle_register_page.dart';
 
 import 'package:get/get.dart';
 
 import '../modules/modules.dart';
+import '../modules/register/page/name_register_page.dart';
 
 class AppRouters {
   static List<GetPage> createRoutes() {
@@ -20,6 +20,14 @@ class AppRouters {
         name: RouterLink.register,
         page: () =>  RegisterPage(),
         binding: RegisterBindings(),
+      ),
+      GetPage(
+        name: RouterLink.registerTittle,
+        page: () =>  TittleRegisterPage(),
+      ),
+      GetPage(
+        name: RouterLink.registerNamePage,
+        page: () =>  NameRegisterPage(),
       ),
       GetPage(
         name: RouterLink.main,

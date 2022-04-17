@@ -6,7 +6,8 @@ import '../../../config/config.dart';
 class RegisterController extends GetxController{
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
 
   RxBool isVisibilityPassword = false.obs;
   RxBool termCondition = false.obs;
@@ -19,9 +20,9 @@ class RegisterController extends GetxController{
   }
 
   void clear(){
-    nameController.clear();
+    firstNameController.clear();
     passwordController.clear();
-    nameController.clear();
+    lastNameController.clear();
   }
   bool validateRegister(){
     return true;
@@ -30,7 +31,7 @@ class RegisterController extends GetxController{
   Future<void> register () async{
     String _phone = phoneController.text.trim();
     String _password = passwordController.text.trim();
-    String _userName = nameController.text.trim();
+  //  String _userName = nameController.text.trim();
     bool isRegisterSuccess = true;
 /*
     if (validateRegister()) {
@@ -68,6 +69,6 @@ class RegisterController extends GetxController{
     }
 
  */
-    if(isRegisterSuccess)  Get.toNamed(RouterLink.login);
+    if(isRegisterSuccess)  Get.toNamed(RouterLink.registerTittle);
   }
 }

@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/utils.dart';
 
 class RegisterPage extends GetView<RegisterController>{
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,14 +30,7 @@ class RegisterPage extends GetView<RegisterController>{
               SizedBox(
                 height: height(30),
               ),
-              buildTextEmailField(
-                  tittle: "Tên của bạn",
-                  textEditingController: controller.nameController,
-                  hintText: "Nhập tên của bạn"),
-              buildTextEmailField(
-                  tittle: "Số điện thoại",
-                  textEditingController: controller.phoneController,
-                  hintText: "Nhập số điện thoại"),
+
               Obx(() => buildTextPasswordField(
                   tittle: "Mật khẩu",
                   textEditingController: controller.passwordController,
