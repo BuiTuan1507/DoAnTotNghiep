@@ -3,6 +3,7 @@ class RouterLink {
   static const String register = '/register';
   static const String registerTittle = '/registerTittle';
   static const String registerNamePage= '/registerNamePage';
+  static const String registerInfoPage = '/registerInfoPage';
   static const String main = '/main';
   static const String homePage = '/homePage';
   static const String postPage = '/postPage';

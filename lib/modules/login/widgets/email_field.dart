@@ -38,17 +38,17 @@ Widget buildTextEmailField(
                 border: OutlineInputBorder(
                   borderSide:
                   BorderSide(color: lightDarkHintText, width: 1.0),
-                  borderRadius: BorderRadius.circular(24.0),
+                  borderRadius: BorderRadius.circular(14.0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
                   BorderSide(color: greenMoney, width: 1.0),
-                  borderRadius: BorderRadius.circular(24.0),
+                  borderRadius: BorderRadius.circular(14.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide:
                   BorderSide(color: lightDarkHintText, width: 1.0),
-                  borderRadius: BorderRadius.circular(24.0),
+                  borderRadius: BorderRadius.circular(14.0),
                 ),
               ),
             )

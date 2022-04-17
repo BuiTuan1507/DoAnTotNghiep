@@ -29,7 +29,7 @@ class _TittleRegisterPageState extends State<TittleRegisterPage> {
                 child: Text("Tham gia chợ Bách Khoa",style: AppStyles.textLargeGreenSemiBold,),
               ),
               Padding(
-                padding:  EdgeInsets.only(top: height(20),bottom: height(70)),
+                padding:  EdgeInsets.only(top: height(20),bottom: height(70), left: width(20), right: width(20)),
                 child: Center(
                   child: Text("Chúng tôi sẽ giúp bạn tạo tài khoản sau vài bước dễ dàng", style: AppStyles.textSmallDarkRegular,),
                 ),
@@ -65,8 +65,8 @@ class _TittleRegisterPageState extends State<TittleRegisterPage> {
       height: height(55),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24), color: greenMoney),
-    );;
+          borderRadius: BorderRadius.circular(14), color: greenMoney),
+    );
   }
 
 }

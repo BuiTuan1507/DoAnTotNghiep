@@ -6,6 +6,7 @@ import 'package:do_an/modules/register/page/tittle_register_page.dart';
 import 'package:get/get.dart';
 
 import '../modules/modules.dart';
+import '../modules/register/page/info_account_register_page.dart';
 import '../modules/register/page/name_register_page.dart';
 
 class AppRouters {
@@ -29,6 +30,11 @@ class AppRouters {
         name: RouterLink.registerNamePage,
         page: () =>  NameRegisterPage(),
       ),
+      GetPage(
+        name: RouterLink.registerInfoPage,
+        page: () =>  InfoAccountRegisterPage(),
+      ),
+
       GetPage(
         name: RouterLink.main,
         page: () =>  MainPage(),
