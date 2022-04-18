@@ -145,5 +145,4 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
     );
   }
 
-
 }

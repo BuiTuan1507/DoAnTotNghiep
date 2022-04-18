@@ -6,10 +6,11 @@ import 'package:do_an/service/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../config/config.dart';
 import '../../../respository/login_repository.dart';
 import '../../../utils/utils.dart';
 
-class AccountController extends GetxController{
+class AccountController extends GetxController {
   RxString token = "".obs;
   LoginRepository loginRepository = LoginRepository();
 
@@ -17,15 +18,15 @@ class AccountController extends GetxController{
   void onInit() {
     loadDataFromLocal();
     super.onInit();
-
   }
-  void loadDataFromLocal (){
+
+  void loadDataFromLocal() {
     token.value = GlobalData.getUserModel().token ?? "";
   }
 
-  Future<void> logout(BuildContext context) async{
-    Get.offAll(()=> LoginPage());
-
+  Future<void> logout(BuildContext context) async {
+    //  Get.offAll(()=> LoginPage());
+    Get.toNamed(RouterLink.login);
     /*
     try {
       Map<String,dynamic> params = {
@@ -42,7 +43,4 @@ class AccountController extends GetxController{
     }
      */
   }
-
-
-
 }

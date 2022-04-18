@@ -6,15 +6,24 @@ import '../../../config/config.dart';
 class RegisterController extends GetxController{
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordRememberController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
 
-  RxBool isVisibilityPassword = false.obs;
+  Rx<DateTime> dateTime = DateTime.now().obs;
+
+  RxBool isVisibilityPassword = true.obs;
+  RxBool isVisibilityPasswordRemember = true.obs;
+
   RxBool termCondition = false.obs;
 
   void changeVisibility (){
     isVisibilityPassword.value = !isVisibilityPassword.value;
   }
+  void changeVisibilityRemember(){
+    isVisibilityPasswordRemember.value = !isVisibilityPasswordRemember.value;
+  }
+
   void changeTermCondition (bool? value){
     termCondition.value = value ?? false;
   }

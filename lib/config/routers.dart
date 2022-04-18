@@ -6,6 +6,7 @@ import 'package:do_an/modules/register/page/tittle_register_page.dart';
 import 'package:get/get.dart';
 
 import '../modules/modules.dart';
+import '../modules/register/page/birthday_register_page.dart';
 import '../modules/register/page/info_account_register_page.dart';
 import '../modules/register/page/name_register_page.dart';
 
@@ -34,7 +35,10 @@ class AppRouters {
         name: RouterLink.registerInfoPage,
         page: () =>  InfoAccountRegisterPage(),
       ),
-
+      GetPage(
+        name: RouterLink.registerDateAndSex,
+        page: () =>  BirthDayRegisterPage(),
+      ),
       GetPage(
         name: RouterLink.main,
         page: () =>  MainPage(),
