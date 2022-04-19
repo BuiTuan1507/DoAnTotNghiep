@@ -1,3 +1,4 @@
+import 'package:do_an/models/register/sex_type.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,8 @@ class RegisterController extends GetxController{
 
   RxBool termCondition = false.obs;
 
+  RxList<SexType> listSexType  = SexType.listSexType.obs;
+
   void changeVisibility (){
     isVisibilityPassword.value = !isVisibilityPassword.value;
   }
@@ -35,6 +38,16 @@ class RegisterController extends GetxController{
   }
   bool validateRegister(){
     return true;
+  }
+
+  void changeStateSexType(String name){
+    int index = listSexType.indexWhere((element) => element.tittle == name);
+    if(index == -1) return;
+    for (var element in listSexType) {
+      element.isSelected = false;
+    }
+    listSexType[index].isSelected = true;
+    listSexType.refresh();
   }
 
   Future<void> register () async{

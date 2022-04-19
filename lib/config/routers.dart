@@ -1,6 +1,7 @@
 import 'package:do_an/config/routes_link.dart';
 import 'package:do_an/modules/home/bindings/search_bindings.dart';
 import 'package:do_an/modules/home/page/search_page.dart';
+import 'package:do_an/modules/register/page/term_condition_register_page.dart';
 import 'package:do_an/modules/register/page/tittle_register_page.dart';
 
 import 'package:get/get.dart';
@@ -38,6 +39,10 @@ class AppRouters {
       GetPage(
         name: RouterLink.registerDateAndSex,
         page: () =>  BirthDayRegisterPage(),
+      ),
+      GetPage(
+        name: RouterLink.registerTermCondition,
+        page: () =>  TermConditionRegisterPage(),
       ),
       GetPage(
         name: RouterLink.main,

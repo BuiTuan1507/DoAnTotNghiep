@@ -56,8 +56,8 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
                 controller.changeVisibilityRemember();
               },controller.isVisibilityPasswordRemember.value, controller.passwordRememberController)),
 
-              SizedBox(
-                height: height(20),
+              Padding(
+                padding: EdgeInsets.only(top: height(30)),
                 child: buttonNext(),
               )
             ],
@@ -140,7 +140,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
       onClick: toPage,
       width: double.infinity,
       height: height(55),
-      margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
+      margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14), color: greenMoney),
     );
