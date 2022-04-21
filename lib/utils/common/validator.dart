@@ -23,13 +23,14 @@ class Validator {
     }
   }
 
-  static String? name(String? value) {
+  static bool? name(String? value) {
+    if(value == "") return false;
     String pattern = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value!)) {
-      return 'validator.name';
+    if (regex.hasMatch(value!)) {
+      return true;
     } else {
-      return null;
+      return false;
     }
   }
 

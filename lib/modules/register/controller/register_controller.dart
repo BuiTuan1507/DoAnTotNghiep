@@ -1,4 +1,5 @@
 import 'package:do_an/models/register/sex_type.dart';
+import 'package:do_an/utils/common/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,10 @@ class RegisterController extends GetxController{
 
   RxList<SexType> listSexType  = SexType.listSexType.obs;
 
+  RxBool isValidateFirstName = false.obs;
+
+  RxBool isValidateLastName = false.obs;
+
   void changeVisibility (){
     isVisibilityPassword.value = !isVisibilityPassword.value;
   }
@@ -36,8 +41,17 @@ class RegisterController extends GetxController{
     passwordController.clear();
     lastNameController.clear();
   }
+  void validateFirstName (String text){
+    isValidateFirstName.value = Validator.name(text) ?? false;
+  }
+  void validateLastName (String text){
+    isValidateLastName.value = Validator.name(
+      text
+    ) ?? false;
+  }
+
   bool validateRegister(){
-    return true;
+    return isValidateFirstName.value && isValidateLastName.value;
   }
 
   void changeStateSexType(String name){

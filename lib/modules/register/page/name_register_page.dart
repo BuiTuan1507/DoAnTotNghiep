@@ -45,7 +45,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
               SizedBox(
                 height: height(70),
               ),
-              buttonNext(),
+              Obx(()=> buttonNext(controller.isValidateFirstName.value && controller.isValidateLastName.value ? greenMoney : grey_3)),
 
               Padding(
                   padding: EdgeInsets.only(top: height(70)),
@@ -74,6 +74,9 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
             child:  TextFormField(
               controller: controller.firstNameController,
               maxLines: 1,
+              onChanged: (value){
+                controller.validateFirstName(value);
+              },
               decoration: InputDecoration(
                 hintText: "Họ",
                 hintStyle: AppStyles.textSmallDarkNormal,
@@ -102,6 +105,9 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
             child:TextFormField(
               controller: controller.lastNameController,
               maxLines: 1,
+              onChanged: (value){
+                controller.validateLastName(value);
+              },
               decoration: InputDecoration(
                 hintText: "Tên",
                 hintStyle: AppStyles.textSmallDarkNormal,
@@ -129,7 +135,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
       ),
     );
   }
-  Widget buttonNext(){
+  Widget buttonNext(HexColor color){
     void toPage(){
       Get.toNamed(RouterLink.registerInfoPage);
     }
@@ -141,7 +147,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
       height: height(55),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14), color: greenMoney),
+          borderRadius: BorderRadius.circular(14), color: color),
     );
   }
 
