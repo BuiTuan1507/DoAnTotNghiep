@@ -37,7 +37,7 @@ class RegisterPage extends GetView<RegisterController>{
                   hintText: "Nhập mật khẩu",
                   isVisibility: controller.isVisibilityPassword.value,
                   changeVisibility: controller.changeVisibility)),
-              buildTernCondition(),
+
               buildButtonRegister(),
               textHaveAccount()
             ],
@@ -71,43 +71,7 @@ class RegisterPage extends GetView<RegisterController>{
           borderRadius: BorderRadius.circular(24), color: greenMoney),
     );
   }
-  Widget buildTernCondition () {
-    return Padding(
-      padding: EdgeInsets.only(left: width(12), top: height(0), bottom: height(12)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start ,
-        children: [
-          Obx(() => Checkbox(
-            value: controller.termCondition.value,
-            activeColor: greenMoney,
-            onChanged: (value){
-              controller.changeTermCondition(value);
-            },
-          )),
-          SizedBox(
-            width: width(8),
-          ),
-          Expanded(child: Padding(
-            padding:  EdgeInsets.only(top: height(7),right: width(16)),
-            child: RichText(
-              text: TextSpan(
-                  text : "Khi bạn đăng ký, bạn đồng ý với chúng tôi về ",
-                  style: AppStyles.textSmallBlackMedium,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "điều khoản chính sách về dịch vụ và quy định của app. ",
-                      style: AppStyles.textSmallGreenMedium,
-                      recognizer: TapGestureRecognizer()..onTap = () => log("to privacy"),
-                    )
-                  ]
-              ),
-            ),
-          ))
-        ],
-      ),
-    );
-  }
+
 
 
   Widget textHaveAccount() {

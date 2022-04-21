@@ -39,7 +39,7 @@ class LoginPage extends GetView<LoginController> {
                   isVisibility: controller.isVisibilityPassword.value,
                   changeVisibility: controller.changeVisibility)),
               buildForgetPassword(),
-              buttonLogin(context),
+              Obx(()=> buttonLogin(context, controller.isValidateLogin.value ? greenMoney : grey_3),),
               buildLoginAnotherMethod(),
               textHaveAccount(),
               Obx(() => loadingLogin(controller.isLoading.value))
@@ -82,7 +82,7 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
-  Widget buttonLogin(BuildContext context) {
+  Widget buttonLogin(BuildContext context, HexColor color) {
     return ButtonApply(
       tittle: "Đăng nhập",
       style: AppStyles.textNormalWhiteSemiBold,
@@ -91,7 +91,7 @@ class LoginPage extends GetView<LoginController> {
       height: height(60),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24), color: greenMoney),
+          borderRadius: BorderRadius.circular(24), color: color),
     );
   }
 
@@ -154,7 +154,7 @@ class LoginPage extends GetView<LoginController> {
                   text: 'Đăng kí',
                   style: AppStyles.textSmallGreenSemiBold,
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.toNamed(RouterLink.register),
+                    ..onTap = () => Get.toNamed(RouterLink.registerTittle),
                 ),
               ],
             ),

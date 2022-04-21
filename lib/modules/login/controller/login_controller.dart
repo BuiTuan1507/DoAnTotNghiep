@@ -23,6 +23,8 @@ class LoginController extends GetxController {
 
   RxBool isLoading = false.obs;
 
+  RxBool isValidateLogin = false.obs;
+
   @override
   void onInit() {
     onSocket();
@@ -38,8 +40,12 @@ class LoginController extends GetxController {
     passwordController.clear();
   }
 
-  bool validateLogin() {
-    return true;
+  void validateLogin() {
+    isValidateLogin.value = phoneController.text.isNotEmpty && passwordController.text.isNotEmpty && validatePhoneNumber(phoneController.text.trim());
+  }
+
+  bool validatePhoneNumber(String phoneNumber){
+    return Validator.validationPhone(phoneNumber);
   }
 
   Future<void> login(BuildContext buildContext) async {

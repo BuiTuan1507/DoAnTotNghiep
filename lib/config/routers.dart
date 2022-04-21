@@ -22,11 +22,12 @@ class AppRouters {
       GetPage(
         name: RouterLink.register,
         page: () =>  RegisterPage(),
-        binding: RegisterBindings(),
+
       ),
       GetPage(
         name: RouterLink.registerTittle,
         page: () =>  TittleRegisterPage(),
+        binding: RegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerNamePage,

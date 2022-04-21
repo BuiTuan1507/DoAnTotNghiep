@@ -91,6 +91,6 @@ class RegisterController extends GetxController{
     }
 
  */
-    if(isRegisterSuccess)  Get.toNamed(RouterLink.registerTittle);
+    if(isRegisterSuccess)  Get.toNamed(RouterLink.main);
   }
 }

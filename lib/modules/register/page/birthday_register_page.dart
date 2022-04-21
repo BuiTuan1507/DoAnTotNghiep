@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
+import '../widget/have_account_widget.dart';
 
 class BirthDayRegisterPage extends StatefulWidget {
   const BirthDayRegisterPage({Key? key}) : super(key: key);
@@ -131,7 +132,12 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
                     tittle: element.tittle!,
                     isSelected: element.isSelected!))
                     .toList(),
-              ))
+              )),
+              SizedBox(
+                height: height(40),
+              ),
+              buttonNext(),
+              haveAccount()
             ],
           ),
         ),

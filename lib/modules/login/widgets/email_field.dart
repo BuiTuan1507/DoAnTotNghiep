@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/utils.dart';
+import '../../modules.dart';
 
 Widget buildTextEmailField(
     {required String tittle,
       required TextEditingController textEditingController,
       required String hintText,}) {
+  final LoginController loginController = Get.find();
   return Container(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,6 +33,9 @@ Widget buildTextEmailField(
             child: TextFormField(
               controller: textEditingController,
               maxLines: 1,
+              onChanged: (value){
+                loginController.validateLogin();
+              },
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: AppStyles.textSmallDarkNormal,

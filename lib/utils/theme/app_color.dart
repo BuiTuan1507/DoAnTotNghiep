@@ -38,7 +38,7 @@ final HexColor grey_6 = HexColor("#F2F2F2");
 final HexColor grey_7 = HexColor("#D9D9D9");
 final HexColor grey_8 = HexColor("#9C9C9C");
 final HexColor grey_9 = HexColor("#EAEEF2");
-final HexColor darGrey = HexColor("#575757");
+final HexColor darkGrey = HexColor("#575757");
 final HexColor greySubText = HexColor("#757575");
 
 
