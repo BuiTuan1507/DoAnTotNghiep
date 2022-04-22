@@ -33,7 +33,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                 child: Text("Bạn tên gì ?",style: AppStyles.textLargeGreenSemiBold,),
               ),
               buildNameField(),
-
+              buildTextCheck(),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: width(20),
               ),
@@ -135,6 +135,42 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
       ),
     );
   }
+
+  Widget buildTextCheck(){
+    return Obx(() => Container(
+      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(0)),
+      child: (controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty || controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty) ?
+      SizedBox(
+        height: height(30),
+        child: Row(
+          children: [
+            Flexible(
+              child: Visibility(
+                  visible: !controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty,
+                  child: buildTextWrongFormat("Họ không đúng định dạng")
+              ),
+              flex: 1,
+            ),
+            SizedBox(width: width(20),),
+            Flexible(
+              child: Visibility(
+                  visible: !controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty,
+                  child: buildTextWrongFormat("Tên không đúng định dạng")
+              ),
+              flex: 1,
+            )
+          ],
+        ),
+      ) : Container(
+        height: height(30),
+      ),
+    ));
+  }
+  Widget buildTextWrongFormat (String text){
+    return Text(text, style: AppStyles.textTinyRedMedium);
+  }
+
+
   Widget buttonNext(HexColor color){
     void toPage(){
       Get.toNamed(RouterLink.registerInfoPage);

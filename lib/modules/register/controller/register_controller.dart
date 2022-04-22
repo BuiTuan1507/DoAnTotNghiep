@@ -25,6 +25,12 @@ class RegisterController extends GetxController{
 
   RxBool isValidateLastName = false.obs;
 
+  RxBool isValidatePhoneNumber = false.obs;
+
+  RxBool isValidatePassword = false.obs;
+
+  RxBool isValidateRememberPassword = false.obs;
+
   void changeVisibility (){
     isVisibilityPassword.value = !isVisibilityPassword.value;
   }
@@ -50,9 +56,16 @@ class RegisterController extends GetxController{
     ) ?? false;
   }
 
+  void validatePhoneNumber (String text){
+    isValidatePhoneNumber.value = Validator.validationPhone(text) ;
+  }
+
+
   bool validateRegister(){
     return isValidateFirstName.value && isValidateLastName.value;
   }
+
+
 
   void changeStateSexType(String name){
     int index = listSexType.indexWhere((element) => element.tittle == name);

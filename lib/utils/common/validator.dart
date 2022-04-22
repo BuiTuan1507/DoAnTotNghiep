@@ -65,7 +65,7 @@ class Validator {
   }
 
   static bool validationPhone(String value) {
-    Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,11}$)';
     RegExp regex = RegExp(pattern.toString());
     if (!regex.hasMatch(value)) return false;
     return true;

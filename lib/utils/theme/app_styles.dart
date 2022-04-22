@@ -116,6 +116,11 @@ class AppStyles{
   );
   /// Tiny
 
+  static TextStyle textTinyRedMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeTiny,
+      fontWeight: fontWeightMedium,
+      color: red
+  );
 
 
 
