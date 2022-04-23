@@ -15,6 +15,7 @@ class RegisterController extends GetxController{
   Rx<DateTime> dateTime = DateTime.now().obs;
 
   RxBool isVisibilityPassword = true.obs;
+
   RxBool isVisibilityPasswordRemember = true.obs;
 
   RxBool termCondition = false.obs;
@@ -27,9 +28,26 @@ class RegisterController extends GetxController{
 
   RxBool isValidatePhoneNumber = false.obs;
 
-  RxBool isValidatePassword = false.obs;
+  RxString currentPassword = "".obs;
 
-  RxBool isValidateRememberPassword = false.obs;
+  RxBool isLengthPassword = false.obs;
+
+  RxBool isContainSpecificCharacter = false.obs;
+
+  RxBool isContainNumber = false.obs;
+
+  RxBool isSamePassword = false.obs;
+
+  RxBool validateInfoAccount = false.obs;
+
+  bool firstSelectedTime = false;
+
+  bool firstSelectedSex = false;
+
+  RxBool isCheckSelectedSex = false.obs;
+
+
+  DateTime checkTime = DateTime(DateTime.now().year -13, DateTime.now().month, DateTime.now().day);
 
   void changeVisibility (){
     isVisibilityPassword.value = !isVisibilityPassword.value;
@@ -42,11 +60,7 @@ class RegisterController extends GetxController{
     termCondition.value = value ?? false;
   }
 
-  void clear(){
-    firstNameController.clear();
-    passwordController.clear();
-    lastNameController.clear();
-  }
+
   void validateFirstName (String text){
     isValidateFirstName.value = Validator.name(text) ?? false;
   }
@@ -56,16 +70,31 @@ class RegisterController extends GetxController{
     ) ?? false;
   }
 
-  void validatePhoneNumber (String text){
-    isValidatePhoneNumber.value = Validator.validationPhone(text) ;
+  Future<void> validatePhoneNumber (String text) async{
+    await Future.delayed(const Duration(seconds: 1), (){
+      isValidatePhoneNumber.value = Validator.validationPhone(text) ;
+    });
+
   }
-
-
+  void validatePassword (String text) {
+    currentPassword.value = text;
+    isLengthPassword.value = text.length > 7;
+    isContainSpecificCharacter.value = Validator.isCheckUppercase(text);
+    isContainNumber.value = Validator.isCheckContainPasswordNumber(text);
+  }
+  void validateRememberPassword (String text) {
+    isSamePassword.value = (text == currentPassword.value);
+    validateInfoAccount.value = isSamePassword.value && isContainNumber.value && isContainSpecificCharacter.value && isLengthPassword.value && isValidatePhoneNumber.value;
+  }
   bool validateRegister(){
     return isValidateFirstName.value && isValidateLastName.value;
   }
 
-
+  void clear(){
+    firstNameController.clear();
+    passwordController.clear();
+    lastNameController.clear();
+  }
 
   void changeStateSexType(String name){
     int index = listSexType.indexWhere((element) => element.tittle == name);
@@ -75,6 +104,7 @@ class RegisterController extends GetxController{
     }
     listSexType[index].isSelected = true;
     listSexType.refresh();
+    isCheckSelectedSex.value = true;
   }
 
   Future<void> register () async{

@@ -70,4 +70,32 @@ class Validator {
     if (!regex.hasMatch(value)) return false;
     return true;
   }
+
+  static bool isCheckLowercase(String password) {
+    bool isCheckPassword;
+    RegExp regEx = RegExp(r'[a-z]');
+    isCheckPassword = regEx.hasMatch(password);
+    return isCheckPassword;
+  }
+
+  static bool isCheckUppercase(String password) {
+    bool isCheckPassword;
+    RegExp regEx = RegExp(r'[A-Z]');
+    isCheckPassword = regEx.hasMatch(password);
+    return isCheckPassword;
+  }
+
+  static bool isCheckContainSpecialKey(String password) {
+    bool isCheckContainPass;
+    RegExp regEx = RegExp(r"(?=.*?[!@#$%^&*])");
+    isCheckContainPass = regEx.hasMatch(password);
+    return isCheckContainPass;
+  }
+
+  static bool isCheckContainPasswordNumber(String password) {
+    bool isCheckContainPass;
+    RegExp regEx = RegExp(r'[0-9]');
+    isCheckContainPass = regEx.hasMatch(password);
+    return isCheckContainPass;
+  }
 }

@@ -173,7 +173,9 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
 
   Widget buttonNext(HexColor color){
     void toPage(){
-      Get.toNamed(RouterLink.registerInfoPage);
+      if(controller.isValidateFirstName.value && controller.isValidateLastName.value) {
+        Get.toNamed(RouterLink.registerInfoPage);
+      }
     }
     return ButtonApply(
       tittle: "Tiếp theo",

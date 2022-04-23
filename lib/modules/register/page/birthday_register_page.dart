@@ -101,6 +101,7 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
                         color: lightDarkHintText.withOpacity(0.4))),
                 child: InkWell(
                   onTap: () {
+                    controller.firstSelectedTime = true;
                     _selectDate(context);
                   },
                   child: Row(
@@ -123,9 +124,7 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: height(20),
-              ),
+              buildBirthDayCheckTime(),
               Obx(()=> Column(
                 children: controller.listSexType
                     .map((element) => buildContainerSex(
@@ -133,6 +132,7 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
                     isSelected: element.isSelected!))
                     .toList(),
               )),
+              buildSelectedSex(),
               SizedBox(
                 height: height(40),
               ),
@@ -195,9 +195,38 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
       ),
     );
   }
+  Widget buildBirthDayCheckTime(){
+
+    return Obx(() => Container(
+      height: height(30),
+      padding: EdgeInsets.symmetric(horizontal: width(20)),
+      child: !controller.dateTime.value.isBefore(controller.checkTime) && controller.firstSelectedTime
+          ? Text(
+        "Bạn phải đủ 13 tuổi mới có thể tạo tài khoản",
+        style: AppStyles.textTinyRedMedium,
+      )
+          : Container(),
+    ));
+  }
+  Widget buildSelectedSex(){
+
+    return Obx(() => Container(
+      height: height(30),
+      padding: EdgeInsets.symmetric(horizontal: width(20)),
+      child: !controller.isCheckSelectedSex.value && controller.firstSelectedSex
+          ? Text(
+        "Bạn phải chọn giới tính của mình",
+        style: AppStyles.textTinyRedMedium,
+      )
+          : Container(),
+    ));
+  }
   Widget buttonNext(){
     void toPage(){
-      Get.toNamed(RouterLink.registerTermCondition);
+      controller.firstSelectedSex = true;
+      if(controller.dateTime.value.isBefore(controller.checkTime) && controller.isCheckSelectedSex.value ) {
+        Get.toNamed(RouterLink.registerTermCondition);
+      }
     }
     return ButtonApply(
       tittle: "Tiếp theo",
