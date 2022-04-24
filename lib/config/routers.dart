@@ -11,10 +11,15 @@ import '../modules/modules.dart';
 import '../modules/register/page/birthday_register_page.dart';
 import '../modules/register/page/info_account_register_page.dart';
 import '../modules/register/page/name_register_page.dart';
+import '../modules/splash/page/splash_page.dart';
 
 class AppRouters {
   static List<GetPage> createRoutes() {
     return [
+      GetPage(
+        name: RouterLink.splash,
+        page: () =>  SplashPage(),
+      ),
       GetPage(
         name: RouterLink.login,
         page: () =>  LoginPage(),

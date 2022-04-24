@@ -9,7 +9,7 @@ final HexColor lightDark = HexColor("#F1F1FA");
 
 final HexColor lightDarkHintText = HexColor("#91919F");
 final HexColor cancelButton = HexColor("#D7D8DD");
-final HexColor greenMoney = HexColor("#5DB075");
+final HexColor greenMoney = HexColor("#1BBA85");
 final HexColor redMoney = HexColor("#FD3C4A");
 final HexColor blueMoney = HexColor("#0077FF");
 final HexColor backgroundColor = HexColor("#F6F6F6");

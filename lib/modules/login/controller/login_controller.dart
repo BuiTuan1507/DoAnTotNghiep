@@ -1,16 +1,11 @@
 import 'dart:developer';
 
-import 'package:do_an/models/login/login_model.dart';
-import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/login_repository.dart';
-import 'package:do_an/service/service.dart';
-import 'package:do_an/utils/common/web_socket.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../config/routes_link.dart';
-import '../../../models/user/user_model.dart';
 import '../../../utils/common/dart_notification_center.dart';
 
 class LoginController extends GetxController {
@@ -19,7 +14,7 @@ class LoginController extends GetxController {
 
   RxBool isVisibilityPassword = false.obs;
 
-  LoginRepository loginRepository = Get.find();
+  LoginRepository loginRepository = Get.put(LoginRepository());
 
   RxBool isLoading = false.obs;
 

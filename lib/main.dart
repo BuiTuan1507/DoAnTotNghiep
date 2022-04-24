@@ -1,4 +1,6 @@
 
+import 'package:do_an/config/config.dart';
+import 'package:do_an/modules/splash/bindings/root_bindings.dart';
 import 'package:do_an/utils/common/web_socket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +37,8 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            initialBinding: LoginBinding(),
-            initialRoute: '/login',
+            initialBinding: RootBinding(),
+            initialRoute: RouterLink.splash,
             getPages: AppRouters.createRoutes(),
           ),
         ));

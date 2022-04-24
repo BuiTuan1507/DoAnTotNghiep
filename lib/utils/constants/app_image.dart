@@ -1,6 +1,7 @@
 class MyImage{
  static String imageBanner = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb9GUG9jUGM2OqQFKOiltsFQmP5nKMnHiyOwMk2kjWvr4-tECmjRnYIcRPKBgIM79qsB8&usqp=CAU';
  static String defaultImage = "assets/images/default_image.jpg";
+ static String logo = "assets/images/logo.png";
 }
 
 class MyIcon{
@@ -13,4 +14,6 @@ class MyIcon{
   static const String myPostIcon = "assets/icon/my_post_icon.svg";
   static const String addPostIcon = "assets/icon/add_post_icon.svg";
   static const String profileIcon = "assets/icon/profile_icon.svg";
+
+
 }
