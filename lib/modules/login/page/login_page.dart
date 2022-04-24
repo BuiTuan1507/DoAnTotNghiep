@@ -28,10 +28,14 @@ class LoginPage extends GetView<LoginController> {
                 height: height(30),
               ),
               buildTittle(),
-              buildTextEmailField(
+              BuildTextEmailField(
                   tittle: "Số điện thoại",
                   textEditingController: controller.phoneController,
-                  hintText: "Nhập số điện thoại"),
+                  hintText: "Nhập số điện thoại",
+                  onChanged: (text) {
+                    controller.validateLogin(text);
+                  }
+              ),
               Obx(() => buildTextPasswordField(
                   tittle: "Mật khẩu",
                   textEditingController: controller.passwordController,

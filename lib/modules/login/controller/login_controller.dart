@@ -35,7 +35,7 @@ class LoginController extends GetxController {
     passwordController.clear();
   }
 
-  void validateLogin() {
+  void validateLogin(String text) {
     isValidateLogin.value = phoneController.text.isNotEmpty && passwordController.text.isNotEmpty && validatePhoneNumber(phoneController.text.trim());
   }
 

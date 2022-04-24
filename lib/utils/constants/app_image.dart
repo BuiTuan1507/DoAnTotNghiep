@@ -2,6 +2,7 @@ class MyImage{
  static String imageBanner = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb9GUG9jUGM2OqQFKOiltsFQmP5nKMnHiyOwMk2kjWvr4-tECmjRnYIcRPKBgIM79qsB8&usqp=CAU';
  static String defaultImage = "assets/images/default_image.jpg";
  static String logo = "assets/images/logo.png";
+ static String rightArrow = "assets/images/right_arrow.svg";
 }
 
 class MyIcon{
