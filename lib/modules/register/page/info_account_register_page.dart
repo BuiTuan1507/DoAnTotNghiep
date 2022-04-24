@@ -18,6 +18,20 @@ class InfoAccountRegisterPage extends StatefulWidget {
 class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
   final RegisterController controller = Get.find();
 
+  late FocusNode phoneNumberFocusNode ;
+
+  @override
+  void initState() {
+    phoneNumberFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneNumberFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +57,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
               Padding(
                   padding: EdgeInsets.only(top: height(10), bottom: height(20)),
                   child: textFormatPhoneNumber()),
+
               Obx(() => buildPasswordField("Nhập mật khẩu", () {
                     controller.changeVisibility();
                   },
@@ -123,6 +138,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
               allow: true,
             ),
           ],
+          focusNode: phoneNumberFocusNode,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: "Số điện thoại",
@@ -150,7 +166,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
           height: height(30),
           padding: EdgeInsets.symmetric(horizontal: width(20)),
           child: !controller.isValidatePhoneNumber.value &&
-                  controller.phoneController.text.isNotEmpty
+                  controller.phoneController.text.isNotEmpty && controller.firstClickButtonInfo.value
               ? Text(
                   "Số điện thoại không đúng định dạng",
                   style: AppStyles.textTinyRedMedium,
@@ -237,6 +253,12 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
 
   Widget buttonNext(HexColor color) {
     void toPage() {
+      controller.firstClickButtonInfo.value = true;
+
+      if(!controller.isValidatePhoneNumber.value) {
+        phoneNumberFocusNode.requestFocus();
+      }
+
       if(controller.validateInfoAccount.value) {
         Get.toNamed(RouterLink.registerDateAndSex);
       }

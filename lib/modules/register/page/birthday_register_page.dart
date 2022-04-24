@@ -136,7 +136,8 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
               SizedBox(
                 height: height(40),
               ),
-              buttonNext(),
+              Obx(() => buttonNext(controller.dateTime.value.isBefore(controller.checkTime) && controller.isCheckSelectedSex.value ? greenMoney : grey_3),
+              ),
               haveAccount()
             ],
           ),
@@ -221,7 +222,7 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
           : Container(),
     ));
   }
-  Widget buttonNext(){
+  Widget buttonNext(HexColor color){
     void toPage(){
       controller.firstSelectedSex = true;
       if(controller.dateTime.value.isBefore(controller.checkTime) && controller.isCheckSelectedSex.value ) {
@@ -236,7 +237,7 @@ class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
       height: height(55),
       margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14), color: greenMoney),
+          borderRadius: BorderRadius.circular(14), color: color),
     );
   }
 }

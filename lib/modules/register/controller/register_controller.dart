@@ -26,6 +26,11 @@ class RegisterController extends GetxController{
 
   RxBool isValidateLastName = false.obs;
 
+  RxBool fistClickName = false.obs;
+
+
+  RxBool firstClickButtonInfo = false.obs;
+
   RxBool isValidatePhoneNumber = false.obs;
 
   RxString currentPassword = "".obs;
@@ -40,11 +45,14 @@ class RegisterController extends GetxController{
 
   RxBool validateInfoAccount = false.obs;
 
+
   bool firstSelectedTime = false;
 
   bool firstSelectedSex = false;
 
   RxBool isCheckSelectedSex = false.obs;
+
+
 
 
   DateTime checkTime = DateTime(DateTime.now().year -13, DateTime.now().month, DateTime.now().day);
@@ -148,6 +156,6 @@ class RegisterController extends GetxController{
     }
 
  */
-    if(isRegisterSuccess)  Get.toNamed(RouterLink.main);
+    if(isRegisterSuccess)  Get.toNamed(RouterLink.registerLoading);
   }
 }

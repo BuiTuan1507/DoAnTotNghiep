@@ -8,5 +8,6 @@ Widget loadingLogin(bool isLoading) {
         padding: EdgeInsets.only(bottom: height(20)),
         alignment: Alignment.bottomCenter,
         child: const CupertinoActivityIndicator(),
-      ));
+      )
+  );
 }
