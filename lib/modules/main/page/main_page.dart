@@ -107,7 +107,7 @@ class MainPage extends StatelessWidget {
                   width: width(34),
                   height: height(28),
                   fit: BoxFit.cover,
-                  color: _controller.currentIndex.value == index ? violet : lightDarkHintText,
+                  color: _controller.currentIndex.value == index ? greenMoney : lightDarkHintText,
                 ),
               ),
             ],

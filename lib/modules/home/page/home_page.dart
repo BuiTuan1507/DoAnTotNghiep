@@ -41,11 +41,16 @@ class HomePage extends GetView<HomeController> {
                 color: grey_2,
               )),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: width(8)),
-          child: Icon(
-            Icons.chat,
-            color: grey_2,
+        InkWell(
+          onTap: (){
+            Get.toNamed(RouterLink.chatPage);
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: width(8)),
+            child: Icon(
+              Icons.chat,
+              color: grey_2,
+            ),
           ),
         ),
         SizedBox(

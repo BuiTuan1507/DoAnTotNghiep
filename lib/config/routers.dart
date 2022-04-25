@@ -85,6 +85,16 @@ class AppRouters {
         page: () =>   SearchPage(),
         binding: SearchBindings()
       ),
+      GetPage(
+          name: RouterLink.chatPage,
+          page: () =>   ChatPage(),
+          binding: ChatBindings()
+      ),
+      GetPage(
+          name: RouterLink.chatDetailPage,
+          page: () =>   ChatDetailPage(),
+          binding: ChatDetailBindings()
+      ),
     ];
   }
 }

@@ -14,4 +14,6 @@ class RouterLink {
   static const String addPostPage = '/addPostPage';
   static const String accountPage = '/accountPage';
   static const String searchPage = '/searchPage';
+  static const String chatPage = "/chatPage";
+  static const String chatDetailPage = "/chatDetailPage";
 }

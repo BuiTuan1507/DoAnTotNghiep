@@ -91,15 +91,4 @@ class _BuildTextEmailFieldState extends State<BuildTextEmailField> {
 }
 
 
-/*
-Widget buildTextEmailField(
-    {required String tittle,
-      required TextEditingController textEditingController,
-      required String hintText
-      }) {
-
-  return
-}
-
- */
 
