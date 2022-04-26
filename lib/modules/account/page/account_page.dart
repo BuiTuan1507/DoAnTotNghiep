@@ -145,80 +145,7 @@ class AccountPage extends GetView<AccountController> {
     );
   }
 
-  void modalSelectImage(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        isDismissible: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(
-              radius(10),
-            ),
-          ),
-        ),
-        builder: (BuildContext context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: height(10),
-                  horizontal: width(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Chọn ảnh",
-                      style: GoogleFonts.sarabun(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: black,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.close_rounded,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                color: grey_5,
-                height: 1,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: height(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    itemButtonSelectImage(
-                      title: "Camera",
-                      function: () {
-                        controller.changeImage(isCamera: true);
-                      },
-                      iconButton: Icons.camera_alt_outlined,
-                    ),
-                    itemButtonSelectImage(
-                        title: "Thư viện",
-                        function: () {
-                          controller.changeImage(isCamera: false);
-                        },
-                        iconButton: Icons.save_rounded),
-                  ],
-                ),
-              ),
-            ],
-          );
-          // return your layout
-        });
-  }
+
 
   void modalLogout(BuildContext context) {
     showModalBottomSheet(
@@ -289,47 +216,5 @@ class AccountPage extends GetView<AccountController> {
         });
   }
 
-  GestureDetector itemButtonSelectImage({
-    required String title,
-    required VoidCallback function,
-    required IconData iconButton,
-  }) {
-    return GestureDetector(
-      onTap: function,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: width(15),
-          vertical: height(10),
-        ),
-        margin: EdgeInsets.symmetric(
-          vertical: height(10),
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            radius(8),
-          ),
-          color: grey_6,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              iconButton,
-            ),
-            SizedBox(
-              width: !CommonUtil.isEmpty(title) ? width(8) : 0,
-            ),
-            Text(
-              title,
-              style: GoogleFonts.sarabun(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: grey_2,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 }

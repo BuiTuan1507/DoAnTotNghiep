@@ -162,7 +162,8 @@ class LoginPage extends GetView<LoginController> {
                 ),
               ],
             ),
-          )),
+          )
+      ),
     );
   }
 }

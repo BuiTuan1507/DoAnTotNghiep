@@ -18,7 +18,7 @@ class AccountController extends GetxController {
   RxString name = "Minh tuan".obs;
   RxString image = Constants.AVATAR_URL.obs;
 
-  ImagePicker picker = ImagePicker();
+
 
   @override
   void onInit() {
@@ -59,33 +59,7 @@ class AccountController extends GetxController {
    // Get.toNamed(Routes.setting);
   }
 
-  void changeImage({required bool isCamera}) async {
-    XFile? pickSingleFile;
 
-    //pick image
-    if (isCamera) {
-      pickSingleFile = (await picker.pickImage(source: ImageSource.camera));
-    } else {
-      pickSingleFile = (await picker.pickImage(source: ImageSource.gallery));
-    }
-    File imageFile = File(pickSingleFile?.path ?? '');
-    if(!CommonUtil.isEmpty(imageFile)){
-      /*
-      log("url image: ${imageFile.path}");
-      String url = await uploadImageToFirebase(imageFile);
-      if (url != '') {
-        image.value = url;
-        log("url image uploaded: $url");
-        await userRepository.updateUser(uuid.value, url);
-        DataGlobal.setImageUserModel(url);
-      } else {
-        log("Không thể thay đổi ảnh");
-      }
-
-       */
-
-    }
-  }
 
 
 }
