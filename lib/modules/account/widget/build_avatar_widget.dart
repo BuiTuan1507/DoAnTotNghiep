@@ -16,7 +16,7 @@ Widget buildAvatar(String? image, double size) {
             color: Colors.white,
             border: Border.all(
               width: 1,
-              color: violet,
+              color: greenMoney,
             )),
         child: Container(
           decoration: BoxDecoration(
@@ -27,14 +27,14 @@ Widget buildAvatar(String? image, double size) {
       );
     },
     errorWidget: (context, url, error) => Container(
-      height: height(50),
-      width: height(50),
+      height: height(size),
+      width: height(size),
       decoration: BoxDecoration(
           image: DecorationImage(image:  NetworkImage(Constants.AVATAR_URL), fit: BoxFit.cover),
           shape: BoxShape.circle,
           border: Border.all(
             width: 1,
-            color: HexColor("#7D9EBD"),
+            color: greenMoney,
           )),
     ),
     placeholder: (context, url) => CircularProgressIndicator(),

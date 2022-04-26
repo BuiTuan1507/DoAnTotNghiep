@@ -16,70 +16,40 @@ class AccountPage extends GetView<AccountController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: height(40),
-        ),
-        buildName(
-          controller.name.value,
-          controller.image.value,
-          context,
-        ),
-        SizedBox(
-          height: height(20),
-        ),
-        buildOptionalAccount(context)
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height(80),
+            ),
+            buildName(
+              controller.name.value,
+              controller.image.value,
+              context,
+            ),
+            SizedBox(
+              height: height(20),
+            ),
+            buildOptionalAccount(context)
+          ],
+        ));
   }
 
   Widget buildImageInfo(String? image, BuildContext context) {
-    if(image == null || image == ""){
+    if (image == null || image == "") {
       image = Constants.AVATAR_URL;
     }
-    return Center(
-      child: SizedBox(
-        height: width(115),
-        width: width(115),
-        child: Stack(
-          clipBehavior: Clip.none,
-          fit: StackFit.expand,
-          children: [
-            buildAvatar(image, 40.0),
-            Positioned(
-              bottom: 0,
-              right: -25,
-              child: RawMaterialButton(
-                onPressed: () {
-                  modalSelectImage(context);
-                },
-                elevation: 2.0,
-                fillColor: const Color(0xFFF5F6F9),
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                  color: Colors.blue,
-                  size: size(20),
-                ),
-                padding: const EdgeInsets.all(5.0),
-                shape: const CircleBorder(),
-              ),),
-          ],
-        ),
-      ),
-    );
+    return buildAvatar(image, 90.0);
   }
 
   Widget buildName(String? name, String? image, BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
             padding: EdgeInsets.only(left: width(15)),
-            child: buildImageInfo(image, context)
-        ),
+            child: buildImageInfo(image, context)),
         Flexible(
           flex: 4,
           child: Column(
@@ -87,32 +57,33 @@ class AccountPage extends GetView<AccountController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: width(18), vertical: height(8)),
-                child: Text("Thông tin cá nhân", style: AppStyles.textLargeBlackSemiBold,),
+                padding: EdgeInsets.symmetric(
+                    horizontal: width(15), vertical: height(4)),
+                child: Text(
+                  "0932333703",
+                  style: AppStyles.textLargeBlackSemiBold,
+                ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: width(18)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: width(15), vertical: height(4)),
                 child: Text(
-                  name ?? '',
+                  "Tài khoản chưa được xác thực",
+                  style: AppStyles.textTinyRedMedium,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width(15)),
+                child: Text(
+                  "Xem thông tin cá nhân của bạn",
                   maxLines: 1,
-                  style: AppStyles.textLargeBlackSemiBold,
+                  style: AppStyles.textSmallDarkRegular,
                   overflow: TextOverflow.ellipsis,
                 ),
               )
             ],
           ),
         ),
-        Flexible(
-          flex: 1,
-          child: Padding(
-            padding: EdgeInsets.only(right: width(20), top: height(12)),
-            child: Icon(
-              Icons.edit,
-              size: size(24),
-              color: lightDarkHintText,
-            ),
-          ),
-        )
       ],
     );
   }
@@ -121,51 +92,50 @@ class AccountPage extends GetView<AccountController> {
     return Container(
       padding: EdgeInsets.all(height(15)),
       margin: EdgeInsets.all(height(16)),
-      decoration:
-      BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildItem(
-            "profile".tr, controller.toPageAccount,),
-          Divider(
-            color: lightDark,
-            thickness: width(1),
-            indent: width(16),
-            endIndent: width(16),
-          ),
-          buildItem("setting".tr, controller.toPageSetting),
-          Divider(
-            color: lightDark,
-            thickness: width(1),
-            indent: width(16),
-            endIndent: width(16),
-          ),
-          buildItem("export".tr, controller.toPageChange),
-          Divider(
-            color: lightDark,
-            thickness: width(1),
-            indent: width(16),
-            endIndent: width(16),
-          ),
-          buildItem("log_out".tr, () =>  controller.logout()),
+          buildItem("Giỏ hàng", controller.toPageAccount, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Cài đặt".tr, controller.toPageSetting, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Tin đã lưu".tr, controller.toPageChange, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Đăng xuất".tr, () => modalLogout(context), MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
         ],
       ),
     );
   }
 
-  Widget buildItem(String? tittle, VoidCallback onClick) {
+  Widget buildItem(
+      String? tittle, VoidCallback onClick, String icon, Color color) {
     return InkWell(
       onTap: onClick,
       child: Padding(
-        padding: EdgeInsets.all(width(15)),
+        padding:
+            EdgeInsets.symmetric(horizontal: width(10), vertical: height(18)),
         child: Row(
           children: [
+            Container(
+                height: width(32),
+                width: width(32),
+                padding: EdgeInsets.all(width(6)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+                child: SvgPicture.asset(
+                  icon,
+                  color: Colors.white,
+                )),
             Expanded(
-              child: Text(
-                tittle ?? "",
-                style: AppStyles.textNormalBlackMedium,
+              child: Padding(
+                padding: EdgeInsets.only(left: width(15)),
+                child: Text(
+                  tittle ?? "",
+                  style: AppStyles.textNormalBlackMedium,
+                ),
               ),
             ),
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
@@ -210,7 +180,10 @@ class AccountPage extends GetView<AccountController> {
                       onTap: () {
                         Get.back();
                       },
-                      child: const Icon(Icons.close_rounded,),),
+                      child: const Icon(
+                        Icons.close_rounded,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -237,8 +210,76 @@ class AccountPage extends GetView<AccountController> {
                         function: () {
                           controller.changeImage(isCamera: false);
                         },
-                        iconButton: Icons.save_rounded
+                        iconButton: Icons.save_rounded),
+                  ],
+                ),
+              ),
+            ],
+          );
+          // return your layout
+        });
+  }
+
+  void modalLogout(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isDismissible: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(
+              radius(10),
+            ),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height : height(20)),
+              Center(
+                child: Text(
+                  "Bạn có chắc chắn đăng xuất không ?",
+                  style: GoogleFonts.sarabun(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: lightDarkHintText,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: height(10),
+                ),
+                child: Row(
+                 
+                  children: [
+                    Expanded(
+                      child: ButtonApply(
+                        tittle: "Quay lại",
+                        style: AppStyles.textSmallWhiteMedium,
+                        onClick: () => {Get.back()},
+                        width: double.infinity,
+                        height: height(45),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: width(10), vertical: height(10)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: grey_3),
+                      ),
                     ),
+                    SizedBox(width : width(15)),
+                    Expanded(child: ButtonApply(
+                      tittle: "Đăng xuất",
+                      style: AppStyles.textSmallWhiteMedium,
+                      onClick: () => controller.logout(),
+                      width: double.infinity,
+                      height: height(45),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: width(15), vertical: height(15)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: greenMoney),
+                    ))
                   ],
                 ),
               ),

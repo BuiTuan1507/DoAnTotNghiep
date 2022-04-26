@@ -37,7 +37,7 @@ class MainPage extends StatelessWidget {
 
           type: BottomNavigationBarType.fixed,
           currentIndex: _controller.currentIndex.value,
-          selectedItemColor: violet,
+          selectedItemColor: greenMoney,
           selectedFontSize: 14,
           unselectedFontSize: 14,
           unselectedItemColor: lightDarkHintText,

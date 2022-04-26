@@ -124,6 +124,11 @@ class AppStyles{
       fontWeight: fontWeightMedium,
       color: greenMoney
   );
+  static TextStyle textSmallWhiteMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeSmall,
+      fontWeight: fontWeightMedium,
+      color: Colors.white
+  );
   /// Tiny
 
   static TextStyle textTinyRedMedium = GoogleFonts.sarabun(
@@ -131,7 +136,11 @@ class AppStyles{
       fontWeight: fontWeightMedium,
       color: red
   );
-
+  static TextStyle textTinyDarkRegular = GoogleFonts.sarabun(
+      fontSize: fontSizeTiny,
+      fontWeight: fontWeightRegular,
+      color:lightDarkHintText
+  );
 
 
 

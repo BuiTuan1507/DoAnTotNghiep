@@ -16,5 +16,7 @@ class MyIcon{
   static const String addPostIcon = "assets/icon/add_post_icon.svg";
   static const String profileIcon = "assets/icon/profile_icon.svg";
 
+  static const String cartIcon = "assets/icon/cart.svg";
+
 
 }
