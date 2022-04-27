@@ -1,5 +1,4 @@
-import 'package:do_an/modules/account/controller/account_detail_controller.dart';
-import 'package:do_an/utils/theme/app_styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +15,9 @@ class AccountDetailPage extends GetView<AccountDetailController>{
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Thong tin ca nhan", style: AppStyles.textNormalBlackMedium,),
+        title: Text("Thông tin cá nhân", style: AppStyles.textNormalWhiteSemiBold,),
         automaticallyImplyLeading: true,
+        backgroundColor: greenMoney,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -31,14 +31,23 @@ class AccountDetailPage extends GetView<AccountDetailController>{
             Container(
               padding: EdgeInsets.symmetric(vertical: height(5), horizontal: width(20)),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  textFollowUser(4, "Nguoi theo doi"),
-                  textFollowUser(5, "Dang theo doi")
+                  textFollowUser(4, "Người theo dõi"),
+                  textFollowUser(5, "Đang theo dõi")
                 ],
               ),
             ),
-            buildButton()
+            SizedBox(height: height(12),),
+            buildButton(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: height(5)),
+              child: Divider(
+                thickness: width(1),
+                indent: width(20),
+                endIndent: width(20),
+              ),
+            )
           ],
         )
       ),
@@ -200,7 +209,7 @@ class AccountDetailPage extends GetView<AccountDetailController>{
   Widget textFollowUser(int numberFollower, String text){
     return RichText(
       text: TextSpan(
-        text: numberFollower.toString(),
+        text: numberFollower.toString() + "  ",
         style: AppStyles.textSmallBlackMedium,
         children: <TextSpan>[
           TextSpan(
@@ -225,8 +234,9 @@ class AccountDetailPage extends GetView<AccountDetailController>{
               ),
               child: Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.edit, size: size(22),color: black,),
+                    Icon(Icons.edit, size: size(20),color: black.withOpacity(0.8),),
                     SizedBox(width: width(10),),
                     Text("Chỉnh sửa trang cá nhân", style: AppStyles.textSmallBlackMedium,)
                   ],
@@ -237,15 +247,34 @@ class AccountDetailPage extends GetView<AccountDetailController>{
           SizedBox(
             width: width(12),
           ),
-          SizedBox(
+          Container(
             height: height(45),
             width: height(70),
+            decoration: BoxDecoration(
+                color: grey_5,
+                borderRadius: BorderRadius.circular(10)
+            ),
             child: Center(
               child: Icon(Icons.more_horiz, size: size(22),),
             ),
           )
         ],
       ),
+    );
+  }
+  Widget buildItemInfo(Icon icon, String tittle, String value){
+    return Container(
+      padding: EdgeInsets.only(left: width(20), right: width(20), bottom: height(15)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(right: width(15)),
+            child: Container(),
+          )
+        ],
+      ),
+
     );
   }
 }

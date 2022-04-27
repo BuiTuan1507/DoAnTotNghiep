@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../utils/constants/constant.dart';
 import '../../../utils/theme/app_styles.dart';
 import '../../../utils/utils.dart';
@@ -72,13 +73,18 @@ class AccountPage extends GetView<AccountController> {
                   style: AppStyles.textTinyRedMedium,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width(15)),
-                child: Text(
-                  "Xem thông tin cá nhân của bạn",
-                  maxLines: 1,
-                  style: AppStyles.textSmallDarkRegular,
-                  overflow: TextOverflow.ellipsis,
+              InkWell(
+                onTap: (){
+                  Get.toNamed(RouterLink.profileDetailPage);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width(15)),
+                  child: Text(
+                    "Xem thông tin cá nhân của bạn",
+                    maxLines: 1,
+                    style: AppStyles.textSmallDarkRegular,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               )
             ],
@@ -181,7 +187,7 @@ class AccountPage extends GetView<AccountController> {
                  
                   children: [
                     Expanded(
-                      child: ButtonApply(
+                        child: ButtonApply(
                         tittle: "Quay lại",
                         style: AppStyles.textSmallWhiteMedium,
                         onClick: () => {Get.back()},

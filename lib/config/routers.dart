@@ -81,6 +81,16 @@ class AppRouters {
         binding: AccountBindings(),
       ),
       GetPage(
+        name: RouterLink.profileDetailPage,
+        page: () =>  const AccountDetailPage(),
+        binding: AccountDetailBindings(),
+      ),
+      GetPage(
+        name: RouterLink.editProfileDetailPage,
+        page: () =>  const EditAccountPage(),
+        binding: EditAccountDetailBindings(),
+      ),
+      GetPage(
         name: RouterLink.searchPage,
         page: () =>   SearchPage(),
         binding: SearchBindings()
