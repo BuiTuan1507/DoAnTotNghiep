@@ -107,21 +107,9 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                     hintStyle: AppStyles.textSmallDarkNormal,
                     contentPadding: EdgeInsets.symmetric(horizontal: width(16)),
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: lightDarkHintText, width: 1.0),
-                      borderRadius: BorderRadius.circular(14.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: greenMoney, width: 1.0),
-                      borderRadius: BorderRadius.circular(14.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: lightDarkHintText, width: 1.0),
-                      borderRadius: BorderRadius.circular(14.0),
-                    ),
+                    border: AppStyles.borderDark,
+                    focusedBorder: AppStyles.borderGreen,
+                    enabledBorder: AppStyles.borderDark,
                   ),
                 ),
                 (controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty && controller.fistClickName.value) ? SizedBox(
@@ -150,21 +138,9 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                     hintStyle: AppStyles.textSmallDarkNormal,
                     contentPadding: EdgeInsets.symmetric(horizontal: width(16)),
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: lightDarkHintText, width: 1.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: greenMoney, width: 1.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: lightDarkHintText, width: 1.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+                    border: AppStyles.borderDark,
+                    focusedBorder: AppStyles.borderGreen,
+                    enabledBorder: AppStyles.borderDark,
                   ),
                 ),
                 (controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty && controller.fistClickName.value) ? SizedBox(

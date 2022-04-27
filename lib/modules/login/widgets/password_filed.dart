@@ -41,21 +41,9 @@ Widget buildTextPasswordField(
                 hintStyle: AppStyles.textSmallDarkNormal,
                 contentPadding: EdgeInsets.symmetric(horizontal: width(16)),
                 fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: lightDarkHintText, width: 1.0),
-                  borderRadius: BorderRadius.circular(14.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: greenMoney, width: 1.0),
-                  borderRadius: BorderRadius.circular(14.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: lightDarkHintText, width: 1.0),
-                  borderRadius: BorderRadius.circular(14.0),
-                ),
+                border: AppStyles.borderDark,
+                focusedBorder: AppStyles.borderGreen,
+                enabledBorder: AppStyles.borderDark,
                 suffixIcon: (isVisibility != null) ?  IconButton(
                     icon: Icon(
                         isVisibility
