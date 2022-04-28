@@ -1,4 +1,5 @@
 import 'package:do_an/config/routes_link.dart';
+import 'package:do_an/modules/account/page/change_password_page.dart';
 import 'package:do_an/modules/home/bindings/search_bindings.dart';
 import 'package:do_an/modules/home/page/search_page.dart';
 import 'package:do_an/modules/register/page/loading_register_page.dart';
@@ -104,6 +105,10 @@ class AppRouters {
           name: RouterLink.chatDetailPage,
           page: () =>   ChatDetailPage(),
           binding: ChatDetailBindings()
+      ),
+      GetPage(
+          name: RouterLink.changePasswordPage,
+          page: () =>   ChangePasswordPage(),
       ),
     ];
   }

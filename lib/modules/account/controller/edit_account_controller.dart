@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../models/register/sex_type.dart';
+
 class EditAccountController extends GetxController{
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -13,5 +15,7 @@ class EditAccountController extends GetxController{
   void validateLastName(String text) {}
 
   void validateEmail (String text) {}
+
+  RxList<SexType> listSexType  = SexType.listSexType.obs;
 
 }

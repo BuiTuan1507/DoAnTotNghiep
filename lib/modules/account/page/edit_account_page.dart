@@ -1,9 +1,10 @@
+import 'package:do_an/models/register/sex_type.dart';
 import 'package:do_an/modules/account/controller/edit_account_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/utils.dart';
 
@@ -73,42 +74,61 @@ class EditAccountPage extends GetView<EditAccountController>{
           ),
         ),
         builder: (BuildContext context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: height(10),
-                  horizontal: width(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Chọn ảnh",
-                      style: GoogleFonts.sarabun(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: black,
+          return SizedBox(
+            height: height(400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: height(10),
+                    left: width(20),
+                    right: width(20)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Chọn giới tính",
+                        style: GoogleFonts.sarabun(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: black,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.close_rounded,
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_rounded,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Divider(
-                color: grey_5,
-                height: 1,
-              ),
+                Divider(
+                  color: grey_5,
+                  height: 1,
+                ),
+                Obx(() => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: controller.listSexType.map((e) =>
+                      buildSexUserItem(e)
+                  ).toList(),
+                )),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: width(20)),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
 
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           );
           // return your layout
         });
@@ -145,9 +165,13 @@ class EditAccountPage extends GetView<EditAccountController>{
             buildTextInfo("Ngày sinh", "15/04/1999", ()=> {
               _selectDate(context)
             }),
-            buildTextInfo("Giới tính", "Nam", ()=> {}),
+            buildTextInfo("Giới tính", "Nam", ()=> {
+              showSelectSexUser(context)
+            }),
             buildTextInfo("Danh sách yêu thích", "Chưa có danh sách yêu thích", ()=> {}),
-            buildTextInfo("Mật  khẩu", "******", ()=> {})
+            buildTextInfo("Mật  khẩu", "******", ()=> {
+
+            })
           ],
         ),
       ),
@@ -179,6 +203,37 @@ class EditAccountPage extends GetView<EditAccountController>{
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildSexUserItem (SexType sexType){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      child: Column(
+        children: [
+          Divider(
+            thickness: height(1),
+            color: grey_7,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: height(8)),
+            color:( sexType.isSelected ?? false ? lightDarkHintText.withOpacity(0.4) : Colors.transparent ),
+            child: Center(
+              child: Text(sexType.tittle ?? "", style:AppStyles.textSmallBlackRegular,)
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildButtonChangeSex(String tittle, HexColor color, VoidCallback onClick){
+    return SizedBox(
+      height: width(45),
+      width: width(70),
+      child: Container(
+        decoration: BoxDecoration(),
       ),
     );
   }
