@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../config/config.dart';
 import '../../../utils/utils.dart';
 import '../controller/register_controller.dart';
+import '../widget/password_filed_widget.dart';
 
 class InfoAccountRegisterPage extends StatefulWidget {
   const InfoAccountRegisterPage({Key? key}) : super(key: key);
@@ -166,37 +167,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
         ));
   }
 
-  Widget buildPasswordField(
-      String hintText,
-      VoidCallback changeVisibility,
-      bool visibilityPassword,
-      TextEditingController textEditingController,
-      Function(String value) onChanged) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: width(20)),
-        child: TextFormField(
-          obscureText: visibilityPassword,
-          controller: textEditingController,
-          maxLines: 1,
-          onChanged: (value) {
-            onChanged(value);
-          },
-          decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: AppStyles.textSmallDarkNormal,
-              contentPadding: EdgeInsets.symmetric(horizontal: width(16)),
-              //  fillColor: Colors.white,
-              border: AppStyles.borderDark,
-              focusedBorder: AppStyles.borderGreen,
-              enabledBorder: AppStyles.borderDark,
-              suffixIcon: IconButton(
-                  icon: Icon(visibilityPassword
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  color: visibilityPassword ? greenMoney : lightDarkHintText,
-                  onPressed: changeVisibility)),
-        ));
-  }
+
 
   Widget buildStrongPassword(String text, HexColor color) {
     return Container(

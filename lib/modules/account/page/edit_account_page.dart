@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
 
 class EditAccountPage extends GetView<EditAccountController>{
@@ -75,7 +76,7 @@ class EditAccountPage extends GetView<EditAccountController>{
         ),
         builder: (BuildContext context) {
           return SizedBox(
-            height: height(400),
+            height: height(330),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -120,12 +121,40 @@ class EditAccountPage extends GetView<EditAccountController>{
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: width(20)),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-
-                    ],
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                                padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: grey_5),
+                                    borderRadius:
+                                    BorderRadius.circular(3),
+                                    color: Colors.white),
+                                child: Center(
+                                    child: Text("Quay lại",
+                                        style:
+                                        GoogleFonts.sarabun(
+                                            color: black
+                                        ))))),
+                        SizedBox(width: width(10)),
+                        InkWell(
+                            onTap: () {
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3),
+                                  color: greenMoney),
+                              padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                              child: Center(
+                                child: Text("Thay đổi",
+                                    style: GoogleFonts.sarabun(color: Colors.white)),
+                              ),
+                            )),
+                      ]),
                 )
               ],
             ),
@@ -170,7 +199,7 @@ class EditAccountPage extends GetView<EditAccountController>{
             }),
             buildTextInfo("Danh sách yêu thích", "Chưa có danh sách yêu thích", ()=> {}),
             buildTextInfo("Mật  khẩu", "******", ()=> {
-
+              Get.toNamed(RouterLink.changePasswordPage)
             })
           ],
         ),
@@ -210,32 +239,25 @@ class EditAccountPage extends GetView<EditAccountController>{
   Widget buildSexUserItem (SexType sexType){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
-      child: Column(
-        children: [
-          Divider(
-            thickness: height(1),
-            color: grey_7,
+      child: InkWell(
+        onTap: (){
+          controller.changeStateSexType(sexType.tittle ?? "");
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: height(8)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color:( sexType.isSelected ?? false ? greenMoney.withOpacity(0.4) : Colors.transparent ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: height(8)),
-            color:( sexType.isSelected ?? false ? lightDarkHintText.withOpacity(0.4) : Colors.transparent ),
-            child: Center(
-              child: Text(sexType.tittle ?? "", style:AppStyles.textSmallBlackRegular,)
-            ),
-          )
-        ],
+
+          child: Center(
+            child: Text(sexType.tittle ?? "", style:AppStyles.textSmallBlackRegular,)
+          ),
+        ),
       ),
     );
   }
 
-  Widget buildButtonChangeSex(String tittle, HexColor color, VoidCallback onClick){
-    return SizedBox(
-      height: width(45),
-      width: width(70),
-      child: Container(
-        decoration: BoxDecoration(),
-      ),
-    );
-  }
+
 
 }
