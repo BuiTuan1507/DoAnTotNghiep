@@ -1,3 +1,4 @@
+import 'package:do_an/modules/account/controller/edit_account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -134,5 +135,110 @@ class MyDialog{
           );
         });
   }
-
+  static popUpSendMessage(BuildContext context,
+      {required final EditAccountController editAccountController,
+        required String tittle,
+        required String hintText,
+        String btnHuyText = 'Quay lại',
+        String textButtonAccept = 'Thay đổi'}) {
+    TextEditingController textEditingController = TextEditingController();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (builder) {
+          return Dialog(
+              insetPadding: EdgeInsets.all(width(18)),
+              child: Container(
+                height: height(255),
+                width: width(343),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(tittle,
+                                  style: GoogleFonts.sarabun(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(Icons.close, size: size(20),),
+                              )
+                            ]),
+                      ),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: textEditingController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                      top: height(16), left: width(16)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(0)),
+                                    borderSide: BorderSide(
+                                        color: HexColor('#DFDFDF'), width: 1),
+                                  ),
+                                  filled: true,
+                                  fillColor: HexColor('#F7F7FC'),
+                                  hintStyle: GoogleFonts.sarabun(color: grey_4,fontSize: size(14),fontWeight: FontWeight.w400),
+                                  hintText: hintText,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(0)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: HexColor('#DFDFDF')),
+                                  )),
+                            ),
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(18),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: grey_5),
+                                          borderRadius:
+                                          BorderRadius.circular(3),
+                                          color: Colors.white),
+                                      child: Center(
+                                          child: Text(btnHuyText,
+                                              style:
+                                              GoogleFonts.sarabun(
+                                                  color: black
+                                              ))))),
+                              SizedBox(width: width(10)),
+                              InkWell(
+                                  onTap: () {
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: greenMoney),
+                                    padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                    child: Center(
+                                      child: Text(textButtonAccept,
+                                          style: GoogleFonts.sarabun(color: Colors.white)),
+                                    ),
+                                  )),
+                            ]),
+                      ),
+                    ]),
+              ));
+        });
+  }
 }
