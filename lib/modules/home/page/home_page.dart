@@ -81,10 +81,39 @@ class HomePage extends GetView<HomeController> {
             height: height(20),
           ),
           ListItemFeature(),
-          SizedBox(
-            height: height(20),
+
+          ListCategoryHome(),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+            child: Text("Tin đăng mới nhất", style: AppStyles.textNormalGreenSemiBold,),
           ),
-          ListCategoryHome()
+          buildListPostInHome()
+        ],
+      ),
+    );
+  }
+
+  Widget buildListPostInHome(){
+    return Container(
+      padding: EdgeInsets.all(width(4)),
+      child: GridView.count(
+        physics:  ScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: EdgeInsets.all(width(5)),
+        crossAxisCount: 2,
+        crossAxisSpacing: width(10),
+        mainAxisSpacing: width(10),
+        childAspectRatio: 0.58,
+        children: <Widget>[
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
+          ItemProductWidget(),
         ],
       ),
     );

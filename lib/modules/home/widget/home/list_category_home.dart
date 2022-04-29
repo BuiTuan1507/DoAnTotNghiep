@@ -1,6 +1,8 @@
 import 'package:do_an/utils/common/screen_utils.dart';
 import 'package:do_an/utils/constants/app_image.dart';
+import 'package:do_an/utils/theme/app_styles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ListCategoryHome extends StatefulWidget {
   const ListCategoryHome({Key? key}) : super(key: key);
@@ -13,25 +15,33 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
-      child: GridView.count(
-        physics: ScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        padding: EdgeInsets.all(5),
-        crossAxisCount: 4,
-        crossAxisSpacing: width(5),
-        mainAxisSpacing: 5.0,
-        childAspectRatio: 0.7,
-        children: <Widget>[
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-          buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+
+      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(0)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+       // mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(padding: EdgeInsets.symmetric(vertical: height(10), horizontal: width(5)),child: Text("Danh mục", style: AppStyles.textNormalGreenSemiBold,),),
+          GridView.count(
+            physics:  ScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: EdgeInsets.all(width(5)),
+            crossAxisCount: 4,
+            crossAxisSpacing: width(10),
+            mainAxisSpacing: width(10),
+            childAspectRatio: 0.65,
+            children: <Widget>[
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
+            ],
+          )
         ],
       ),
     );
@@ -39,7 +49,8 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
 
   Widget buildItemCategory (String image, String text){
     return Container(
-      width: width(120),
+     // margin: EdgeInsets.only(right: width(10)),
+      width: width(130),
      child: Column(
        children: <Widget>[
          Container(
@@ -57,14 +68,12 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
            ),
          ),
          Container(
-           height: 7,
+           height: height(10),
          ),
-         Container(
-           child: Text(
-             text,
-             style: TextStyle(fontSize: 18),
-             textAlign: TextAlign.center,
-           ),
+         Text(
+           text,
+           style: AppStyles.textNormalBlackMedium,
+           textAlign: TextAlign.center,
          )
        ],
      ),

@@ -74,6 +74,7 @@ class AppStyles {
       color: lightDarkHintText);
   static TextStyle textNormalBlackMedium = GoogleFonts.sarabun(
       fontSize: fontSizeNormal, fontWeight: fontWeightMedium, color: black);
+
   static TextStyle textNormalGreenSemiBold = GoogleFonts.sarabun(
       fontSize: fontSizeNormal,
       fontWeight: fontWeightSemiBold,
@@ -106,7 +107,10 @@ class AppStyles {
       fontSize: fontSizeSmall,
       fontWeight: fontWeightMedium,
       color: Colors.white);
-
+  static TextStyle textSmallRedMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeSmall,
+      fontWeight: fontWeightMedium,
+      color: red);
   /// Tiny
 
   static TextStyle textTinyRedMedium = GoogleFonts.sarabun(
@@ -115,4 +119,8 @@ class AppStyles {
       fontSize: fontSizeTiny,
       fontWeight: fontWeightRegular,
       color: lightDarkHintText);
+  static TextStyle textTinyStrongDarkRegular = GoogleFonts.sarabun(
+      fontSize: fontSizeTiny,
+      fontWeight: fontWeightMedium,
+      color: black.withOpacity(0.9));
 }
