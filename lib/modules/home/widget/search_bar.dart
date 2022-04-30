@@ -21,20 +21,20 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     OutlineInputBorder border =
     OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(35)),
-        borderSide: BorderSide(color: Colors.green,width: width(1)));
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        borderSide: BorderSide(color: grey_4,width: height(1)
+        )
+    );
     return Container(
-        height: height(50),
-        padding: EdgeInsets.symmetric(horizontal: width(20)),
+        height: height(60),
+        padding: EdgeInsets.symmetric(vertical: height(3)),
         margin: EdgeInsets.symmetric(vertical: height(10)),
-        color: Colors.white,
         child: TextFormField(
             controller: widget.textEditingController,
             onChanged: (text) {
               setState(() {
                 widget.onChanged(text);
               });
-
             },
             decoration: InputDecoration(
 
@@ -42,10 +42,10 @@ class _SearchBarState extends State<SearchBar> {
               focusedBorder: border,
               enabledBorder: border,
               disabledBorder: border,
-              hintText: 'Tìm kiếm giao dich ...',
+              hintText: 'Tìm kiếm sản phẩm ...',
               alignLabelWithHint: false,
-              hintStyle: GoogleFonts.sarabun(fontSize: size(14), color: violet),
-              prefixIcon:  Icon(Icons.search, color: violet, size: 20),
+              hintStyle: GoogleFonts.sarabun(fontSize: size(14), color: greenMoney),
+              prefixIcon:  Icon(Icons.search, color: greenMoney, size: 20),
               suffixIcon: !widget.textEditingController.text.isNotEmpty? null: buildIconButton(),
               contentPadding:  EdgeInsets.all(width(8)),
             )
