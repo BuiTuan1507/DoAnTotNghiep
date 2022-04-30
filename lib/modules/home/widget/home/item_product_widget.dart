@@ -2,7 +2,9 @@ import 'package:do_an/utils/widget/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
+import '../../../../config/routes_link.dart';
 import '../../../../utils/utils.dart';
 
 class ItemProductWidget extends StatefulWidget {
@@ -15,27 +17,32 @@ class ItemProductWidget extends StatefulWidget {
 class _ItemProductWidgetState extends State<ItemProductWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: width(150),
-      width: width(200),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-      padding: EdgeInsets.symmetric(horizontal: width(5)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildImage(),
-          buildStatusPost(),
-          Divider(
-            endIndent: width(10),
-            indent: width(10),
-            thickness: height(1),
-            color: grey_4,
-          ),
-          buildNameProduct(),
-          buildMoneyProduct(),
-          buildTimeAndLocation()
-        ],
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.productDetailPage);
+      },
+      child: Container(
+        height: width(150),
+        width: width(200),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        padding: EdgeInsets.symmetric(horizontal: width(5)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildImage(),
+            buildStatusPost(),
+            Divider(
+              endIndent: width(10),
+              indent: width(10),
+              thickness: height(1),
+              color: grey_4,
+            ),
+            buildNameProduct(),
+            buildMoneyProduct(),
+            buildTimeAndLocation()
+          ],
+        ),
       ),
     );
   }

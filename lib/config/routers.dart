@@ -110,6 +110,11 @@ class AppRouters {
           name: RouterLink.changePasswordPage,
           page: () =>   ChangePasswordPage(),
       ),
+      GetPage(
+        name: RouterLink.productDetailPage,
+        page: () =>   ProductDetailPage(),
+        binding: ProductDetailBindings()
+      ),
     ];
   }
 }

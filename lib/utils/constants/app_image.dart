@@ -3,6 +3,7 @@ class MyImage{
  static String defaultImage = "assets/images/default_image.jpg";
  static String logo = "assets/images/logo.png";
  static String rightArrow = "assets/images/right_arrow.svg";
+ static String play = "assets/images/play.svg";
 }
 
 class MyIcon{
