@@ -4,7 +4,10 @@ import 'package:do_an/utils/theme/app_color.dart';
 import 'package:do_an/utils/theme/app_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../widget/image_product_widget.dart';
 
 class ProductDetailPage extends GetView<ProductDetailController>{
   const ProductDetailPage({Key? key}) : super(key: key);
@@ -31,8 +34,17 @@ class ProductDetailPage extends GetView<ProductDetailController>{
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              
+            child: SingleChildScrollView(
+              child: Container(
+                height: 210.h,
+                child: ImageProductWidget(
+                  imageList: controller.imageBanner,
+                  height: 210.h,
+                  width: double.infinity,
+                  isIndicator: 1,
+                  isAutoPlay: true,
+                )
+              ),
             ),
           ),
           SafeArea(child: buildBottomBar())
@@ -99,7 +111,8 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         children: [
           Flexible(
             flex: 1,
-              child: buildItemBottomBar("Gọi điện", Icons.phone_in_talk)),
+              child: buildItemBottomBar("Gọi điện", Icons.phone_in_talk)
+          ),
           VerticalDivider(
             indent: height(10),
             endIndent: height(10),
@@ -144,7 +157,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
       children: [
         Icon(iconData, size: size(22),color: greenMoney,),
         SizedBox(height:height(5)),
-        Text(tittle, style: AppStyles.textSmallGreenMedium,)
+        Text(tittle, style: AppStyles.textSmallBlackMedium,)
       ],
     );
   }

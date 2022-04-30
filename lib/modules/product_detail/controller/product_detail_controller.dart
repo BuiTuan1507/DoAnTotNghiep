@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
 
-class ProductDetailController extends GetxController{
+import '../../../utils/constants/app_image.dart';
 
+class ProductDetailController extends GetxController{
+  List<String> imageBanner = [
+    MyImage.imageBanner,
+    MyImage.imageBanner,
+    MyImage.imageBanner,
+    MyImage.imageBanner,
+  ];
 }

@@ -4,9 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../utils/utils.dart';
 import '../../modules.dart';
-import '../widget/home/banner_widget.dart';
-import '../widget/home/list_category_home.dart';
-import '../widget/home/list_item_feature.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
