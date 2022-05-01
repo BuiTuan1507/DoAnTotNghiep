@@ -77,7 +77,18 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                       color: grey_3,
                     ),
                   ),
-                  buildInfoPost()
+                  buildInfoPost(),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: height(10)),
+                    child: Divider(
+                      endIndent: width(20),
+                      indent: width(20),
+                      thickness: height(1),
+                      color: grey_3,
+                    ),
+                  ),
+                  buildSupportChat(),
+                  buildListSamePost()
                 ],
               ),
             ),
@@ -384,10 +395,73 @@ class ProductDetailPage extends GetView<ProductDetailController>{
   }
   Widget buildSupportChat(){
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("Hỏi người bán qua chat" , style: AppStyles.textNormalDarkSemiBold,),
+          SizedBox(
+            height: height(15),
+          ),
+          Container(
+            height: height(50),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                buildItemSupportChat("Mặt hàng này còn không bạn"),
+                buildItemSupportChat("Mặt hàng này còn không bạn"),
+                buildItemSupportChat("Mặt hàng này còn không bạn"),
+                buildItemSupportChat("Mặt hàng này còn không bạn"),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  Widget buildItemSupportChat (String tittle){
+    return Container(
+      margin: EdgeInsets.only(right: width(10)),
+      padding: EdgeInsets.symmetric(horizontal: width(12), vertical: height(8)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          width: height(1),
+          color: greenMoney
+        ),
+
+      ),
+      child: Center(
+        child: Text(tittle, style: AppStyles.textSmallBlackRegular,),
+      ),
+    );
+  }
+  Widget buildListSamePost(){
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       child: Column(
+        crossAxisAlignment:CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("Hỏi người bán qua chat" , style: AppStyles.textNormalDarkSemiBold,)
+          Text("Tin đăng tương tự", style: AppStyles.textNormalDarkSemiBold,),
+          SizedBox(height: height(15),),
+          Container(
+            height: height(380),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+                ItemProductWidget(),
+              ],
+            ),
+          )
         ],
       ),
     );
