@@ -21,4 +21,7 @@ class RouterLink {
   static const String changePasswordPage = "/changePasswordPage";
 
   static const String productDetailPage = "/productDetailPage";
+
+  static const String addPostCategoryPage = "/addPostCategoryPage";
+  static const String addPostInfoPage = "/addPostInfoPage";
 }

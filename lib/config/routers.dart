@@ -115,6 +115,16 @@ class AppRouters {
         page: () =>   ProductDetailPage(),
         binding: ProductDetailBindings()
       ),
+      GetPage(
+          name: RouterLink.productDetailPage,
+          page: () =>   ProductDetailPage(),
+          binding: ProductDetailBindings()
+      ),
+      GetPage(
+          name: RouterLink.productDetailPage,
+          page: () =>   ProductDetailPage(),
+          binding: ProductDetailBindings()
+      ),
     ];
   }
 }
