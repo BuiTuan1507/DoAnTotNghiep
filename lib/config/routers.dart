@@ -123,7 +123,7 @@ class AppRouters {
       GetPage(
           name: RouterLink.addPostInfoPage,
           page: () =>   AddPostInfoPage(),
-          binding: AddPostCategoryBindings()
+          binding: AddPostInfoBindings()
       ),
     ];
   }

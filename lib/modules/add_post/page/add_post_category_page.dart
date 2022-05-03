@@ -1,9 +1,9 @@
 import 'package:do_an/models/category/category_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../config/config.dart';
 import '../../../utils/utils.dart';
 import '../../modules.dart';
 
@@ -39,7 +39,7 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
-                  return buildItemCategory(context, controller.categoryModel.value.categoryLv2?[index] ?? CategoryLv2() );
+                  return buildItemCategorylv2(context, controller.categoryModel.value.categoryLv2?[index] ?? CategoryLv2() );
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -54,14 +54,14 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
     );
   }
 
-  Widget buildItemCategory(BuildContext context,CategoryLv2 categoryLv2) {
+  Widget buildItemCategorylv2(BuildContext context,CategoryLv2 categoryLv2) {
     return Container(
       padding:
       EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       color: (categoryLv2.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
         onTap: (){
-      //    Get.toNamed(RouterLink.addPostCategoryPage, arguments: categoryModel);
+          Get.toNamed(RouterLink.addPostInfoPage, arguments: controller.categoryModel.value);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

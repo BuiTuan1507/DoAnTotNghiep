@@ -21,7 +21,7 @@ class SplashPage extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("uid") ?? '';
     if (uuid == '') {
-      Get.offAllNamed(RouterLink.login);
+      Get.offAllNamed(RouterLink.main);
     } else {
     //  String name = prefs.getString(LocaleKeys.nameUser) ?? "";
    //   String email = prefs.getString(LocaleKeys.emailUser) ?? "";
