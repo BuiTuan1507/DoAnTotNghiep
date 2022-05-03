@@ -1,3 +1,4 @@
+import 'package:do_an/config/config.dart';
 import 'package:do_an/models/category/category_model.dart';
 import 'package:do_an/utils/common/screen_utils.dart';
 import 'package:do_an/utils/theme/app_color.dart';
@@ -61,7 +62,11 @@ class AddPostPage extends GetView<AddPostController> {
     return Container(
       padding:
           EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+      color: (categoryModel.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
+        onTap: (){
+          Get.toNamed(RouterLink.addPostCategoryPage, arguments: categoryModel);
+        },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

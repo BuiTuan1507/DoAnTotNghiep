@@ -116,14 +116,14 @@ class AppRouters {
         binding: ProductDetailBindings()
       ),
       GetPage(
-          name: RouterLink.productDetailPage,
-          page: () =>   ProductDetailPage(),
-          binding: ProductDetailBindings()
+          name: RouterLink.addPostCategoryPage,
+          page: () =>   AddPostCategoryPage(),
+          binding: AddPostCategoryBindings()
       ),
       GetPage(
-          name: RouterLink.productDetailPage,
-          page: () =>   ProductDetailPage(),
-          binding: ProductDetailBindings()
+          name: RouterLink.addPostInfoPage,
+          page: () =>   AddPostInfoPage(),
+          binding: AddPostCategoryBindings()
       ),
     ];
   }
