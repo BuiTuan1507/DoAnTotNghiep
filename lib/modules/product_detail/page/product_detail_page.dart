@@ -2,9 +2,7 @@ import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/utils.dart';
-import '../widget/image_product_widget.dart';
 
 class ProductDetailPage extends GetView<ProductDetailController>{
   const ProductDetailPage({Key? key}) : super(key: key);

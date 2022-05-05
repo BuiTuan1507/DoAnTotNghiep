@@ -1,10 +1,14 @@
 import 'dart:io';
 import 'package:do_an/modules/add_post/controller/add_post_info_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/utils.dart';
+import '../../../utils/widget/curreny_formatter.dart';
+import '../widget/description_field.dart';
 
 class AddPostInfoPage extends GetView<AddPostInfoController> {
   const AddPostInfoPage({Key? key}) : super(key: key);
@@ -97,7 +101,13 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               ),
             ),
             Obx(() => (controller.file?.isEmpty ?? true) ? buildSelectedImage() : buildListImage()),
-            buildConditionUse(context)
+            buildConditionUse(context),
+            buildForm(),
+            buildMoneyField(),
+            buildTextTittleAndInfo(),
+            buildTittlePostField(),
+            buildInfoPostField(),
+            buildAddressField()
           ],
         ),
       ),
@@ -217,7 +227,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: height(100),
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -294,5 +304,90 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
         ),
       ),
     );
+  }
+
+  Widget buildForm (){
+    return InkWell(
+      onTap: (){
+        //modalSelectedConditionUse(context);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
+        height: height(60),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            border: Border.all(width: height(1), color: grey_5),
+            borderRadius: BorderRadius.circular(5)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildTittleField("Hình thức"),
+            Padding(
+              padding: EdgeInsets.only(right: width(10)),
+            ),
+            Text(
+              controller.formUse.value,
+              style: AppStyles.textSmallBlackMedium,
+            )
+            ,
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.arrow_drop_down, size: size(22),),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildMoneyField(){
+    return Container(
+        height: height(50),
+        padding: EdgeInsets.symmetric(horizontal: width(20)),
+        margin: EdgeInsets.symmetric(vertical: height(10)),
+        child: TextFormField(
+            //controller: controller.moneyController,
+            onChanged: (text) {
+            },
+            inputFormatters: [
+              FilteringTextInputFormatter(
+                RegExp("[0-9]"),
+                allow: true,
+              ),
+              CurrencyFormatter()
+            ],
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              border: AppStyles.borderDark,
+              focusedBorder: AppStyles.borderGreen,
+              enabledBorder: AppStyles.borderDark,
+              hintText: 'Nhập số tiền ...',
+              alignLabelWithHint: false,
+              hintStyle: GoogleFonts.sarabun(
+                  fontSize: size(14), color: lightDarkHintText),
+              contentPadding: EdgeInsets.all(width(8)),
+            )));
+  }
+  Widget buildTextTittleAndInfo(){
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: width(20), vertical: height(10)),
+      child: Text(
+        "Tiêu đề và mô tả",
+        style: AppStyles.textSmallBlackMedium,
+      ),
+    );
+  }
+  Widget buildTittlePostField(){
+    return descriptionField( hintText: "Nhập tiêu đề ...", maxLines: 2, maxLength: 200, heightField: height(90));
+  }
+  Widget buildInfoPostField(){
+    return descriptionField( hintText: "Nhập tiêu đề ...", maxLines: 10, maxLength: 1000, heightField: height(250));
+  }
+  Widget buildAddressField(){
+    return Container();
   }
 }

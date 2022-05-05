@@ -11,7 +11,11 @@ class AddPostInfoController extends GetxController {
 
   RxString conditionUser = "".obs;
 
+  RxString formUse = "".obs;
+
   RxList<String> listConditionUse = ["Mới", "Như Mới","Tốt","Khá", "Kém","Không chọn"].obs;
+
+  RxList<String> listFormUse = ["Mới", "Như Mới","Tốt","Khá", "Kém","Không chọn"].obs;
 
   var picker = ImagePicker();
 
