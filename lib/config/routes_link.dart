@@ -19,11 +19,9 @@ class RouterLink {
   static const String profileDetailPage = "/profileDetailPage";
   static const String editProfileDetailPage = "/editProfileDetailPage";
   static const String changePasswordPage = "/changePasswordPage";
-
   static const String productDetailPage = "/productDetailPage";
-
   static const String addPostCategoryPage = "/addPostCategoryPage";
   static const String addPostInfoPage = "/addPostInfoPage";
-
   static const String selectedAddressPage = "/selectedAddressPage";
+  static const String addAddressPage = "/addAddressPage";
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
 
 
@@ -37,18 +38,23 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
     );
   }
   Widget buildAddAddress(){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20),vertical: height(15)),
-      child: Row(
-        crossAxisAlignment:CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: width(10)),
-            child: Icon(Icons.add, size: size(22),),
-          ),
-          Text("Thêm", style: AppStyles.textSmallBlackMedium,)
-        ],
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.addAddressPage);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: width(20),vertical: height(15)),
+        child: Row(
+          crossAxisAlignment:CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: width(10)),
+              child: Icon(Icons.add, size: size(22),),
+            ),
+            Text("Thêm", style: AppStyles.textSmallBlackMedium,)
+          ],
+        ),
       ),
     );
   }

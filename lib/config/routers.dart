@@ -131,6 +131,11 @@ class AppRouters {
           page: () =>   SelectedAddressPage(),
           binding: SelectedAddressBindings()
       ),
+      GetPage(
+          name: RouterLink.addAddressPage,
+          page: () =>   AddAddressPage(),
+          binding: AddAddressBindings()
+      ),
     ];
   }
 }

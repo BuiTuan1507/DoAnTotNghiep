@@ -1,12 +1,16 @@
 export 'account/bindings/account_bindings.dart';
 export 'account/bindings/account_detail_bindings.dart';
+export 'account/bindings/add_address_bindings.dart';
 export 'account/bindings/edit_account_bindings.dart';
+export 'account/bindings/selected_address_bindings.dart';
 export 'account/controller/account_controller.dart';
 export 'account/controller/account_detail_controller.dart';
+export 'account/controller/add_address_controller.dart';
 export 'account/controller/edit_account_controller.dart';
 export 'account/controller/selected_address_controller.dart';
 export 'account/page/account_detail_page.dart';
 export 'account/page/account_page.dart';
+export 'account/page/add_address_page.dart';
 export 'account/page/change_password_page.dart';
 export 'account/page/edit_account_page.dart';
 export 'account/page/selected_address_page.dart';
