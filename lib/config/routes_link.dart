@@ -24,4 +24,6 @@ class RouterLink {
 
   static const String addPostCategoryPage = "/addPostCategoryPage";
   static const String addPostInfoPage = "/addPostInfoPage";
+
+  static const String selectedAddressPage = "/selectedAddressPage";
 }

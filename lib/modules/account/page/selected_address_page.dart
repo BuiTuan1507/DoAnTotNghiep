@@ -1,7 +1,7 @@
 import 'package:do_an/models/user/address_model.dart';
 import 'package:do_an/modules/account/controller/selected_address_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 
 import '../../../utils/utils.dart';
@@ -29,8 +29,8 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             buildAddAddress(),
-            SizedBox(height: height(20),),
-            buildListAddressUser()
+            buildListAddressUser(),
+            buildButtonApply()
           ],
         ),
       ),
@@ -70,13 +70,9 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                addressModel.address ?? "",
-                style: AppStyles.textSmallGreenRegular,
-              ),
               InkWell(
                 onTap: () {
-                 // controller.changeStateSexType(tittle);
+                  // controller.changeStateSexType(tittle);
                 },
                 child: Container(
                   height: width(17),
@@ -93,20 +89,40 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
                         color: (addressModel.isSelected ?? false) ? greenMoney : Colors.white),
                   ),
                 ),
+              ),
+              SizedBox(width: width(15),),
+              Expanded(
+                child: Text(
+
+                  addressModel.address ?? "",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.textSmallBlackRegular,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: width(15)),
+                child: Icon(Icons.delete, size: size(22),),
               )
             ],
           ),
-          SizedBox(
-            height: height(10),
-          ),
-          Divider(
-            indent: width(0),
-            endIndent: width(0),
-            thickness: width(1),
-            color: lightDarkHintText.withOpacity(0.3),
-          )
+          
         ],
       ),
+    );
+  }
+  Widget buildButtonApply(){
+    return Container(
+       child: ButtonApply(
+          tittle: "Xác nhận",
+          style: AppStyles.textNormalWhiteSemiBold,
+          onClick:() => {},
+          width: double.infinity,
+          height: height(60),
+          margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24), color: greenMoney),
+        )
     );
   }
 }

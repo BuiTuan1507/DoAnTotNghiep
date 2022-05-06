@@ -190,7 +190,9 @@ class EditAccountPage extends GetView<EditAccountController>{
             buildTextInfo("Email", "Chưa có email", ()=> {
               MyDialog.popUpSendMessage(context, editAccountController: controller, tittle: "Email", hintText: "Nhập email của bạn ...")
             }),
-            buildTextInfo("Địa chỉ", "Chưa có địa chỉ", ()=> {}),
+            buildTextInfo("Địa chỉ", "Chưa có địa chỉ", ()=> {
+              Get.toNamed(RouterLink.selectedAddressPage)
+            }),
             buildTextInfo("Ngày sinh", "15/04/1999", ()=> {
               _selectDate(context)
             }),

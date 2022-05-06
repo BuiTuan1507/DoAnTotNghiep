@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/curreny_formatter.dart';
 import '../widget/description_field.dart';
@@ -107,7 +108,11 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
             buildTextTittleAndInfo(),
             buildTittlePostField(),
             buildInfoPostField(),
-            buildAddressField()
+            buildAddressField(),
+            SizedBox(
+              height: height(20),
+            ),
+            buildButtonAddPost()
           ],
         ),
       ),
@@ -388,6 +393,51 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
     return descriptionField( hintText: "Nhập tiêu đề ...", maxLines: 10, maxLength: 1000, heightField: height(250));
   }
   Widget buildAddressField(){
-    return Container();
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.selectedAddressPage);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
+        height: height(75),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            border: Border.all(width: height(1), color: grey_5),
+            borderRadius: BorderRadius.circular(5)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildTittleField("Địa chỉ"),
+                Icon(Icons.arrow_drop_down, size: size(22),),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: height(0)),
+              child: Text("Chưa có", style: AppStyles.textSmallBlackMedium,),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildButtonAddPost(){
+    return Container(
+      child: ButtonApply(
+        tittle: "Đăng tin",
+        style: AppStyles.textNormalWhiteSemiBold,
+        onClick:() => {},
+        width: double.infinity,
+        height: height(60),
+        margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24), color: greenMoney),
+      )
+    );
   }
 }
