@@ -1,9 +1,12 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/chat/chat_users_model.dart';
+import '../../../utils/utils.dart';
 import '../../modules.dart';
+import '../widget/avatar_widget.dart';
 
 class ChatDetailPage extends GetView<ChatDetailController>{
   const ChatDetailPage({Key? key}) : super(key: key);
@@ -11,64 +14,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        flexibleSpace: SafeArea(
-          child: Container(
-            padding: EdgeInsets.only(right: 16),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  width: 2,
-                ),
-                CircleAvatar(
-                  backgroundImage: AssetImage(controller.chatUsers.imageURL),
-                  maxRadius: 20,
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        controller.chatUsers.name,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        "Online",
-                        style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 13),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  Icons.settings,
-                  color: Colors.black54,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      appBar: appBarChatDetail(),
       body: Stack(
         children: <Widget>[
 
@@ -161,6 +107,77 @@ class ChatDetailPage extends GetView<ChatDetailController>{
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  AppBar appBarChatDetail(){
+    return AppBar(
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.white,
+      flexibleSpace: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(right: 16),
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                  size: size(22),
+                ),
+              ),
+              SizedBox(
+                width: width(2),
+              ),
+              buildAvatarUser(imageUrl: '', size: 40),
+              SizedBox(
+                width: width(12),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      controller.chatUsers.name,
+                      style: AppStyles.textNormalBlackMedium,
+                    ),
+                    SizedBox(
+                      height: height(6),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height:height(8),
+                          width: height(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: greenMoney
+                          ),
+                        ),
+                        SizedBox(width: width(8),),
+                        Text(
+                          "Đang hoạt động",
+                          style:AppStyles.textTinyStrongDarkRegular,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.settings,
+                color: Colors.black54,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

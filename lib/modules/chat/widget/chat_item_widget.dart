@@ -8,6 +8,7 @@ import '../../../models/chat/chat_users_model.dart';
 import '../../../utils/common/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../page/chat_detail_page.dart';
+import 'avatar_widget.dart';
 
 
 
@@ -31,7 +32,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(child: buildAvatarUser(imageUrl: '')),
+            Container(child: buildAvatarUser(imageUrl: '', size: 60)),
             SizedBox(width: width(10),),
             Expanded(
               child: Column(
@@ -53,42 +54,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
     );
   }
 
-  Widget buildAvatarUser({required String imageUrl}){
-    return (imageUrl != "")
-        ? CachedNetworkImage(
-      imageUrl: imageUrl,
-      imageBuilder: (context, image) {
-        return Container(
-          height: width(60),
-          width: width(60),
-          decoration: BoxDecoration(
-              image: DecorationImage(image: image, fit: BoxFit.cover),
-              shape: BoxShape.circle
-          ),
-        );
-      },
-      placeholder: (context, image) {
-        return Container(
-          height: width(60),
-          width: width(60),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: CachedNetworkImageProvider(Constants.AVATAR_URL),
-                  fit: BoxFit.cover),
-              shape: BoxShape.circle),
-        );
-      },
-    )
-        : Container(
-      height: width(60),
-      width: width(60),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: CachedNetworkImageProvider(Constants.AVATAR_URL),
-              fit: BoxFit.cover),
-          shape: BoxShape.circle),
-    );
-  }
+
 
   Widget buildAvatarProduct({required String imageUrl}){
     return (imageUrl != "")
@@ -203,7 +169,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
         ),
         SizedBox(width: width(13)),
         Visibility(
-          visible: (chatUsers.newMessageCount ?? 0) > 0,
+          visible: (chatUsers.newMessageCount) > 0,
           child: Container(
             alignment: Alignment.center,
             height: radius(20),

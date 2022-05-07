@@ -123,4 +123,8 @@ class AppStyles {
       fontSize: fontSizeTiny,
       fontWeight: fontWeightMedium,
       color: black.withOpacity(0.9));
+  static TextStyle textTinyWhiteMedium = GoogleFonts.sarabun(
+      fontSize: fontSizeTiny,
+      fontWeight: fontWeightMedium,
+      color: Colors.white);
 }
