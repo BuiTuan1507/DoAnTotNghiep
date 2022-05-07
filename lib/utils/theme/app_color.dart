@@ -16,6 +16,7 @@ final HexColor backgroundColor = HexColor("#F6F6F6");
 final HexColor orangeMoney = HexColor("#FCAC12");
 final HexColor violet_2 = HexColor("#EEE5FF");
 final HexColor red_2 = HexColor("#FD3C4A");
+final HexColor amber = HexColor("#FCAC12");
 
 final HexColor deepIndigo = HexColor("#240066");
 final HexColor azure = HexColor("#03A9F4");

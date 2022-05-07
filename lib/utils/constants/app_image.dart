@@ -19,5 +19,23 @@ class MyIcon{
 
   static const String cartIcon = "assets/icon/cart.svg";
 
+  static const String notificationIcon = "assets/icon/notification.svg";
+
+  static const String callPhoneIcon = "assets/icon/call_phone_icon.svg";
+
+  static const String cameraIcon = "assets/icon/camera_icon.svg";
+
+  static const String chatIcon = "assets/icon/chat_icon.svg";
+  static const String closeCircleIcon = "assets/icon/close_icon.svg";
+
+  static const String deleteIcon = "assets/icon/delete_icon.svg";
+  static const String errorIcon = "assets/icon/error_icon.svg";
+
+  static const String locationIcon = "assets/icon/location_icon.svg";
+
+  static const String sendMessageIcon = "assets/icon/send_message_icon.svg";
+  static const String settingIcon = "assets/icon/setting_icon.svg";
+  static const String shareIcon = "assets/icon/share_icon.svg";
+
 
 }

@@ -60,9 +60,14 @@ class MainPage extends StatelessWidget {
                 index: 2
             ),
             barItem(
+                label: "Thông báo",
+                iconImage: MyIcon.notificationIcon,
+                index: 3
+            ),
+            barItem(
                 label: "Cá nhân",
                 iconImage: MyIcon.profileIcon,
-                index: 3
+                index: 4
             ),
           ],
         ));
@@ -77,6 +82,7 @@ class MainPage extends StatelessWidget {
         HomePage(),
         PostPage(),
         AddPostPage(),
+        NotificationPage(),
         AccountPage(),
       ],
     );

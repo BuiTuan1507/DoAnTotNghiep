@@ -1,6 +1,7 @@
 import 'package:do_an/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../utils/utils.dart';
 import '../../modules.dart';
@@ -44,10 +45,7 @@ class HomePage extends GetView<HomeController> {
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: width(8)),
-            child: Icon(
-              Icons.chat,
-              color: grey_2,
-            ),
+            child: SvgPicture.asset(MyIcon.chatIcon),
           ),
         ),
         SizedBox(
