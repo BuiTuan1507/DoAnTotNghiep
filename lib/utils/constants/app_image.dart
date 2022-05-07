@@ -4,6 +4,7 @@ class MyImage{
  static String logo = "assets/images/logo.png";
  static String rightArrow = "assets/images/right_arrow.svg";
  static String play = "assets/images/play.svg";
+ static String chatLogo = "assets/images/chat_logo.svg";
 }
 
 class MyIcon{

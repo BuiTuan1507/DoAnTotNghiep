@@ -6,7 +6,8 @@ class ChatUsers{
   String imageURL;
   String time;
   bool isRead;
-  ChatUsers({required this.name,required this.messageText,required this.imageURL,required this.time, required this.isRead});
+  int newMessageCount;
+  ChatUsers({required this.name,required this.messageText,required this.imageURL,required this.time, required this.isRead, required this.newMessageCount});
 }
 
 class ChatMessage{

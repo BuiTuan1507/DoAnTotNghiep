@@ -29,7 +29,7 @@ class AccountPage extends GetView<AccountController> {
               context,
             ),
             SizedBox(
-              height: height(20),
+              height: height(30),
             ),
             buildOptionalAccount(context)
           ],
@@ -96,19 +96,20 @@ class AccountPage extends GetView<AccountController> {
 
   Widget buildOptionalAccount(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(height(15)),
-      margin: EdgeInsets.all(height(16)),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
+      padding: EdgeInsets.symmetric(horizontal: width(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildItem("Giỏ hàng", controller.toPageAccount, MyIcon.cartIcon,
+          buildItem("Đơn mua", controller.toPageAccount, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Đơn bán", controller.toPageAccount, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Tin đã lưu", controller.toPageAccount, MyIcon.cartIcon,
+              Colors.red.withOpacity(0.4)),
+          buildItem("Bạn bè".tr, controller.toPageChange, MyIcon.cartIcon,
               Colors.red.withOpacity(0.4)),
           buildItem("Cài đặt".tr, controller.toPageSetting, MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
-          buildItem("Tin đã lưu".tr, controller.toPageChange, MyIcon.cartIcon,
               Colors.red.withOpacity(0.4)),
           buildItem("Đăng xuất".tr, () => modalLogout(context), MyIcon.cartIcon,
               Colors.red.withOpacity(0.4)),
