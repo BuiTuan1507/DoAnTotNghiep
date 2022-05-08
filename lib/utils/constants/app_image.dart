@@ -5,6 +5,8 @@ class MyImage{
  static String rightArrow = "assets/images/right_arrow.svg";
  static String play = "assets/images/play.svg";
  static String chatLogo = "assets/images/chat_logo.svg";
+ static const String wallClock = "assets/images/wall_clock.svg";
+ static const  String warning = "assets/images/warning.svg";
 }
 
 class MyIcon{
@@ -31,12 +33,11 @@ class MyIcon{
 
   static const String deleteIcon = "assets/icon/delete_icon.svg";
   static const String errorIcon = "assets/icon/error_icon.svg";
-
   static const String locationIcon = "assets/icon/location_icon.svg";
 
   static const String sendMessageIcon = "assets/icon/send_message_icon.svg";
   static const String settingIcon = "assets/icon/setting_icon.svg";
   static const String shareIcon = "assets/icon/share_icon.svg";
 
-
+  static const String smsIcon = "assets/icon/sms.png";
 }

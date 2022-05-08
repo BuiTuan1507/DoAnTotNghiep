@@ -13,5 +13,6 @@ class ChatUsers{
 class ChatMessage{
   String messageContent;
   String messageType;
-  ChatMessage({required this.messageContent, required this.messageType});
+  bool sendMessageStatus = false;
+  ChatMessage({required this.messageContent, required this.messageType, required this.sendMessageStatus});
 }
