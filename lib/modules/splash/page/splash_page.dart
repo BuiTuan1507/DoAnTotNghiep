@@ -21,7 +21,7 @@ class SplashPage extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("uid") ?? '';
     if (uuid == '') {
-      Get.offAllNamed(RouterLink.main);
+      Get.offAllNamed(RouterLink.login);
     } else {
     //  String name = prefs.getString(LocaleKeys.nameUser) ?? "";
    //   String email = prefs.getString(LocaleKeys.emailUser) ?? "";
@@ -29,7 +29,7 @@ class SplashPage extends StatelessWidget {
 
     //  UserModel userModel = UserModel(uuid: uuid, name: name, email: email,ccCurrency: ccCurrency);
      // DataGlobal.setUserModel(userModel);
-      Get.offAllNamed(RouterLink.main);
+      Get.offAllNamed(RouterLink.login);
     }
   }
 

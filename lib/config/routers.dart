@@ -1,19 +1,6 @@
 import 'package:do_an/config/routes_link.dart';
-import 'package:do_an/modules/account/page/change_password_page.dart';
-import 'package:do_an/modules/home/bindings/search_bindings.dart';
-import 'package:do_an/modules/home/page/search_page.dart';
-import 'package:do_an/modules/register/page/loading_register_page.dart';
-import 'package:do_an/modules/register/page/term_condition_register_page.dart';
-import 'package:do_an/modules/register/page/tittle_register_page.dart';
-
 import 'package:get/get.dart';
-
-import '../modules/account/bindings/selected_address_bindings.dart';
 import '../modules/modules.dart';
-import '../modules/register/page/birthday_register_page.dart';
-import '../modules/register/page/info_account_register_page.dart';
-import '../modules/register/page/name_register_page.dart';
-import '../modules/splash/page/splash_page.dart';
 
 class AppRouters {
   static List<GetPage> createRoutes() {
@@ -28,30 +15,28 @@ class AppRouters {
         binding: LoginBinding(),
       ),
       GetPage(
-        name: RouterLink.register,
-        page: () =>  RegisterPage(),
-
-      ),
-      GetPage(
         name: RouterLink.registerTittle,
         page: () =>  TittleRegisterPage(),
-        binding: RegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerNamePage,
         page: () =>  NameRegisterPage(),
+        binding: NameRegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerInfoPage,
         page: () =>  InfoAccountRegisterPage(),
+        binding: InfoAccountRegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerDateAndSex,
         page: () =>  BirthDayRegisterPage(),
+        binding: BirthdayRegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerTermCondition,
         page: () =>  TermConditionRegisterPage(),
+        binding: RegisterBindings(),
       ),
       GetPage(
         name: RouterLink.registerLoading,

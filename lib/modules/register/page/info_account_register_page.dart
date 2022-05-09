@@ -1,3 +1,4 @@
+import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,33 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/config.dart';
 import '../../../utils/utils.dart';
-import '../controller/register_controller.dart';
-import '../widget/password_filed_widget.dart';
 
-class InfoAccountRegisterPage extends StatefulWidget {
+class InfoAccountRegisterPage extends GetView<InfoAccountRegisterController>{
   const InfoAccountRegisterPage({Key? key}) : super(key: key);
 
-  @override
-  State<InfoAccountRegisterPage> createState() =>
-      _InfoAccountRegisterPageState();
-}
-
-class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
-  final RegisterController controller = Get.find();
-
-  late FocusNode phoneNumberFocusNode ;
-
-  @override
-  void initState() {
-    phoneNumberFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    phoneNumberFocusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +117,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
               allow: true,
             ),
           ],
-          focusNode: phoneNumberFocusNode,
+          focusNode: controller.phoneNumberFocusNode,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: "Số điện thoại",
@@ -209,7 +187,7 @@ class _InfoAccountRegisterPageState extends State<InfoAccountRegisterPage> {
       controller.firstClickButtonInfo.value = true;
 
       if(!controller.isValidatePhoneNumber.value) {
-        phoneNumberFocusNode.requestFocus();
+        controller.phoneNumberFocusNode.requestFocus();
       }
 
       if(controller.validateInfoAccount.value) {

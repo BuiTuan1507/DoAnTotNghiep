@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:do_an/modules/login/page/login_page.dart';
+import 'package:do_an/modules/modules.dart';
 import 'package:do_an/modules/register/controller/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,32 +11,10 @@ import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
 
 
-class NameRegisterPage extends StatefulWidget {
+class NameRegisterPage extends GetView<NameRegisterController>{
+
   const NameRegisterPage({Key? key}) : super(key: key);
 
-  @override
-  State<NameRegisterPage> createState() => _NameRegisterPageState();
-}
-
-class _NameRegisterPageState extends State<NameRegisterPage> {
-  final RegisterController controller = Get.find();
-
-  late FocusNode firstNameFocusNode ;
-  late FocusNode lastNameFocusNode ;
-
-  @override
-  void initState() {
-    firstNameFocusNode = FocusNode();
-    lastNameFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    firstNameFocusNode.dispose();
-    lastNameFocusNode.dispose();
-    super.dispose();
-  }
 
 
   @override
@@ -98,7 +77,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                 TextFormField(
                   controller: controller.firstNameController,
                   maxLines: 1,
-                  focusNode: firstNameFocusNode,
+                  focusNode: controller.firstNameFocusNode,
                   onChanged: (value){
                     controller.validateFirstName(value);
                   },
@@ -112,10 +91,10 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                     enabledBorder: AppStyles.borderDark,
                   ),
                 ),
-                (controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty && controller.fistClickName.value) ? SizedBox(
+                (!(controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty) && controller.fistClickName.value) ? SizedBox(
                   height: height(20),
                   child: Visibility(
-                      visible: !controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty,
+                      visible: !(controller.isValidateFirstName.value && controller.firstNameController.text.isNotEmpty),
                       child: buildTextWrongFormat("Họ không đúng định dạng")
                   ),
                 ) : SizedBox(height: height(20),)
@@ -129,7 +108,7 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                 TextFormField(
                   controller: controller.lastNameController,
                   maxLines: 1,
-                  focusNode: lastNameFocusNode,
+                  focusNode: controller.lastNameFocusNode,
                   onChanged: (value){
                     controller.validateLastName(value);
                   },
@@ -143,10 +122,10 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
                     enabledBorder: AppStyles.borderDark,
                   ),
                 ),
-                (controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty && controller.fistClickName.value) ? SizedBox(
+                (!(controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty) && controller.fistClickName.value) ? SizedBox(
                   height: height(20),
                   child: Visibility(
-                      visible: !controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty,
+                      visible: !(controller.isValidateLastName.value && controller.lastNameController.text.isNotEmpty),
                       child: buildTextWrongFormat("Tên không đúng định dạng")
                   ),
                 ) : SizedBox(height: height(20),)
@@ -167,10 +146,11 @@ class _NameRegisterPageState extends State<NameRegisterPage> {
   Widget buttonNext(HexColor color){
     void toPage(){
       controller.fistClickName.value = true;
+
       if(!controller.isValidateFirstName.value ) {
-        firstNameFocusNode.requestFocus();
+        controller.firstNameFocusNode.requestFocus();
       }else if(!controller.isValidateLastName.value) {
-        lastNameFocusNode.requestFocus();
+        controller.lastNameFocusNode.requestFocus();
       }
       if(controller.isValidateFirstName.value && controller.isValidateLastName.value) {
         Get.toNamed(RouterLink.registerInfoPage);

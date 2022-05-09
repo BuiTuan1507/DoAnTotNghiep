@@ -1,6 +1,4 @@
 import 'package:do_an/config/config.dart';
-import 'package:do_an/utils/common/screen_utils.dart';
-import 'package:do_an/utils/theme/app_styles.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

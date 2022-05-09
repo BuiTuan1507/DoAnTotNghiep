@@ -5,17 +5,10 @@ import 'package:get/get.dart';
 
 import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
-import '../widget/have_account_widget.dart';
 
-class BirthDayRegisterPage extends StatefulWidget {
+class BirthDayRegisterPage extends GetView<BirthdayRegisterController>{
   const BirthDayRegisterPage({Key? key}) : super(key: key);
 
-  @override
-  State<BirthDayRegisterPage> createState() => _BirthDayRegisterPageState();
-}
-
-class _BirthDayRegisterPageState extends State<BirthDayRegisterPage> {
-  RegisterController controller = Get.find();
 
   _selectDate(BuildContext context) async {
     final ThemeData theme = Theme.of(context);
