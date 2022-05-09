@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:do_an/service/service.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../config/routes_link.dart';
 import '../../../respository/login_repository.dart';
 import '../../../utils/constants/constant.dart';
 import '../../../utils/utils.dart';
@@ -50,13 +51,25 @@ class AccountController extends GetxController {
      */
   }
 
-  void toPageChange() {}
 
-  void toPageAccount(){
-   // Get.toNamed(Routes.walletPage);
+  void toPageBuy(){
+    Get.toNamed(RouterLink.purchaseOrderPage);
   }
+
+  void toPageSell(){
+    Get.toNamed(RouterLink.sellOrderPage);
+  }
+
+  void toPageSavePost(){
+    Get.toNamed(RouterLink.savePostPage);
+  }
+
+  void toPageFriend(){
+    Get.toNamed(RouterLink.friendUserPage);
+  }
+
   void toPageSetting(){
-   // Get.toNamed(Routes.setting);
+    Get.toNamed(RouterLink.editProfileDetailPage);
   }
 
 

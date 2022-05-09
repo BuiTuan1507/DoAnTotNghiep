@@ -136,6 +136,27 @@ class AppRouters {
           page: () =>   AddAddressPage(),
           binding: AddAddressBindings()
       ),
+
+      GetPage(
+          name: RouterLink.friendUserPage,
+          page: () =>   FriendUserPage(),
+          binding: FriendUserBindings()
+      ),
+      GetPage(
+          name: RouterLink.purchaseOrderPage,
+          page: () =>   PurchaseOrderPage(),
+          binding: PurchaseOrderBindings()
+      ),
+      GetPage(
+          name: RouterLink.sellOrderPage,
+          page: () =>   SellOrderPage(),
+          binding: SellOrderBindings()
+      ),
+      GetPage(
+          name: RouterLink.savePostPage,
+          page: () =>   SavePostPage(),
+          binding: SavePostBindings()
+      ),
     ];
   }
 }

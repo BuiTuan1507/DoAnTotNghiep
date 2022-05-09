@@ -24,4 +24,8 @@ class RouterLink {
   static const String addPostInfoPage = "/addPostInfoPage";
   static const String selectedAddressPage = "/selectedAddressPage";
   static const String addAddressPage = "/addAddressPage";
+  static const String purchaseOrderPage = "/purchaseOrderPage";
+  static const String sellOrderPage = "/sellOrderPage";
+  static const String savePostPage = "/savePostPage";
+  static const String friendUserPage = "/friendUserPage";
 }
