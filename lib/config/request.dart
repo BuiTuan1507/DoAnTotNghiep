@@ -37,9 +37,12 @@ class BaseRequest {
     Map<String, dynamic>? param,
     Map<String, dynamic>? header,
   }) async {
+
+    header ??= {};
+
+  //  url = appEnvironment.domainApi + url;
     log("URL: " + url + "\n");
     log("body: " + param.toString());
-    header ??= {};
     try {
       var response = await _dio.request(
         url,

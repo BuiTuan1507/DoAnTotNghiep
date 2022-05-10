@@ -2,8 +2,10 @@ import 'package:do_an/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:intl/intl.dart';
 import '../../../config/routes_link.dart';
+import '../../../models/register/register_user_model.dart';
+import '../../../models/register/sex_type.dart';
 import '../../../utils/utils.dart';
 
 class BirthDayRegisterPage extends GetView<BirthdayRegisterController>{
@@ -219,6 +221,25 @@ class BirthDayRegisterPage extends GetView<BirthdayRegisterController>{
     void toPage(){
       controller.firstSelectedSex = true;
       if(controller.dateTime.value.isBefore(controller.checkTime) && controller.isCheckSelectedSex.value ) {
+        RegisterUserModel registerUserModel = RegisterSingleton.getModel();
+
+        registerUserModel.birthDay = DateFormat('yyyy-MM-dd – kk:mm:ss').format(controller.dateTime.value);
+
+        SexType sexType = controller.listSexType.firstWhere((element) => element.isSelected == true,orElse:() => SexType());
+
+        switch(sexType.tittle){
+          case "Nam":
+            registerUserModel.sexUser = 0;
+            break;
+          case "Nữ":
+            registerUserModel.sexUser = 1;
+            break;
+          case "Tuỳ chọn khác":
+            registerUserModel.sexUser = 2;
+            break;
+        }
+
+        RegisterSingleton.setModel(registerUserModel);
         Get.toNamed(RouterLink.registerTermCondition);
       }
     }

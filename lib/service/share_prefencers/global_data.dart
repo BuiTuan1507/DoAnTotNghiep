@@ -24,7 +24,8 @@ class GlobalData{
     if(!CommonUtil.isEmpty(user)) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("token", user?.token ?? "");
-      prefs.setString("username", user?.username?? "");
+      prefs.setString("firstName", user?.firstName?? "");
+      prefs.setString("lastName", user?.lastName?? "");
       prefs.setString("phoneNumber", user?.phoneNumber ?? "");
       prefs.setBool("active", user?.active ?? true);
       setUserModel(user ?? UserModel());
@@ -33,7 +34,8 @@ class GlobalData{
   static Future<void> clearUser () async{
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     await _prefs.remove("token");
-    await _prefs.remove("username");
+    await _prefs.remove("firstName");
+    await _prefs.remove("lastName");
     await _prefs.remove("phoneNumber");
     await _prefs.remove("active");
     setUserModel(UserModel());

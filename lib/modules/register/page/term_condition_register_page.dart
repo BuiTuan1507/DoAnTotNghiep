@@ -36,8 +36,13 @@ class _TermConditionRegisterPageState extends State<TermConditionRegisterPage> {
               height: height(50),
             ),
             Center(child: buildTernCondition()),
-            SizedBox(height: height(100),),
-            buttonNext()
+            SizedBox(height: height(70),),
+
+            SizedBox(height: height(40),),
+            buttonNext(context),
+
+            Obx(()=>  loadingLogin(controller.isLoading.value),),
+
           ],
         ),
       ),
@@ -64,9 +69,9 @@ class _TermConditionRegisterPageState extends State<TermConditionRegisterPage> {
     );
   }
 
-  Widget buttonNext(){
+  Widget buttonNext(BuildContext context){
     void toPage(){
-      controller.register();
+      controller.register(context);
     }
     return ButtonApply(
       tittle: "Đăng kí",

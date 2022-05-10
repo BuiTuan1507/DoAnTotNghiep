@@ -1,3 +1,4 @@
+import 'package:do_an/models/register/register_user_model.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -191,6 +192,10 @@ class InfoAccountRegisterPage extends GetView<InfoAccountRegisterController>{
       }
 
       if(controller.validateInfoAccount.value) {
+        RegisterUserModel registerUserModel = RegisterSingleton.getModel();
+        registerUserModel.phoneNumber = controller.phoneController.text;
+        registerUserModel.password = controller.passwordController.text;
+        RegisterSingleton.setModel(registerUserModel);
         Get.toNamed(RouterLink.registerDateAndSex);
       }
     }

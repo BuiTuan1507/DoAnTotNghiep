@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:do_an/config/config.dart';
 import 'package:do_an/modules/splash/bindings/root_bindings.dart';
 import 'package:do_an/utils/common/web_socket.dart';
@@ -6,15 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'config/routers.dart';
-import 'modules/login/bindings/login_binding.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   Get.put(MyWebSocket());
   runApp(
     const MyApp(),
   );
+}
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
 }
 
 class MyApp extends StatelessWidget {

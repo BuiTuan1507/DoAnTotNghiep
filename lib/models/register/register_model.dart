@@ -1,4 +1,4 @@
-class UserModel{
+class RegisterModel {
   int? id;
   String? firstName;
   String? lastName;
@@ -6,10 +6,19 @@ class UserModel{
   String? avatar;
   bool? active;
   String? phoneNumber;
-  UserModel(
-      {this.id, this.firstName,this.lastName, this.token, this.avatar, this.active,this.phoneNumber});
+  String? createTime;
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  RegisterModel(
+      {this.id,
+        this.firstName,
+        this.lastName,
+        this.token,
+        this.avatar,
+        this.active,
+        this.phoneNumber,
+        this.createTime});
+
+  RegisterModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['firstName'];
     lastName = json['lastName'];
@@ -17,6 +26,7 @@ class UserModel{
     avatar = json['avatar'];
     active = json['active'];
     phoneNumber = json['phoneNumber'];
+    createTime = json['createTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,7 +37,8 @@ class UserModel{
     data['token'] = this.token;
     data['avatar'] = this.avatar;
     data['active'] = this.active;
-    data['phoneNumber'] = phoneNumber;
+    data['phoneNumber'] = this.phoneNumber;
+    data['createTime'] = this.createTime;
     return data;
   }
 }

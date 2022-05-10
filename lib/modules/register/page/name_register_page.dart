@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:do_an/models/register/register_user_model.dart';
 import 'package:do_an/modules/login/page/login_page.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:do_an/modules/register/controller/register_controller.dart';
@@ -153,6 +154,8 @@ class NameRegisterPage extends GetView<NameRegisterController>{
         controller.lastNameFocusNode.requestFocus();
       }
       if(controller.isValidateFirstName.value && controller.isValidateLastName.value) {
+        RegisterUserModel registerUserModel = RegisterUserModel(firstName: controller.firstNameController.text, lastName: controller.lastNameController.text);
+        RegisterSingleton.setModel(registerUserModel);
         Get.toNamed(RouterLink.registerInfoPage);
       }
     }
