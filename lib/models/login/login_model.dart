@@ -1,16 +1,18 @@
 class LoginDataResponse {
   int? id;
-  String? username;
+  String? firstName;
+  String? lastName;
   String? token;
   String? avatar;
   bool? active;
   String? phoneNumber;
   LoginDataResponse(
-      {this.id, this.username, this.token, this.avatar, this.active, this.phoneNumber});
+      {this.id, this.firstName,this.lastName, this.token, this.avatar, this.active, this.phoneNumber});
 
   LoginDataResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    username = json['username'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
     token = json['token'];
     avatar = json['avatar'];
     active = json['active'];
@@ -20,7 +22,8 @@ class LoginDataResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['username'] = this.username;
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
     data['token'] = this.token;
     data['avatar'] = this.avatar;
     data['active'] = this.active;

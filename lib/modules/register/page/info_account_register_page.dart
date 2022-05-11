@@ -118,8 +118,9 @@ class InfoAccountRegisterPage extends GetView<InfoAccountRegisterController>{
               allow: true,
             ),
           ],
-          focusNode: controller.phoneNumberFocusNode,
           keyboardType: TextInputType.number,
+          focusNode: controller.phoneNumberFocusNode,
+
           decoration: InputDecoration(
             hintText: "Số điện thoại",
             hintStyle: AppStyles.textSmallDarkNormal,

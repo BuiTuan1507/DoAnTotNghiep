@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:do_an/models/user/user_info_model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,6 +9,17 @@ import '../../../utils/common/common_util.dart';
 class AccountDetailController extends GetxController{
 
   ImagePicker picker = ImagePicker();
+
+  Rx<UserInfoModel> userInfoModel = UserInfoModel().obs;
+
+  @override
+  void onInit() {
+    if(Get.arguments != null){
+      userInfoModel.value = Get.arguments;
+    }
+
+    super.onInit();
+  }
 
   void changeImage({required bool isCamera}) async {
     XFile? pickSingleFile;

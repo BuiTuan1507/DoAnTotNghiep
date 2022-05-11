@@ -6,6 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../config/routes_link.dart';
+import '../../../models/login/login_model.dart';
+import '../../../models/models.dart';
+import '../../../models/user/user_model.dart';
+import '../../../service/share_prefencers/global_data.dart';
 import '../../../utils/common/dart_notification_center.dart';
 
 class LoginController extends GetxController {
@@ -35,7 +39,7 @@ class LoginController extends GetxController {
     passwordController.clear();
   }
 
-  void validateLogin(String text) {
+  void validateLogin() {
     isValidateLogin.value = phoneController.text.isNotEmpty && passwordController.text.isNotEmpty && validatePhoneNumber(phoneController.text.trim());
   }
 
@@ -48,8 +52,8 @@ class LoginController extends GetxController {
     String _password = passwordController.text.trim();
     bool isLoginSuccess = true;
 
-    /*
-    if (validateLogin()) {
+    validateLogin();
+    if (isValidateLogin.value) {
       Map<String, dynamic> param = {
         "phoneNumber": _phone,
         "password": _password
@@ -65,7 +69,8 @@ class LoginController extends GetxController {
           UserModel newUser = UserModel(
               id: dataResponse.id,
               token: dataResponse.token,
-              username: dataResponse.username,
+              firstName: dataResponse.firstName,
+              lastName: dataResponse.lastName,
               avatar: dataResponse.avatar,
               active: dataResponse.active,
             phoneNumber: dataResponse.phoneNumber
@@ -83,7 +88,7 @@ class LoginController extends GetxController {
       }
     }
 
-     */
+
     if (isLoginSuccess) Get.toNamed(RouterLink.main);
   }
 

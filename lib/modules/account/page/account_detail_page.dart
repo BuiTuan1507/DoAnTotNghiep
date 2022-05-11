@@ -21,59 +21,59 @@ class AccountDetailPage extends GetView<AccountDetailController> {
         automaticallyImplyLeading: true,
         backgroundColor: greenMoney,
       ),
-      body: SingleChildScrollView(
+      body: Obx(() => SingleChildScrollView(
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildAvatarProfile(Constants.AVATAR_URL, context),
-          Center(
-            child: Text(
-              "Minh Tuan",
-              style: AppStyles.textNormalBlackMedium,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(
-                vertical: height(5), horizontal: width(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                textFollowUser(4, "Người theo dõi"),
-                textFollowUser(5, "Đang theo dõi")
-              ],
-            ),
-          ),
-          SizedBox(
-            height: height(12),
-          ),
-          buildButton(),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: height(5)),
-            child: Divider(
-              thickness: width(1),
-              indent: width(20),
-              endIndent: width(20),
-            ),
-          ),
-          buildItemInfo(Icons.phone, "Giới tính", "Nam"),
-          buildItemInfo(Icons.phone, "Ngày sinh", "15/07/1999"),
-          buildItemInfo(Icons.phone, "Ngày tham gia", "27/04/2022"),
-          buildItemInfo(Icons.phone, "Địa chỉ",
-              "Số 1,Ngõ 298 Minh Khai, Hoàng Mai, Hà Nội"),
-          buildItemInfo(Icons.phone, "Đánh giá", "Chưa đánh giá"),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: height(0)),
-            child: Divider(
-              thickness: width(1),
-              indent: width(20),
-              endIndent: width(20),
-            ),
-          ),
-          buildTextDisplayPost("1"),
-          buildListPostProfile()
-        ],
-      )),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              buildAvatarProfile(controller.userInfoModel.value.avatar ?? Constants.AVATAR_URL, context),
+              Center(
+                child: Text(
+                  (controller.userInfoModel.value.firstName ?? "") + " " + (controller.userInfoModel.value.lastName ?? ""),
+                  style: AppStyles.textNormalBlackMedium,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: height(5), horizontal: width(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    textFollowUser(controller.userInfoModel.value.followers ?? 0, "Người theo dõi"),
+                    textFollowUser(controller.userInfoModel.value.followingUser ?? 0, "Đang theo dõi")
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: height(12),
+              ),
+              buildButton(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: height(5)),
+                child: Divider(
+                  thickness: width(1),
+                  indent: width(20),
+                  endIndent: width(20),
+                ),
+              ),
+              buildItemInfo(Icons.phone, "Giới tính", "Nam"),
+              buildItemInfo(Icons.phone, "Ngày sinh", "15/07/1999"),
+              buildItemInfo(Icons.phone, "Ngày tham gia", "27/04/2022"),
+              buildItemInfo(Icons.phone, "Địa chỉ",
+                  "Số 1,Ngõ 298 Minh Khai, Hoàng Mai, Hà Nội"),
+              buildItemInfo(Icons.phone, "Đánh giá", "Chưa đánh giá"),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: height(0)),
+                child: Divider(
+                  thickness: width(1),
+                  indent: width(20),
+                  endIndent: width(20),
+                ),
+              ),
+              buildTextDisplayPost("1"),
+              buildListPostProfile()
+            ],
+          ))),
     );
   }
 

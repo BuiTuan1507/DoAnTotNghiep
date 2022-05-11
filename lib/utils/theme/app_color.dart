@@ -9,7 +9,7 @@ final HexColor lightDark = HexColor("#F1F1FA");
 
 final HexColor lightDarkHintText = HexColor("#91919F");
 final HexColor cancelButton = HexColor("#D7D8DD");
-final HexColor greenMoney = HexColor("#1BBA85");
+final HexColor greenMoney = HexColor("#1877F2");
 final HexColor redMoney = HexColor("#FD3C4A");
 final HexColor blueMoney = HexColor("#0077FF");
 final HexColor backgroundColor = HexColor("#F6F6F6");
@@ -32,7 +32,7 @@ final HexColor red = HexColor("#FF3D00");
 
 final HexColor black = HexColor("#121212");
 final HexColor grey_2 = HexColor("#454545");
-final HexColor grey_3 = HexColor("#6B6B6B");
+final HexColor grey_3 = HexColor("#898F9C");
 final HexColor grey_4 = HexColor("#A0A0A0");
 final HexColor grey_5 = HexColor("#DDDDDD");
 final HexColor grey_6 = HexColor("#F2F2F2");

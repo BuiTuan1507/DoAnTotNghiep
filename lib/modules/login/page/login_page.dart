@@ -30,7 +30,7 @@ class LoginPage extends GetView<LoginController> {
                   textEditingController: controller.phoneController,
                   hintText: "Nhập số điện thoại",
                   onChanged: (text) {
-                    controller.validateLogin(text);
+                    controller.validateLogin();
                   }
               ),
               Obx(() => buildTextPasswordField(

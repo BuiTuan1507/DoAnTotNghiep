@@ -16,6 +16,7 @@ class AccountPage extends GetView<AccountController> {
 
   @override
   Widget build(BuildContext context) {
+     controller.getUserInfo(context);
     return Obx(() => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -57,25 +58,25 @@ class AccountPage extends GetView<AccountController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
+              Obx(() => Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: width(15), vertical: height(4)),
                 child: Text(
-                  "0932333703",
+                  controller.infoUser.value.phoneNumber ?? "",
                   style: AppStyles.textLargeBlackSemiBold,
                 ),
-              ),
+              )),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: width(15), vertical: height(4)),
                 child: Text(
-                  "Tài khoản chưa được xác thực",
-                  style: AppStyles.textTinyRedMedium,
+                  controller.infoUser.value.point.toString() + " điểm",
+                  style: AppStyles.textSmallGreenRegular,
                 ),
               ),
               InkWell(
                 onTap: (){
-                  Get.toNamed(RouterLink.profileDetailPage);
+                  Get.toNamed(RouterLink.profileDetailPage, arguments: controller.infoUser.value);
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: width(15)),
@@ -205,7 +206,7 @@ class AccountPage extends GetView<AccountController> {
                     Expanded(child: ButtonApply(
                       tittle: "Đăng xuất",
                       style: AppStyles.textSmallWhiteMedium,
-                      onClick: () => controller.logout(),
+                      onClick: () => controller.logout(context),
                       width: double.infinity,
                       height: height(45),
                       margin: EdgeInsets.symmetric(

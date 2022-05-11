@@ -34,7 +34,7 @@ Widget buildTextPasswordField(
             controller: textEditingController,
             maxLines: 1,
             onChanged: (value){
-              loginController.validateLogin(value);
+              loginController.validateLogin();
             },
             decoration: InputDecoration(
                 hintText: hintText,

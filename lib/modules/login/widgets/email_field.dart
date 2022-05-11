@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,6 +50,13 @@ class _BuildTextEmailFieldState extends State<BuildTextEmailField> {
                   widget.onChanged(text);
                 });
               },
+              inputFormatters: [
+                FilteringTextInputFormatter(
+                  RegExp("[0-9]"),
+                  allow: true,
+                ),
+              ],
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: AppStyles.textSmallDarkNormal,
