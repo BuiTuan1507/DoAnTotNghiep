@@ -56,12 +56,12 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   endIndent: width(20),
                 ),
               ),
-              buildItemInfo(Icons.phone, "Giới tính", "Nam"),
-              buildItemInfo(Icons.phone, "Ngày sinh", "15/07/1999"),
-              buildItemInfo(Icons.phone, "Ngày tham gia", "27/04/2022"),
-              buildItemInfo(Icons.phone, "Địa chỉ",
-                  "Số 1,Ngõ 298 Minh Khai, Hoàng Mai, Hà Nội"),
-              buildItemInfo(Icons.phone, "Đánh giá", "Chưa đánh giá"),
+              buildItemInfo(Icons.person, "Giới tính", controller.sexUser.value),
+              buildItemInfo(Icons.calendar_today, "Ngày sinh", controller.birthDay.value),
+              buildItemInfo(Icons.calendar_today, "Ngày tham gia",controller.joinTime.value),
+              buildItemInfo(Icons.location_on, "Địa chỉ",
+                  controller.addressUser.value),
+              buildItemInfo(Icons.star, "Đánh giá", controller.rating.value),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: height(0)),
                 child: Divider(
@@ -70,7 +70,7 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   endIndent: width(20),
                 ),
               ),
-              buildTextDisplayPost("1"),
+              buildTextDisplayPost(controller.userInfoModel.value.posts?.length.toString() ?? "0"),
               buildListPostProfile()
             ],
           ))),
@@ -167,14 +167,14 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                     itemButtonSelectImage(
                       title: "Camera",
                       function: () {
-                        controller.changeImage(isCamera: true);
+                        controller.changeImage(isCamera: true, context: context);
                       },
                       iconButton: Icons.camera_alt_outlined,
                     ),
                     itemButtonSelectImage(
                         title: "Thư viện",
                         function: () {
-                          controller.changeImage(isCamera: false);
+                          controller.changeImage(isCamera: false, context: context);
                         },
                         iconButton: Icons.save_rounded),
                   ],
