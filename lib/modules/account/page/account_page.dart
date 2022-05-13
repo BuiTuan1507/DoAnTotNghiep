@@ -70,7 +70,7 @@ class AccountPage extends GetView<AccountController> {
                 padding: EdgeInsets.symmetric(
                     horizontal: width(15), vertical: height(4)),
                 child: Text(
-                  controller.infoUser.value.point.toString() + " điểm",
+                  (controller.infoUser.value.point ?? 0 ).toString() + " điểm",
                   style: AppStyles.textSmallGreenRegular,
                 ),
               ),

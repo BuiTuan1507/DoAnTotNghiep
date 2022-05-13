@@ -3,13 +3,13 @@
 class Validator {
   Validator();
 
-  static String? email(String? value) {
+  static bool email(String? value) {
     String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!)) {
-      return 'validator.email';
+      return false;
     } else {
-      return "";
+      return true;
     }
   }
 
@@ -23,7 +23,8 @@ class Validator {
     }
   }
 
-  static bool? name(String? value) {
+  static bool?
+  name(String? value) {
     if(value == "") return false;
     String pattern = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     RegExp regex = RegExp(pattern);

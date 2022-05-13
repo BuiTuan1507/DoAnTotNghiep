@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../config/routes_link.dart';
 import '../../../utils/utils.dart';
 
-class EditAccountPage extends GetView<EditAccountController>{
+class EditAccountPage extends GetView<EditAccountController> {
   const EditAccountPage({Key? key}) : super(key: key);
 
   _selectDate(BuildContext context) async {
@@ -82,10 +82,7 @@ class EditAccountPage extends GetView<EditAccountController>{
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    top: height(10),
-                    left: width(20),
-                    right: width(20)
-                  ),
+                      top: height(10), left: width(20), right: width(20)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -113,48 +110,52 @@ class EditAccountPage extends GetView<EditAccountController>{
                   height: 1,
                 ),
                 Obx(() => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: controller.listSexType.map((e) =>
-                      buildSexUserItem(e)
-                  ).toList(),
-                )),
+                      mainAxisSize: MainAxisSize.min,
+                      children: controller.listSexType
+                          .map((e) => buildSexUserItem(e))
+                          .toList(),
+                    )),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: width(20)),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Container(
-                                padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: grey_5),
-                                    borderRadius:
-                                    BorderRadius.circular(3),
-                                    color: Colors.white),
-                                child: Center(
-                                    child: Text("Quay lại",
-                                        style:
-                                        GoogleFonts.sarabun(
-                                            color: black
-                                        ))))),
-                        SizedBox(width: width(10)),
-                        InkWell(
-                            onTap: () {
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  color: greenMoney),
-                              padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
-                              child: Center(
-                                child: Text("Thay đổi",
-                                    style: GoogleFonts.sarabun(color: Colors.white)),
-                              ),
-                            )),
-                      ]),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                top: height(7),
+                                bottom: height(7),
+                                right: width(16),
+                                left: width(16)),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: grey_5),
+                                borderRadius: BorderRadius.circular(3),
+                                color: Colors.white),
+                            child: Center(
+                                child: Text("Quay lại",
+                                    style:
+                                        GoogleFonts.sarabun(color: black))))),
+                    SizedBox(width: width(10)),
+                    InkWell(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: greenMoney),
+                          padding: EdgeInsets.only(
+                              top: height(7),
+                              bottom: height(7),
+                              right: width(16),
+                              left: width(16)),
+                          child: Center(
+                            child: Text("Thay đổi",
+                                style:
+                                    GoogleFonts.sarabun(color: Colors.white)),
+                          ),
+                        )),
+                  ]),
                 )
               ],
             ),
@@ -165,6 +166,7 @@ class EditAccountPage extends GetView<EditAccountController>{
 
   @override
   Widget build(BuildContext context) {
+    controller.getUserInfo(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -175,91 +177,142 @@ class EditAccountPage extends GetView<EditAccountController>{
         automaticallyImplyLeading: true,
         backgroundColor: greenMoney,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-
-            buildTextInfo("Họ", "Bui", ()=> {
-              MyDialog.popUpSendMessage(context, editAccountController: controller, tittle: "Họ", hintText: "Nhập họ của bạn ...")
-            }),
-            buildTextInfo("Tên", "Tuan", ()=> {
-              MyDialog.popUpSendMessage(context, editAccountController: controller, tittle: "Tên", hintText: "Nhập tên của bạn ...")
-            }),
-            buildTextInfo("Email", "Chưa có email", ()=> {
-              MyDialog.popUpSendMessage(context, editAccountController: controller, tittle: "Email", hintText: "Nhập email của bạn ...")
-            }),
-            buildTextInfo("Địa chỉ", "Chưa có địa chỉ", ()=> {
-              Get.toNamed(RouterLink.selectedAddressPage)
-            }),
-            buildTextInfo("Ngày sinh", "15/04/1999", ()=> {
-              _selectDate(context)
-            }),
-            buildTextInfo("Giới tính", "Nam", ()=> {
-              showSelectSexUser(context)
-            }),
-            buildTextInfo("Danh sách yêu thích", "Chưa có danh sách yêu thích", ()=> {}),
-            buildTextInfo("Mật  khẩu", "******", ()=> {
-              Get.toNamed(RouterLink.changePasswordPage)
-            })
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget  buildTextInfo(String tittle, String value, VoidCallback onClick){
-    return InkWell(
-      onTap: onClick,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+      body: Obx(() => SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding (
-                  padding: EdgeInsets.only(bottom: height(10)),
-                  child: Text(tittle, style: AppStyles.textSmallDarkRegular,),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: height(10)),
-                  child: Text(value, style: AppStyles.textSmallBlackMedium,),
-                )
+                buildTextInfo(
+                    "Họ",
+                    controller.infoUser.value.firstName ?? "",
+                    () => {
+                          MyDialog.popUpSendMessage(context,
+                              textEditingController: controller.firstNameController,
+                              tittle: "Họ",
+                              hintText: "Nhập họ của bạn ...", onCancel: () {
+                            Get.back();
+                            controller.firstNameController.clear();
+                          }, onSubmit: () {
+                            controller.updateFirstName(context);
+                              })
+                        }),
+                buildTextInfo(
+                    "Tên",
+                    controller.infoUser.value.lastName ?? "",
+                    () => {
+                          MyDialog.popUpSendMessage(context,
+                              textEditingController: controller.lastNameController,
+                              tittle: "Tên",
+                              hintText: "Nhập tên của bạn ...", onCancel: () {
+                            Get.back();
+                            controller.lastNameController.clear();
+                          }, onSubmit: () {
+                            controller.updateLastName(context);
+                              })
+                        }),
+                buildTextInfo(
+                    "Email",
+                    controller.infoUser.value.email ?? "Chưa có email",
+                    () => {
+                          MyDialog.popUpSendMessage(context,
+                              textEditingController: controller.emailController,
+                              tittle: "Email",
+                              hintText: "Nhập email của bạn ...", onCancel: () {
+                            Get.back();
+                            controller.emailController.clear();
+                          }, onSubmit: () {
+                            controller.updateEmail(context);
+                              })
+                        }),
+                buildTextInfo(
+                    "Địa chỉ",
+                    (controller.infoUser.value.listAddress?.isNotEmpty ?? false)
+                        ? (controller
+                                .infoUser.value.listAddress?.first.address ??
+                            "")
+                        : "Chưa có địa chỉ",
+                    () => {Get.toNamed(RouterLink.selectedAddressPage)}),
+                buildTextInfo("Ngày sinh", controller.birthDay.value,
+                    () => {_selectDate(context)}),
+                buildTextInfo("Giới tính", controller.sexUser.value,
+                    () => {showSelectSexUser(context)}),
+                buildTextInfo("Mật  khẩu", controller.password.value,
+                    () => {Get.toNamed(RouterLink.changePasswordPage)}),
+
+                Obx(() => loadingLogin(controller.isLoading.value))
               ],
             ),
-            SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
+          )),
+    );
+  }
+
+  Widget buildTextInfo(String tittle, String value, VoidCallback onClick) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        padding:
+            EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: height(10)),
+                    child: Text(
+                      tittle,
+                      style: AppStyles.textSmallDarkRegular,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: height(10)),
+                    child: Text(
+                      value,
+                      style: AppStyles.textSmallBlackMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width(10)),
+              child: SvgPicture.asset(MyImage.rightArrow,
+                  color: HexColor("#6492BC")),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget buildSexUserItem (SexType sexType){
+  Widget buildSexUserItem(SexType sexType) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           controller.changeStateSexType(sexType.tittle ?? "");
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: height(8)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color:( sexType.isSelected ?? false ? greenMoney.withOpacity(0.4) : Colors.transparent ),
+            color: (sexType.isSelected ?? false
+                ? greenMoney.withOpacity(0.4)
+                : Colors.transparent),
           ),
-
           child: Center(
-            child: Text(sexType.tittle ?? "", style:AppStyles.textSmallBlackRegular,)
-          ),
+              child: Text(
+            sexType.tittle ?? "",
+            style: AppStyles.textSmallBlackRegular,
+          )),
         ),
       ),
     );
   }
-
-
-
 }

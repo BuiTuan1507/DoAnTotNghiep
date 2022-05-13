@@ -95,8 +95,8 @@ class AccountDetailController extends GetxController{
       } else {
         log("Không thể thay đổi ảnh");
       }
-
     }
+    Get.back();
   }
   Future<String> uploadImageToFirebase(File image) async {
     String url = '';

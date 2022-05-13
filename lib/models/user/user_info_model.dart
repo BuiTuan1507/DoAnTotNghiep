@@ -132,12 +132,14 @@ class UserInfoModel {
 class ListAddress {
   int? id;
   String? address;
+  bool? isSelected;
 
-  ListAddress({this.id, this.address});
+  ListAddress({this.id, this.address, this.isSelected });
 
   ListAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     address = json['address'];
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {

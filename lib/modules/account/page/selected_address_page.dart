@@ -1,4 +1,5 @@
 import 'package:do_an/models/user/address_model.dart';
+import 'package:do_an/models/user/user_info_model.dart';
 import 'package:do_an/modules/account/controller/selected_address_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
 
   @override
   Widget build(BuildContext context) {
+    controller.getUserInfo(context);
     return Scaffold(
       appBar:  AppBar(
         centerTitle: true,
@@ -24,17 +26,20 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
         automaticallyImplyLeading: true,
         backgroundColor: greenMoney,
       ),
-      body: SingleChildScrollView(
+      body: Obx(() => SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             buildAddAddress(),
-            buildListAddressUser(),
-            buildButtonApply()
+            (controller.infoUser.value.listAddress?.isNotEmpty ?? false) ?
+            buildListAddressUser() : Center(
+              child: Text("Bạn chưa thêm địa chỉ", style: AppStyles.textSmallBlackRegular,),
+            ),
+            (controller.infoUser.value.listAddress?.isNotEmpty ?? false) ?  buildButtonApply() : Container()
           ],
         ),
-      ),
+      )),
     );
   }
   Widget buildAddAddress(){
@@ -60,12 +65,12 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
   }
   Widget buildListAddressUser(){
     return Container(
-      child: Column(
-        children: controller.listAddressModel.map((e) => buildItemAddress(addressModel: e)).toList(),
-      ),
+      child: Obx(() => Column(
+        children: controller.infoUser.value.listAddress!.map((e) => buildItemAddress(addressModel: e)).toList(),
+      )),
     );
   }
-  Widget buildItemAddress({required AddressModel addressModel}) {
+  Widget buildItemAddress({required ListAddress addressModel}) {
     return Container(
       padding:
       EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
@@ -78,7 +83,7 @@ class SelectedAddressPage extends GetView<SelectedAddressController>{
             children: [
               InkWell(
                 onTap: () {
-                  // controller.changeStateSexType(tittle);
+                   controller.changeStatusAddress(addressModel);
                 },
                 child: Container(
                   height: width(17),

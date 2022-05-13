@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'utils/widget/loading_toast.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
@@ -39,17 +41,19 @@ class MyApp extends StatelessWidget {
           onTap: (){
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: GetMaterialApp(
-            enableLog: true,
-            debugShowCheckedModeBanner: false,
-            title: 'Market',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
+          child: Loading(
+            child: GetMaterialApp(
+              enableLog: true,
+              debugShowCheckedModeBanner: false,
+              title: 'Market',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              initialBinding: RootBinding(),
+              initialRoute: RouterLink.splash,
+              getPages: AppRouters.createRoutes(),
             ),
-            initialBinding: RootBinding(),
-            initialRoute: RouterLink.splash,
-            getPages: AppRouters.createRoutes(),
           ),
         ));
   }

@@ -136,12 +136,13 @@ class MyDialog{
         });
   }
   static popUpSendMessage(BuildContext context,
-      {required final EditAccountController editAccountController,
+      {required final TextEditingController textEditingController,
         required String tittle,
         required String hintText,
+        required VoidCallback onSubmit,
+        required VoidCallback onCancel,
         String btnHuyText = 'Quay lại',
         String textButtonAccept = 'Thay đổi'}) {
-    TextEditingController textEditingController = TextEditingController();
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -205,9 +206,7 @@ class MyDialog{
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
+                                  onTap: onCancel,
                                   child: Container(
                                       padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
                                       decoration: BoxDecoration(
@@ -223,8 +222,7 @@ class MyDialog{
                                               ))))),
                               SizedBox(width: width(10)),
                               InkWell(
-                                  onTap: () {
-                                  },
+                                  onTap: onSubmit,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(3),

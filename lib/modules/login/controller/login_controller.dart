@@ -48,9 +48,10 @@ class LoginController extends GetxController {
   }
 
   Future<void> login(BuildContext buildContext) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     String _phone = phoneController.text.trim();
     String _password = passwordController.text.trim();
-    bool isLoginSuccess = true;
+    bool isLoginSuccess = false;
 
     validateLogin();
     if (isValidateLogin.value) {
