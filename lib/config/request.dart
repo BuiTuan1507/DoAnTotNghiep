@@ -57,6 +57,32 @@ class BaseRequest {
     }
   }
 
+  Future<dynamic> requestDataApi({
+    required MethodType method,
+    required String url,
+    Map<String, dynamic>? param,
+    Map<String, dynamic>? header,
+  }) async {
+
+    header ??= {};
+
+    //  url = appEnvironment.domainApi + url;
+    log("URL: " + url + "\n");
+    log("body: " + param.toString());
+    try {
+      var response = await _dio.request(
+        url,
+        data: param,
+        options: Options(method: methods[method], headers: header),
+      );
+      log("Response: " + response.toString());
+      return response.data;
+    } catch (e) {
+      log(e.toString());
+      return handleError(e);
+    }
+  }
+
   Future<ResponseModel> requestBearerApi({
     required MethodType method,
     required String url,

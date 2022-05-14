@@ -21,4 +21,7 @@ class UrlApi{
   static const String  changePassword = "/change_password";
   static const String addAddress = "/add_address";
   static const String deleteAddress = "/delete_address";
+  static const String getListProvince = "/get_list_address";
+  static const String getListDistrict = "/get_list_district";
+  static const String getListWard = "/get_list_ward";
 }

@@ -53,11 +53,16 @@ class AccountDetailController extends GetxController{
         sexUser.value = "Khác";
         break;
     }
-    DateTime joinTimeDate =  DateFormat("yyyy-MM-dd hh:mm:ss").parse(userInfoModel.value.created ?? "");
-    DateTime birthDayTime =  DateFormat("yyyy-MM-dd hh:mm:ss").parse(userInfoModel.value.birthDay ?? "");
+    try{
+      DateTime joinTimeDate =  DateFormat("yyyy-MM-dd hh:mm:ss").parse(userInfoModel.value.created ?? "");
+      DateTime birthDayTime =  DateFormat("yyyy-MM-dd hh:mm:ss").parse(userInfoModel.value.birthDay ?? "");
 
-    joinTime.value = DateFormat("dd-MM-yyyy").format(joinTimeDate);
-    birthDay.value = DateFormat("dd-MM-yyyy").format(birthDayTime);
+      joinTime.value = DateFormat("dd-MM-yyyy").format(joinTimeDate);
+      birthDay.value = DateFormat("dd-MM-yyyy").format(birthDayTime);
+    }catch(e){
+      log(e.toString());
+    }
+
 
     if(userInfoModel.value.listAddress?.isNotEmpty ?? false){
       addressUser.value = userInfoModel.value.listAddress?.first.address ?? "";

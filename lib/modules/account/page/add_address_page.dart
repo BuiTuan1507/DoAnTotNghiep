@@ -22,8 +22,8 @@ class AddAddressPage extends GetView<AddAddressController>{
         ),
         builder: (BuildContext context) {
           return SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Obx(() => (!controller.isLoadingProvince.value) ? Column(
+              //  mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -32,9 +32,9 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: lightDarkHintText,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: black,
                     ),
                   ),
                 ),
@@ -42,9 +42,11 @@ class AddAddressPage extends GetView<AddAddressController>{
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.provinceName.length, (index) => Container(
-                    padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.provinceName[index],style: AppStyles.textSmallDarkNormal,),
+                  children: List.generate(controller.listProvince.length, (index) => InkWell(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      child: Text(controller.listProvince[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
+                    ),
                   )),
                 ),
 
@@ -66,7 +68,11 @@ class AddAddressPage extends GetView<AddAddressController>{
                   ),
                 ),
               ],
-            ),
+            ) : Column(
+              children: [
+                loadingLogin(controller.isLoadingProvince.value)
+              ],
+            )),
           );
           // return your layout
         });
@@ -102,14 +108,14 @@ class AddAddressPage extends GetView<AddAddressController>{
                   ),
                 ),
 
-                Column(
+                Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.districtName.length, (index) => Container(
+                  children: List.generate(controller.listDistrict.length, (index) => Container(
                     padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.districtName[index],style: AppStyles.textSmallDarkNormal,),
+                    child: Text(controller.listDistrict[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
                   )),
-                ),
+                )),
 
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -165,14 +171,14 @@ class AddAddressPage extends GetView<AddAddressController>{
                   ),
                 ),
 
-                Column(
+                Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.wardsName.length, (index) => Container(
+                  children: List.generate(controller.listWard.length, (index) => Container(
                     padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.wardsName[index],style: AppStyles.textSmallDarkNormal,),
+                    child: Text(controller.listWard[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
                   )),
-                ),
+                )),
 
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -216,25 +222,25 @@ class AddAddressPage extends GetView<AddAddressController>{
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             buildAddressField(),
-            buildItemProvince( tittle: "Chọn tỉnh/thành phố", selected: () {
+            Obx(() => buildItemProvince( tittle: "Chọn tỉnh/thành phố", selected: () {
               modalSelectedProvince(context, "Chọn tỉnh");
-            }, name: "Hà Nội"),
+            }, name: controller.selectedProvinceModel.value.sName ?? ""),),
             Divider(
               indent: width(20),
               endIndent: width(20),
               height: height(1),
             ),
-            buildItemProvince(tittle: "Chọn quận/huyện", selected: () {
+            Obx(() => buildItemProvince(tittle: "Chọn quận/huyện", selected: () {
               modalSelectedDistrict(context, "Chọn huyện");
-            }, name: "Hai Bà Trưng"),
+            },name: controller.selectedDistrictAddressModel.value.sName ?? ""),),
             Divider(
               indent: width(20),
               endIndent: width(20),
               height: height(1),
             ),
-            buildItemProvince(tittle: "Chọn phường/xã", selected: () {
+            Obx(()=>buildItemProvince(tittle: "Chọn phường/xã", selected: () {
               modalSelectedWard(context, "Chọn xã");
-            }, name: "Minh Khai"),
+            }, name: controller.selectedWardAddressModel.value.sName ?? ""),),
             SizedBox(
               height: height(30),
             ),
@@ -305,5 +311,7 @@ class AddAddressPage extends GetView<AddAddressController>{
           borderRadius: BorderRadius.circular(24), color: greenMoney),
     );
   }
+
+
 
 }

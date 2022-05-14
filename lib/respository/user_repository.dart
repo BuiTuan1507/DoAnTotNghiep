@@ -39,4 +39,23 @@ class UserRepository{
         method: MethodType.post, url: url, token: token,param: param);
     return res;
   }
+
+  Future<dynamic> apiGetListProvince() async {
+    var url = UrlApi.getListProvince;
+    var res = await _request.requestDataApi(
+        method: MethodType.post, url: url);
+    return res;
+  }
+  Future<dynamic> apiGetListDistrict({required Map<String, dynamic> param}) async {
+    var url = UrlApi.getListDistrict;
+    var res = await _request.requestDataApi(
+        method: MethodType.post, url: url,param: param);
+    return res;
+  }
+  Future<dynamic> apiGetListWard({required Map<String, dynamic> param}) async {
+    var url = UrlApi.getListWard;
+    var res = await _request.requestDataApi(
+        method: MethodType.post, url: url,param: param);
+    return res;
+  }
 }
