@@ -227,11 +227,15 @@ class EditAccountPage extends GetView<EditAccountController> {
                 buildTextInfo(
                     "Địa chỉ",
                     (controller.infoUser.value.listAddress?.isNotEmpty ?? false)
-                        ? (controller
-                                .infoUser.value.listAddress?.first.address ??
-                            "")
+                        ? (controller.addressUser.value)
                         : "Chưa có địa chỉ",
-                    () => {Get.toNamed(RouterLink.selectedAddressPage)}),
+                    () => {
+                      Get.toNamed(RouterLink.selectedAddressPage)?.then((value) {
+                        if(value != null){
+                          controller.getAddress(value);
+                        }
+                      })
+                    }),
                 buildTextInfo("Ngày sinh", controller.birthDay.value,
                     () => {_selectDate(context)}),
                 buildTextInfo("Giới tính", controller.sexUser.value,

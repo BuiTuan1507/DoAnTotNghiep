@@ -40,6 +40,13 @@ class UserRepository{
     return res;
   }
 
+  Future<ResponseModel> apiChangeAddress({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.changeAddress;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+
   Future<dynamic> apiGetListProvince() async {
     var url = UrlApi.getListProvince;
     var res = await _request.requestDataApi(

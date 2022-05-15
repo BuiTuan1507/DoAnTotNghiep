@@ -35,6 +35,8 @@ class EditAccountController extends GetxController{
 
   Rx<String> password = "".obs;
 
+  Rx<String> addressUser = "".obs;
+
 
 
   bool validateFirstName(String text) {
@@ -209,6 +211,13 @@ class EditAccountController extends GetxController{
         password.value += "*";
       }
     }
+    ListAddress address = infoUser.value.listAddress?.firstWhere((element) => element.id == infoUser.value.selectedId, orElse:() => ListAddress()) ?? ListAddress();
+    
+    addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
+  }
+
+  void getAddress (ListAddress address){
+    addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
   }
 
 

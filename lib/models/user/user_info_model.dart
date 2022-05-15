@@ -23,6 +23,7 @@ class UserInfoModel {
   double? rating;
   String? email;
   int? point;
+  int? selectedId;
   List<dynamic>? posts;
   List<ListAddress>? listAddress;
 
@@ -51,6 +52,7 @@ class UserInfoModel {
         this.rating,
         this.email,
         this.point,
+        this.selectedId,
         this.posts,
         this.listAddress});
 
@@ -79,6 +81,7 @@ class UserInfoModel {
     rating = json['rating'];
     email = json['email'];
     point = json['point'];
+    selectedId = json['selectedId'];
     if (json['posts'] != null) {
       posts = <Null>[];
       json['posts'].forEach((v) {
@@ -119,6 +122,7 @@ class UserInfoModel {
     data['rating'] = this.rating;
     data['email'] = this.email;
     data['point'] = this.point;
+    data['selectedId'] = this.selectedId;
     if (this.posts != null) {
       data['posts'] = this.posts!.map((v) => v?.toJson()).toList();
     }
@@ -129,23 +133,72 @@ class UserInfoModel {
   }
 }
 
+
 class ListAddress {
   int? id;
-  String? address;
+  String? street;
+  int? provinceId;
+  String? province;
+  int? districtId;
+  String? district;
+  int? wardId;
+  String? ward;
   bool? isSelected;
-
-  ListAddress({this.id, this.address, this.isSelected });
+  ListAddress(
+      {this.id,
+        this.street,
+        this.provinceId,
+        this.province,
+        this.districtId,
+        this.district,
+        this.wardId,
+        this.ward, this.isSelected
+      });
 
   ListAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    address = json['address'];
+    street = json['street'];
+    provinceId = json['provinceId'];
+    province = json['province'];
+    districtId = json['districtId'];
+    district = json['district'];
+    wardId = json['wardId'];
+    ward = json['ward'];
     isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['address'] = this.address;
+    data['street'] = this.street;
+    data['provinceId'] = this.provinceId;
+    data['province'] = this.province;
+    data['districtId'] = this.districtId;
+    data['district'] = this.district;
+    data['wardId'] = this.wardId;
+    data['ward'] = this.ward;
     return data;
   }
+  ListAddress copyWith({
+    int? id,
+    String? street,
+    int? provinceId,
+    String? province,
+    int? districtId,
+    String? district,
+    int? wardId,
+    String? ward,
+    bool? isSelected,
+  }) =>
+      ListAddress(
+        id : id ?? this.id,
+        street : street ?? this.street,
+        provinceId : provinceId ?? this.provinceId,
+        province : province ?? this.province,
+        districtId : districtId ?? this.districtId,
+        district : district ?? this.district,
+        wardId: wardId ?? this.wardId,
+        ward: ward ?? this.ward,
+        isSelected: isSelected ?? this.isSelected,
+      );
 }

@@ -43,6 +43,10 @@ class AddAddressPage extends GetView<AddAddressController>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: List.generate(controller.listProvince.length, (index) => InkWell(
+                    onTap:(){
+                      controller.selectedProvince(controller.listProvince[index]);
+                      Get.back();
+                    },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
                       child: Text(controller.listProvince[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
@@ -91,8 +95,8 @@ class AddAddressPage extends GetView<AddAddressController>{
         ),
         builder: (BuildContext context) {
           return SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Obx(() => (!controller.isLoadingDistrict.value) ? Column(
+              //  mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -101,9 +105,9 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: lightDarkHintText,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: black,
                     ),
                   ),
                 ),
@@ -111,9 +115,15 @@ class AddAddressPage extends GetView<AddAddressController>{
                 Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.listDistrict.length, (index) => Container(
-                    padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.listDistrict[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
+                  children: List.generate(controller.listDistrict.length, (index) => InkWell(
+                    onTap:(){
+                      controller.selectedDistrict(controller.listDistrict[index]);
+                      Get.back();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      child: Text(controller.listDistrict[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
+                    ),
                   )),
                 )),
 
@@ -135,7 +145,11 @@ class AddAddressPage extends GetView<AddAddressController>{
                   ),
                 ),
               ],
-            ),
+            ) : Column(
+              children: [
+                loadingLogin(controller.isLoadingDistrict.value)
+              ],
+            )),
           );
           // return your layout
         });
@@ -154,8 +168,8 @@ class AddAddressPage extends GetView<AddAddressController>{
         ),
         builder: (BuildContext context) {
           return SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Obx(() => (!controller.isLoadingWard.value) ? Column(
+              //  mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -164,9 +178,9 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: lightDarkHintText,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: black,
                     ),
                   ),
                 ),
@@ -174,9 +188,15 @@ class AddAddressPage extends GetView<AddAddressController>{
                 Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.listWard.length, (index) => Container(
-                    padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.listWard[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
+                  children: List.generate(controller.listWard.length, (index) => InkWell(
+                    onTap:(){
+                      controller.selectedWard(controller.listWard[index]);
+                      Get.back();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      child: Text(controller.listWard[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
+                    ),
                   )),
                 )),
 
@@ -198,7 +218,11 @@ class AddAddressPage extends GetView<AddAddressController>{
                   ),
                 ),
               ],
-            ),
+            ) : Column(
+              children: [
+                loadingLogin(controller.isLoadingWard.value)
+              ],
+            )),
           );
           // return your layout
         });
@@ -230,21 +254,29 @@ class AddAddressPage extends GetView<AddAddressController>{
               endIndent: width(20),
               height: height(1),
             ),
-            Obx(() => buildItemProvince(tittle: "Chọn quận/huyện", selected: () {
-              modalSelectedDistrict(context, "Chọn huyện");
+            Obx(() => buildItemProvince(tittle: "Chọn quận/huyện", selected: () async {
+              if(controller.selectedProvinceModel.value.sName != null ){
+                await controller.getListDistrict();
+                modalSelectedDistrict(context, "Chọn huyện");
+              }
+
             },name: controller.selectedDistrictAddressModel.value.sName ?? ""),),
             Divider(
               indent: width(20),
               endIndent: width(20),
               height: height(1),
             ),
-            Obx(()=>buildItemProvince(tittle: "Chọn phường/xã", selected: () {
-              modalSelectedWard(context, "Chọn xã");
+            Obx(()=>buildItemProvince(tittle: "Chọn phường/xã", selected: () async {
+              if(controller.selectedDistrictAddressModel.value.sName != null)  {
+                await controller.getListWard();
+                modalSelectedWard(context, "Chọn xã");
+              }
+
             }, name: controller.selectedWardAddressModel.value.sName ?? ""),),
             SizedBox(
               height: height(30),
             ),
-            buildButtonAddAddress()
+            buildButtonAddAddress(context)
           ],
         ),
       ),
@@ -256,9 +288,8 @@ class AddAddressPage extends GetView<AddAddressController>{
         padding: EdgeInsets.symmetric(horizontal: width(20)),
         margin: EdgeInsets.symmetric(vertical: height(10)),
         child: TextFormField(
-          // controller: controller.descriptionEditingController,
+           controller: controller.streetController,
             onChanged: (text) {
-              //    controller.validateAddTransaction();
             },
             maxLines: 1,
             decoration: InputDecoration(
@@ -299,11 +330,11 @@ class AddAddressPage extends GetView<AddAddressController>{
       ),
     );
   }
-  Widget buildButtonAddAddress(){
+  Widget buildButtonAddAddress(BuildContext context){
     return ButtonApply(
       tittle: "Xác nhận",
       style: AppStyles.textNormalWhiteSemiBold,
-      onClick:() => {},
+      onClick:() => {controller.createAddress(context)},
       width: double.infinity,
       height: height(55),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),

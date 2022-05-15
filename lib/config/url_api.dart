@@ -24,4 +24,5 @@ class UrlApi{
   static const String getListProvince = "/get_list_address";
   static const String getListDistrict = "/get_list_district";
   static const String getListWard = "/get_list_ward";
+  static const String changeAddress = "/change_address";
 }

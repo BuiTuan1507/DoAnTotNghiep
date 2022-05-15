@@ -63,14 +63,13 @@ class AccountDetailController extends GetxController{
       log(e.toString());
     }
 
-
     if(userInfoModel.value.listAddress?.isNotEmpty ?? false){
-      addressUser.value = userInfoModel.value.listAddress?.first.address ?? "";
+      ListAddress address = userInfoModel.value.listAddress?.firstWhere((element) => element.id == userInfoModel.value.selectedId, orElse:() => ListAddress()) ?? ListAddress();
+      addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
     }
    if(userInfoModel.value.rating != 0){
      rating.value = userInfoModel.value.rating.toString();
    }
-
   }
 
   void changeImage({required bool isCamera, required BuildContext context}) async {
