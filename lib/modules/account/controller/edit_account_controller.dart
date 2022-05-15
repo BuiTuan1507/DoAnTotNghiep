@@ -37,7 +37,7 @@ class EditAccountController extends GetxController{
 
   Rx<String> addressUser = "".obs;
 
-
+  DateTime checkTime = DateTime(DateTime.now().year -13, DateTime.now().month, DateTime.now().day);
 
   bool validateFirstName(String text) {
     return Validator.name(text) ?? false;
@@ -49,6 +49,10 @@ class EditAccountController extends GetxController{
 
   bool validateEmail (String text) {
     return Validator.email(text);
+  }
+
+  bool validateBirthDay(){
+    return dateTime.value.isBefore(checkTime);
   }
 
   Rx isLoading = false.obs;
@@ -182,7 +186,23 @@ class EditAccountController extends GetxController{
     }else {
       CommonUtil.showToast("Email không đúng định dạng" );
     }
+  }
 
+  Future<void> updateBirthDay (BuildContext context) async {
+    if(validateBirthDay()){
+      String _date = DateFormat('yyyy-MM-dd kk:mm:ss').format(dateTime.value);
+      SetUserInfomation setUserInfomation = SetUserInfomation(
+          firstName: infoUser.value.firstName,
+          lastName: infoUser.value.lastName,
+          email: infoUser.value.email,
+          birthDay: _date,
+          avatar: infoUser.value.avatar,
+          sexUser: infoUser.value.sex
+      );
+      await  setUserInfo(setUserInfomation, context);
+    }else {
+      CommonUtil.showToast("Bạn phải trên 13 tuổi" );
+    }
   }
 
 

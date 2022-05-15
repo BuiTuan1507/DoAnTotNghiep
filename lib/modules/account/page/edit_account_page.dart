@@ -26,6 +26,7 @@ class EditAccountPage extends GetView<EditAccountController> {
       case TargetPlatform.linux:
         break;
     }
+
   }
 
   /// This builds material date picker in Android
@@ -33,7 +34,7 @@ class EditAccountPage extends GetView<EditAccountController> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: controller.dateTime.value,
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1930),
       lastDate: DateTime(2025),
     );
     if (picked != null && picked != controller.dateTime.value) {
@@ -50,13 +51,13 @@ class EditAccountPage extends GetView<EditAccountController> {
             color: Colors.white,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
-              onDateTimeChanged: (picked) {
+              onDateTimeChanged: (picked) async {
                 if (picked != controller.dateTime.value) {
                   controller.dateTime.value = picked;
                 }
               },
               initialDateTime: controller.dateTime.value,
-              minimumYear: 2000,
+              minimumYear: 1930,
               maximumYear: 2025,
             ),
           );
@@ -237,7 +238,10 @@ class EditAccountPage extends GetView<EditAccountController> {
                       })
                     }),
                 buildTextInfo("Ngày sinh", controller.birthDay.value,
-                    () => {_selectDate(context)}),
+                    ()  async => {
+                 await _selectDate(context),
+                     await controller.updateBirthDay(context)
+                }),
                 buildTextInfo("Giới tính", controller.sexUser.value,
                     () => {showSelectSexUser(context)}),
                 buildTextInfo("Mật  khẩu", controller.password.value,
