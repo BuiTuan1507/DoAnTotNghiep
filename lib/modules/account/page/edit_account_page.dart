@@ -26,7 +26,6 @@ class EditAccountPage extends GetView<EditAccountController> {
       case TargetPlatform.linux:
         break;
     }
-
   }
 
   /// This builds material date picker in Android
@@ -85,7 +84,7 @@ class EditAccountPage extends GetView<EditAccountController> {
                   padding: EdgeInsets.only(
                       top: height(10), left: width(20), right: width(20)),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Chọn giới tính",
@@ -93,14 +92,6 @@ class EditAccountPage extends GetView<EditAccountController> {
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           color: black,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.close_rounded,
                         ),
                       ),
                     ],
@@ -118,45 +109,50 @@ class EditAccountPage extends GetView<EditAccountController> {
                     )),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: width(20)),
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: height(7),
-                                bottom: height(7),
-                                right: width(16),
-                                left: width(16)),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: grey_5),
-                                borderRadius: BorderRadius.circular(3),
-                                color: Colors.white),
-                            child: Center(
-                                child: Text("Quay lại",
-                                    style:
-                                        GoogleFonts.sarabun(color: black))))),
-                    SizedBox(width: width(10)),
-                    InkWell(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(3),
-                              color: greenMoney),
-                          padding: EdgeInsets.only(
-                              top: height(7),
-                              bottom: height(7),
-                              right: width(16),
-                              left: width(16)),
-                          child: Center(
-                            child: Text("Thay đổi",
-                                style:
-                                    GoogleFonts.sarabun(color: Colors.white)),
-                          ),
-                        )),
-                  ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                                padding: EdgeInsets.only(
+                                    top: height(7),
+                                    bottom: height(7),
+                                    right: width(16),
+                                    left: width(16)),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: grey_5),
+                                    borderRadius: BorderRadius.circular(3),
+                                    color: Colors.white),
+                                child: Center(
+                                    child: Text("Quay lại",
+                                        style: GoogleFonts.sarabun(
+                                            color: black))))),
+                        SizedBox(width: width(10)),
+                        InkWell(
+                            onTap: () {
+                              if(controller.validateSex()){
+                                controller.updateSexUser(context);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3),
+                                  color: greenMoney),
+                              padding: EdgeInsets.only(
+                                  top: height(7),
+                                  bottom: height(7),
+                                  right: width(16),
+                                  left: width(16)),
+                              child: Center(
+                                child: Text("Thay đổi",
+                                    style: GoogleFonts.sarabun(
+                                        color: Colors.white)),
+                              ),
+                            )),
+                      ]),
                 )
               ],
             ),
@@ -188,28 +184,30 @@ class EditAccountPage extends GetView<EditAccountController> {
                     controller.infoUser.value.firstName ?? "",
                     () => {
                           MyDialog.popUpSendMessage(context,
-                              textEditingController: controller.firstNameController,
+                              textEditingController:
+                                  controller.firstNameController,
                               tittle: "Họ",
                               hintText: "Nhập họ của bạn ...", onCancel: () {
                             Get.back();
                             controller.firstNameController.clear();
                           }, onSubmit: () {
                             controller.updateFirstName(context);
-                              })
+                          })
                         }),
                 buildTextInfo(
                     "Tên",
                     controller.infoUser.value.lastName ?? "",
                     () => {
                           MyDialog.popUpSendMessage(context,
-                              textEditingController: controller.lastNameController,
+                              textEditingController:
+                                  controller.lastNameController,
                               tittle: "Tên",
                               hintText: "Nhập tên của bạn ...", onCancel: () {
                             Get.back();
                             controller.lastNameController.clear();
                           }, onSubmit: () {
                             controller.updateLastName(context);
-                              })
+                          })
                         }),
                 buildTextInfo(
                     "Email",
@@ -223,7 +221,7 @@ class EditAccountPage extends GetView<EditAccountController> {
                             controller.emailController.clear();
                           }, onSubmit: () {
                             controller.updateEmail(context);
-                              })
+                          })
                         }),
                 buildTextInfo(
                     "Địa chỉ",
@@ -231,22 +229,24 @@ class EditAccountPage extends GetView<EditAccountController> {
                         ? (controller.addressUser.value)
                         : "Chưa có địa chỉ",
                     () => {
-                      Get.toNamed(RouterLink.selectedAddressPage)?.then((value) {
-                        if(value != null){
-                          controller.getAddress(value);
-                        }
-                      })
-                    }),
-                buildTextInfo("Ngày sinh", controller.birthDay.value,
-                    ()  async => {
-                 await _selectDate(context),
-                     await controller.updateBirthDay(context)
-                }),
+                          Get.toNamed(RouterLink.selectedAddressPage)
+                              ?.then((value) {
+                            if (value != null) {
+                              controller.getAddress(value);
+                            }
+                          })
+                        }),
+                buildTextInfo(
+                    "Ngày sinh",
+                    controller.birthDay.value,
+                    () async => {
+                          await _selectDate(context),
+                          await controller.updateBirthDay(context)
+                        }),
                 buildTextInfo("Giới tính", controller.sexUser.value,
                     () => {showSelectSexUser(context)}),
                 buildTextInfo("Mật  khẩu", controller.password.value,
                     () => {Get.toNamed(RouterLink.changePasswordPage)}),
-
                 Obx(() => loadingLogin(controller.isLoading.value))
               ],
             ),

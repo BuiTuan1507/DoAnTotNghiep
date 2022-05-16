@@ -248,6 +248,7 @@ class AddAddressPage extends GetView<AddAddressController>{
             buildAddressField(),
             Obx(() => buildItemProvince( tittle: "Chọn tỉnh/thành phố", selected: () {
               modalSelectedProvince(context, "Chọn tỉnh");
+              FocusManager.instance.primaryFocus?.unfocus();
             }, name: controller.selectedProvinceModel.value.sName ?? ""),),
             Divider(
               indent: width(20),

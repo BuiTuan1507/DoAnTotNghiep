@@ -54,6 +54,7 @@ class InfoAccountRegisterController extends GetxController{
     isLengthPassword.value = text.length > 7;
     isContainSpecificCharacter.value = Validator.isCheckUppercase(text);
     isContainNumber.value = Validator.isCheckContainPasswordNumber(text);
+    isSamePassword.value = (text == passwordRememberController.text.trim());
     validateInfoAccount.value = isSamePassword.value && isContainNumber.value && isContainSpecificCharacter.value && isLengthPassword.value && isValidatePhoneNumber.value;
   }
   void validateRememberPassword (String text) {

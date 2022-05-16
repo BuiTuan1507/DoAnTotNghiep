@@ -27,6 +27,8 @@ class EditAccountController extends GetxController{
 
   final TextEditingController passwordRememberController = TextEditingController();
 
+  final TextEditingController oldPasswordController = TextEditingController();
+
   Rx<DateTime> dateTime = DateTime.now().obs;
 
   Rx<String> sexUser = "".obs;
@@ -36,6 +38,26 @@ class EditAccountController extends GetxController{
   Rx<String> password = "".obs;
 
   Rx<String> addressUser = "".obs;
+
+  /// password
+  RxString currentPassword = "".obs;
+
+  RxBool isLengthPassword = false.obs;
+
+  RxBool isContainSpecificCharacter = false.obs;
+
+  RxBool isContainNumber = false.obs;
+
+  RxBool isSamePassword = false.obs;
+
+  RxBool validateInfoAccount = false.obs;
+
+
+  RxBool isVisibilityPassword = true.obs;
+
+  RxBool isVisibilityPasswordRemember = true.obs;
+
+  RxBool isVisibilityOldPassword = true.obs;
 
   DateTime checkTime = DateTime(DateTime.now().year -13, DateTime.now().month, DateTime.now().day);
 
@@ -54,14 +76,19 @@ class EditAccountController extends GetxController{
   bool validateBirthDay(){
     return dateTime.value.isBefore(checkTime);
   }
+  bool validateSex(){
+    for(int i = 0; i < listSexType.length; i++){
+      if(listSexType[i].isSelected == true){
+        return true;
+      }
+    }
+    return false;
+  }
 
   Rx isLoading = false.obs;
 
   RxList<SexType> listSexType  = SexType.listSexType.obs;
 
-  RxBool isVisibilityPassword = false.obs;
-
-  RxBool isVisibilityPasswordRemember = false.obs;
 
   UserRepository userRepository = UserRepository();
 
@@ -203,6 +230,34 @@ class EditAccountController extends GetxController{
     }else {
       CommonUtil.showToast("Bạn phải trên 13 tuổi" );
     }
+
+  }
+
+  Future<void> updateSexUser (BuildContext context) async {
+    Get.back();
+    int _sex = 0;
+    SexType sexType = listSexType.firstWhere((element) => element.isSelected == true, orElse: ()=> SexType());
+
+    switch (sexType.tittle){
+      case "Nam" :
+        _sex= 0;
+        break;
+      case "Nữ":
+        _sex= 1;
+        break;
+      case "Khác":
+        _sex = 2;
+        break;
+    }
+    SetUserInfomation setUserInfomation = SetUserInfomation(
+        firstName: infoUser.value.firstName,
+        lastName: infoUser.value.lastName,
+        email: infoUser.value.email,
+        birthDay: infoUser.value.birthDay,
+        avatar: infoUser.value.avatar,
+        sexUser: _sex
+    );
+    await  setUserInfo(setUserInfomation, context);
   }
 
 
@@ -250,15 +305,67 @@ class EditAccountController extends GetxController{
     listSexType[index].isSelected = true;
     listSexType.refresh();
   }
-  void changeVisibility(){
-
+  void changeOldVisibility (){
+    isVisibilityOldPassword.value = !isVisibilityOldPassword.value;
   }
- void validatePassword(String value){
 
- }
- void changeVisibilityRemember (){
+  void changeVisibility (){
+    isVisibilityPassword.value = !isVisibilityPassword.value;
+  }
+  void changeVisibilityRemember(){
+    isVisibilityPasswordRemember.value = !isVisibilityPasswordRemember.value;
+  }
+  void validatePassword (String text) {
+    currentPassword.value = text;
+    isLengthPassword.value = text.length > 7;
+    isContainSpecificCharacter.value = Validator.isCheckUppercase(text);
+    isContainNumber.value = Validator.isCheckContainPasswordNumber(text);
+    isSamePassword.value = (text == passwordRememberController.text.trim());
+    validateInfoAccount.value = isSamePassword.value && isContainNumber.value && isContainSpecificCharacter.value && isLengthPassword.value && oldPasswordController.text.isNotEmpty;
+  }
+  void validateRememberPassword (String text) {
+    isSamePassword.value = (text == currentPassword.value);
+    validateInfoAccount.value = isSamePassword.value && isContainNumber.value && isContainSpecificCharacter.value && isLengthPassword.value && oldPasswordController.text.isNotEmpty;
+  }
 
- }
- void validateRememberPassword(String value){}
+  Future<void> changePasswordAccount(BuildContext context) async {
+    if(validateInfoAccount.value){
+      FocusManager.instance.primaryFocus?.unfocus();
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      try{
+        Map<String,dynamic> param = {
+          "token":token,
+          "userId":userId,
+          "oldPassword":oldPasswordController.text.trim(),
+          "newPassword":passwordController.text.trim()
+        };
+        ResponseModel responseModel = await userRepository.apiChangePassword(param: param, token: token);
+        oldPasswordController.clear();
+        passwordRememberController.clear();
+        passwordController.clear();
+        if(responseModel.status){
+          CommonUtil.showToast("Thay đổi mật khẩu thành công", isSuccessToast: true);
+        }else {
+          MyDialog.popUpErrorMessage(buildContext: context, content: "Lỗi thay đổi mật khẩu", tittle: responseModel.message);
+        }
+      }catch(e){
+        log(e.toString());
+      }
+
+    }else{
+      if(isContainNumber.value && isContainSpecificCharacter.value && isLengthPassword.value && oldPasswordController.text.isNotEmpty){
+
+      }else{
+        CommonUtil.showToast("Mật khẩu mới nên có đủ 8 kí tự bao gồm chữ in hoa và số");
+        return;
+      }
+      if(isSamePassword.value){
+      }else{
+        CommonUtil.showToast("Mật khẩu mới nhập lại phải giống nhau");
+      }
+    }
+  }
+
 
 }

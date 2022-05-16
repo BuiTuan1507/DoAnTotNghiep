@@ -18,6 +18,6 @@ class SexType {
   static List<SexType> listSexType = [
     SexType(tittle: "Nam", isSelected: false),
     SexType(tittle: "Nữ", isSelected: false),
-    SexType(tittle: "Tuỳ chọn khác", isSelected: false),
+    SexType(tittle: "Khác", isSelected: false),
   ];
 }

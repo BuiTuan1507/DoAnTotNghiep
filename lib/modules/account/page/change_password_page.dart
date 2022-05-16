@@ -28,16 +28,26 @@ class ChangePasswordPage extends GetView<EditAccountController> {
           SizedBox(
             height: height(40),
           ),
-          Obx(() => buildPasswordField("Nhập mật khẩu", () {
-                controller.changeVisibility();
+          Obx(() => buildPasswordField("Nhập mật khẩu cũ", () {
+                controller.changeOldVisibility();
               },
-                  controller.isVisibilityPassword.value,
-                  controller.passwordController,
+                  controller.isVisibilityOldPassword.value,
+                  controller.oldPasswordController,
+                  (value) => {}
+          )),
+          SizedBox(
+            height: height(20),
+          ),
+          Obx(() => buildPasswordField("Nhập mật khẩu mới", () {
+            controller.changeVisibility();
+          },
+              controller.isVisibilityPassword.value,
+              controller.passwordController,
                   (value) => controller.validatePassword(value))),
           SizedBox(
             height: height(20),
           ),
-          Obx(() => buildPasswordField("Nhập lại mật khẩu", () {
+          Obx(() => buildPasswordField("Nhập lại mật khẩu mới", () {
                 controller.changeVisibilityRemember();
               },
                   controller.isVisibilityPasswordRemember.value,
@@ -46,17 +56,19 @@ class ChangePasswordPage extends GetView<EditAccountController> {
           SizedBox(
             height: height(50),
           ),
-          ButtonApply(
+          Obx(() => ButtonApply(
             tittle: "Thay đổi mật khẩu",
             style: AppStyles.textNormalWhiteSemiBold,
-            onClick: () {},
+            onClick: () async {
+             await controller.changePasswordAccount(context);
+            },
             width: double.infinity,
             height: height(55),
             margin: EdgeInsets.symmetric(
                 horizontal: width(20), vertical: height(15)),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14), color: greenMoney),
-          )
+                borderRadius: BorderRadius.circular(14), color: controller.validateInfoAccount.value ? greenMoney : grey_3),
+          ))
         ],
       ),
     );
