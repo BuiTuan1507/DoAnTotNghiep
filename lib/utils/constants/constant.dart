@@ -10,6 +10,7 @@ class Constants{
       "https://www.sbc.edu.sg/wp-content/uploads/2021/01/148-1486972_mystery-man-avatar-circle-clipart.jpg";
   static const String PRODUCT_URL = "https://img2.thuthuatphanmem.vn/uploads/2019/01/03/anh-dong-hoa-lavender-dep-nhat_011921390.jpg";
 
+  static const currency = " ₫";
 
 
 }

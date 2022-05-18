@@ -1,8 +1,13 @@
 import 'dart:io';
 
 import 'package:do_an/models/category/category_model.dart';
+import 'package:do_an/models/user/user_info_model.dart';
+import 'package:do_an/utils/common/validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../utils/constants/constant.dart';
 
 class AddPostInfoController extends GetxController {
 
@@ -12,15 +17,24 @@ class AddPostInfoController extends GetxController {
 
   RxList<File>? file = <File>[].obs;
 
-  RxString conditionUser = "".obs;
-
-  RxString formUse = "".obs;
 
   RxList<String> listConditionUse = ["Mới", "Như Mới","Tốt","Khá", "Kém","Không chọn"].obs;
 
   RxList<String> listFormUse = ["Mới", "Như Mới","Tốt","Khá", "Kém","Không chọn"].obs;
 
+  Rx<String> selectedConditionUse = "Không chọn".obs;
+
+  Rx<String> selectedFormUse = "Không chọn".obs;
+
+  Rx<ListAddress> address = ListAddress().obs;
+
+  Rx<String> addressUser = "Chưa có".obs;
+
   var picker = ImagePicker();
+
+  final TextEditingController moneyController = TextEditingController();
+  final TextEditingController tittleController = TextEditingController();
+  final TextEditingController infoController = TextEditingController();
 
   @override
   void onInit() {
@@ -61,5 +75,20 @@ class AddPostInfoController extends GetxController {
     }
 
     return file;
+  }
+
+   String formatMoney ( String money){
+    if(money == "") return "0";
+    String moneyFormat = money.replaceAll(".","").replaceAll(Constants.currency,"");
+    if(moneyFormat == " ") return "0";
+    return moneyFormat;
+  }
+
+  bool validateTittle(String value){
+    return Validator.name(value) ?? false;
+  }
+
+  void getAddress (ListAddress address){
+    addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
   }
 }

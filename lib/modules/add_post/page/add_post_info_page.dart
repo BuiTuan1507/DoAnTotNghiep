@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:do_an/modules/add_post/controller/add_post_info_controller.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,6 @@ import '../widget/description_field.dart';
 
 class AddPostInfoPage extends GetView<AddPostInfoController> {
   const AddPostInfoPage({Key? key}) : super(key: key);
-
 
   void modalSelectedConditionUse(BuildContext context) {
     showModalBottomSheet(
@@ -33,38 +33,124 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height : height(20)),
+                SizedBox(height: height(20)),
                 Center(
                   child: Text(
                     "Điều kiện sử dụng ",
                     style: GoogleFonts.sarabun(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: lightDarkHintText,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: black,
                     ),
                   ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(controller.listConditionUse.length, (index) => Container(
-                    padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-                    child: Text(controller.listConditionUse[index],style: AppStyles.textSmallDarkNormal,),
-                  )),
+                  children: List.generate(
+                      controller.listConditionUse.length,
+                      (index) => InkWell(
+                            onTap: () {
+                              controller.selectedConditionUse.value =
+                                  controller.listConditionUse[index];
+                              Get.back();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width(20), vertical: height(15)),
+                              child: Text(
+                                controller.listConditionUse[index],
+                                style: AppStyles.textSmallDarkNormal,
+                              ),
+                            ),
+                          )),
                 ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: height(20),
                   ),
-                  child:  ButtonApply(
+                  child: ButtonApply(
                     tittle: "Quay lại",
                     style: AppStyles.textSmallWhiteMedium,
                     onClick: () => {Get.back()},
                     width: double.infinity,
                     height: height(45),
                     margin: EdgeInsets.symmetric(
-                        horizontal: width(10), vertical: height(10)),
+                        horizontal: width(20), vertical: height(10)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: greenMoney),
+                  ),
+                ),
+              ],
+            ),
+          );
+          // return your layout
+        });
+  }
+
+  void modalSelectedFormUse(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isDismissible: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(
+              radius(10),
+            ),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: height(20)),
+                Center(
+                  child: Text(
+                    "Hình thức ",
+                    style: GoogleFonts.sarabun(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: black,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: List.generate(
+                      controller.listFormUse.length,
+                      (index) => InkWell(
+                            onTap: () {
+                              controller.selectedFormUse.value =
+                                  controller.listFormUse[index];
+                              Get.back();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width(20), vertical: height(15)),
+                              child: Text(
+                                controller.listFormUse[index],
+                                style: AppStyles.textSmallDarkNormal,
+                              ),
+                            ),
+                          )),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: height(20),
+                  ),
+                  child: ButtonApply(
+                    tittle: "Quay lại",
+                    style: AppStyles.textSmallWhiteMedium,
+                    onClick: () => {Get.back()},
+                    width: double.infinity,
+                    height: height(45),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: width(20), vertical: height(10)),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         color: greenMoney),
@@ -101,11 +187,12 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
                 style: AppStyles.textSmallBlackMedium,
               ),
             ),
-            Obx(() => (controller.file?.isEmpty ?? true) ? buildSelectedImage() : buildListImage()),
+            Obx(() => (controller.file?.isEmpty ?? true)
+                ? buildSelectedImage()
+                : buildListImage()),
             buildConditionUse(context),
-            buildForm(),
+            buildForm(context),
             buildMoneyField(),
-            buildTextTittleAndInfo(),
             buildTittlePostField(),
             buildInfoPostField(),
             buildAddressField(),
@@ -156,10 +243,11 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
                 padding: EdgeInsets.symmetric(
                     horizontal: width(10), vertical: height(10)),
                 child: Text(
-                    (controller.mainCategory.value.sName ?? "" ) + " - " + (controller.subCategory.value.sName ?? ""),
+                  (controller.mainCategory.value.sName ?? "") +
+                      " - " +
+                      (controller.subCategory.value.sName ?? ""),
                   style: AppStyles.textSmallBlackMedium,
-                )
-            ),
+                )),
           ),
         ],
       ),
@@ -169,7 +257,11 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
   Widget buildSelectedImage() {
     return InkWell(
       onTap: () async {
-        await controller.openImage();
+        if ((controller.file?.length ?? 0) <= 5) {
+          await controller.openImage();
+        } else {
+          CommonUtil.showToast("Bạn chỉ có thể chọn tối đa 5 ảnh");
+        }
       },
       child: Container(
         height: height(120),
@@ -201,70 +293,76 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
 
   Widget buildListImage() {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+      padding: EdgeInsets.symmetric(vertical: height(15)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            height: height(120),
-            width: height(120),
-            margin: EdgeInsets.symmetric(horizontal: width(20)),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: grey_5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.photo_camera,
-                  size: size(30),
-                  color: greenMoney,
-                ),
-                SizedBox(
-                  height: height(10),
-                ),
-                Text(
-                  "Thêm ảnh",
-                  style: AppStyles.textSmallDarkNormal,
-                )
-              ],
+          InkWell(
+            onTap: () async {
+              await controller.openImage();
+            },
+            child: Container(
+              height: height(100),
+              width: height(100),
+              margin: EdgeInsets.symmetric(horizontal: width(20)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: grey_5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.photo_camera,
+                    size: size(24),
+                    color: greenMoney,
+                  ),
+                  Text(
+                    "Thêm ảnh",
+                    style: AppStyles.textSmallDarkNormal,
+                  )
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            height: height(100),
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.file?.length ?? 0,
-              itemBuilder: (context, index) => Container(
-                constraints: BoxConstraints(
-                    maxHeight: height(100), maxWidth: width(100)),
-                child: Stack(children: [
-                  (controller.file?.length ?? 0) > 0
-                      ? Container(
-                          margin: EdgeInsets.only(right: width(10)),
-                          width: width(100),
-                          height: height(100),
-                          child: Image.file(
-                            controller.file?[index] ?? File(''),
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Container(),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      onPressed: () {
-                        controller.file?[index] = File('');
-                        controller.file?.removeAt(index);
-                      },
-                      icon: Icon(Icons.cancel, size: size(20),),
-                    ),
-                  )
-                ]),
+          Expanded(
+            child: SizedBox(
+              height: height(100),
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.file?.length ?? 0,
+                itemBuilder: (context, index) => Container(
+                  constraints: BoxConstraints(
+                      maxHeight: height(100), maxWidth: height(100)),
+                  child: Stack(children: [
+                    (controller.file?.length ?? 0) > 0
+                        ? Container(
+                            margin: EdgeInsets.only(right: height(10)),
+                            width: height(100),
+                            height: height(100),
+                            child: Image.file(
+                              controller.file?[index] ?? File(''),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Container(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        onPressed: () {
+                          controller.file?[index] = File('');
+                          controller.file?.removeAt(index);
+                        },
+                        icon: Icon(
+                          Icons.cancel,
+                          size: size(20),
+                        ),
+                      ),
+                    )
+                  ]),
+                ),
               ),
             ),
           ),
@@ -273,14 +371,16 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
     );
   }
 
-  Widget buildConditionUse(BuildContext context){
+  Widget buildConditionUse(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         modalSelectedConditionUse(context);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-        padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
+        margin:
+            EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding:
+            EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
         height: height(60),
         width: double.infinity,
         decoration: BoxDecoration(
@@ -295,14 +395,16 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               padding: EdgeInsets.only(right: width(10)),
             ),
             Text(
-              controller.conditionUser.value,
+              controller.selectedConditionUse.value,
               style: AppStyles.textSmallBlackMedium,
-            )
-            ,
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Icon(Icons.arrow_drop_down, size: size(22),),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  size: size(22),
+                ),
               ),
             )
           ],
@@ -311,14 +413,16 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
     );
   }
 
-  Widget buildForm (){
+  Widget buildForm(BuildContext context) {
     return InkWell(
-      onTap: (){
-        //modalSelectedConditionUse(context);
+      onTap: () {
+        modalSelectedFormUse(context);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-        padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
+        margin:
+            EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding:
+            EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
         height: height(60),
         width: double.infinity,
         decoration: BoxDecoration(
@@ -333,14 +437,16 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               padding: EdgeInsets.only(right: width(10)),
             ),
             Text(
-              controller.formUse.value,
+              controller.selectedFormUse.value,
               style: AppStyles.textSmallBlackMedium,
-            )
-            ,
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Icon(Icons.arrow_drop_down, size: size(22),),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  size: size(22),
+                ),
               ),
             )
           ],
@@ -348,58 +454,103 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
       ),
     );
   }
-  Widget buildMoneyField(){
+
+  Widget buildMoneyField() {
     return Container(
-        height: height(50),
+        height: height(105),
         padding: EdgeInsets.symmetric(horizontal: width(20)),
         margin: EdgeInsets.symmetric(vertical: height(10)),
-        child: TextFormField(
-            //controller: controller.moneyController,
-            onChanged: (text) {
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter(
-                RegExp("[0-9]"),
-                allow: true,
-              ),
-              CurrencyFormatter()
-            ],
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: AppStyles.borderDark,
-              focusedBorder: AppStyles.borderGreen,
-              enabledBorder: AppStyles.borderDark,
-              hintText: 'Nhập số tiền ...',
-              alignLabelWithHint: false,
-              hintStyle: GoogleFonts.sarabun(
-                  fontSize: size(14), color: lightDarkHintText),
-              contentPadding: EdgeInsets.all(width(8)),
-            )));
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildTittleField("Giá"),
+            SizedBox(height: height(8)),
+            TextFormField(
+                controller: controller.moneyController,
+                onChanged: (text) {
+
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter(
+                    RegExp("[0-9]"),
+                    allow: true,
+                  ),
+                  CurrencyFormatter()
+                ],
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: AppStyles.borderDark,
+                  focusedBorder: AppStyles.borderGreen,
+                  enabledBorder: AppStyles.borderDark,
+                  hintText: 'Nhập số tiền ...',
+                  alignLabelWithHint: false,
+                  hintStyle: GoogleFonts.sarabun(
+                      fontSize: size(14), color: lightDarkHintText),
+                  contentPadding: EdgeInsets.all(width(8)),
+                ))
+          ],
+        ));
   }
-  Widget buildTextTittleAndInfo(){
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: width(20), vertical: height(10)),
-      child: Text(
-        "Tiêu đề và mô tả",
-        style: AppStyles.textSmallBlackMedium,
+
+  Widget buildTittlePostField() {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: width(20)),
+              child: buildTittleField("Tiêu đề")),
+          SizedBox(
+            height: height(4),
+          ),
+          descriptionField(
+              hintText: "Nhập tiêu đề ...",
+              maxLines: 2,
+              maxLength: 200,
+              heightField: height(90))
+        ],
       ),
     );
   }
-  Widget buildTittlePostField(){
-    return descriptionField( hintText: "Nhập tiêu đề ...", maxLines: 2, maxLength: 200, heightField: height(90));
+
+  Widget buildInfoPostField() {
+    return
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: width(20)),
+                child: buildTittleField("Thông tin")),
+            SizedBox(
+              height: height(4),
+            ),
+            descriptionField(
+                hintText: "Nhập thông tin ...",
+                maxLines: 10,
+                maxLength: 1000,
+                heightField: height(250))
+          ],
+        ),
+      );
   }
-  Widget buildInfoPostField(){
-    return descriptionField( hintText: "Nhập tiêu đề ...", maxLines: 10, maxLength: 1000, heightField: height(250));
-  }
-  Widget buildAddressField(){
+
+  Widget buildAddressField() {
     return InkWell(
-      onTap: (){
-        Get.toNamed(RouterLink.selectedAddressPage);
+      onTap: () async {
+      await Get.toNamed(RouterLink.selectedAddressPage)?.then((value) {
+          controller.address.value = value;
+          controller.getAddress(controller.address.value);
+        });
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-        padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
+        margin:
+            EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding:
+            EdgeInsets.symmetric(horizontal: width(10), vertical: height(6)),
         height: height(75),
         width: double.infinity,
         decoration: BoxDecoration(
@@ -414,30 +565,36 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildTittleField("Địa chỉ"),
-                Icon(Icons.arrow_drop_down, size: size(22),),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: size(22),
+                ),
               ],
             ),
-            Padding(
+            Obx(() => Padding(
               padding: EdgeInsets.only(top: height(0)),
-              child: Text("Chưa có", style: AppStyles.textSmallBlackMedium,),
-            )
+              child: Text(
+                controller.addressUser.value,
+                style: AppStyles.textSmallBlackMedium,
+              ),
+            ))
           ],
         ),
       ),
     );
   }
-  Widget buildButtonAddPost(){
+
+  Widget buildButtonAddPost() {
     return Container(
-      child: ButtonApply(
-        tittle: "Đăng tin",
-        style: AppStyles.textNormalWhiteSemiBold,
-        onClick:() => {},
-        width: double.infinity,
-        height: height(60),
-        margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24), color: greenMoney),
-      )
-    );
+        child: ButtonApply(
+      tittle: "Đăng tin",
+      style: AppStyles.textNormalWhiteSemiBold,
+      onClick: () => {},
+      width: double.infinity,
+      height: height(60),
+      margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24), color: greenMoney),
+    ));
   }
 }

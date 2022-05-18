@@ -1,6 +1,8 @@
 
 import 'package:flutter/services.dart';
 
+import '../utils.dart';
+
 
 class CurrencyFormatter extends TextInputFormatter{
   static const separator = '.';
@@ -52,7 +54,7 @@ class CurrencyFormatter extends TextInputFormatter{
         //  selectionIndex = 4; /// do dai cua ",000"
       }
       return TextEditingValue(
-        text: newString.toString() ,
+        text: newString.toString() + Constants.currency ,
         selection: TextSelection.collapsed(
           offset: newString.length - selectionIndex,
         ),
@@ -75,7 +77,7 @@ class CurrencyFormatter extends TextInputFormatter{
       }
 
       return TextEditingValue(
-        text: newString.toString() ,
+        text: newString.toString() + Constants.currency,
         selection: TextSelection.collapsed(
           offset: newString.length - selectionIndex,
         ),
