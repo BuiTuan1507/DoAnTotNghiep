@@ -1,165 +1,44 @@
-import 'package:flutter/animation.dart';
-
-class CategoryModel {
-  String? id;
-  String? name;
+class MainCategory {
+  int? id;
+  String? sName;
   bool? isSelected;
-  List<CategoryLv2>? categoryLv2;
 
-  CategoryModel({this.id, this.name, this.isSelected, this.categoryLv2});
+  MainCategory({this.id, this.sName, this.isSelected});
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
+  MainCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    isSelected = json['isSelected'];
-    if (json['categoryLv2'] != null) {
-      categoryLv2 = <CategoryLv2>[];
-      json['categoryLv2'].forEach((v) {
-        categoryLv2!.add(new CategoryLv2.fromJson(v));
-      });
-    }
+    sName = json['_name'];
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
-    data['isSelected'] = this.isSelected;
-    if (this.categoryLv2 != null) {
-      data['categoryLv2'] = this.categoryLv2!.map((v) => v.toJson()).toList();
-    }
+    data['_name'] = this.sName;
     return data;
   }
-  static List<CategoryModel> listCategory = [
-    CategoryModel(
-      id: "1",
-      name: "Xe may",
-      isSelected: false,
-      categoryLv2: [
-        CategoryLv2(
-          id: "1",
-          name: "Xe may cu",
-          isSelected: false
-        ),
-        CategoryLv2(
-            id: "1",
-            name: "Xe may cu",
-            isSelected: false
-        ),
-        CategoryLv2(
-            id: "1",
-            name: "Xe may cu",
-            isSelected: false
-        ),
-        CategoryLv2(
-            id: "1",
-            name: "Xe may cu",
-            isSelected: false
-        ),
-      ]
-    ),
-    CategoryModel(
-        id: "1",
-        name: "Xe may",
-        isSelected: false,
-        categoryLv2: [
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-        ]
-    ),
-    CategoryModel(
-        id: "1",
-        name: "Xe may",
-        isSelected: false,
-        categoryLv2: [
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-        ]
-    ),
-    CategoryModel(
-        id: "1",
-        name: "Xe may",
-        isSelected: false,
-        categoryLv2: [
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-          CategoryLv2(
-              id: "1",
-              name: "Xe may cu",
-              isSelected: false
-          ),
-        ]
-    ),
-  ];
 }
 
-class CategoryLv2 {
-  String? id;
-  String? name;
+class SubCategory {
+  int? id;
+  String? sName;
+  int? iMainId;
   bool? isSelected;
 
-  CategoryLv2({this.id, this.name, this.isSelected});
+  SubCategory({this.id, this.sName, this.iMainId, this.isSelected});
 
-  CategoryLv2.fromJson(Map<String, dynamic> json) {
+  SubCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    isSelected = json['isSelected'];
+    sName = json['_name'];
+    iMainId = json['_main_id'];
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
-    data['isSelected'] = this.isSelected;
+    data['_name'] = this.sName;
+    data['_main_id'] = this.iMainId;
     return data;
   }
 }

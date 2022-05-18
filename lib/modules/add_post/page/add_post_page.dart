@@ -3,6 +3,7 @@ import 'package:do_an/models/category/category_model.dart';
 import 'package:do_an/utils/common/screen_utils.dart';
 import 'package:do_an/utils/theme/app_color.dart';
 import 'package:do_an/utils/theme/app_styles.dart';
+import 'package:do_an/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -32,18 +33,18 @@ class AddPostPage extends GetView<AddPostController> {
             SizedBox(
               height: height(10),
             ),
-            Container(
+            Obx(() => Container(
               padding: EdgeInsets.symmetric(
                   horizontal: width(10), vertical: height(20)),
               child: ListView.separated(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 // controller: scrollController,
-                itemCount: 4,
+                itemCount: controller.listMainCategory.length,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
-                  return buildItemCategory(context, controller.listCategory[index]);
+                  return buildItemCategory(context, controller.listMainCategory[index]);
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -53,26 +54,29 @@ class AddPostPage extends GetView<AddPostController> {
                   );
                 },
               ),
-            )
+            ),
+
+            ),
+            Obx(() => loadingLogin(controller.isLoading.value))
           ]),
     );
   }
 
-  Widget buildItemCategory(BuildContext context,CategoryModel categoryModel) {
+  Widget buildItemCategory(BuildContext context,MainCategory mainCategory) {
     return Container(
       padding:
           EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-      color: (categoryModel.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
+      color: (mainCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
         onTap: (){
-          Get.toNamed(RouterLink.addPostCategoryPage, arguments: categoryModel);
+          Get.toNamed(RouterLink.addPostCategoryPage, arguments: mainCategory);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              categoryModel.name ?? " ",
+              mainCategory.sName ?? " ",
               style: AppStyles.textSmallBlackRegular,
             ),
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))

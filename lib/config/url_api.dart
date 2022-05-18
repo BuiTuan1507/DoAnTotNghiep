@@ -25,4 +25,7 @@ class UrlApi{
   static const String getListDistrict = "/get_list_district";
   static const String getListWard = "/get_list_ward";
   static const String changeAddress = "/change_address";
+  static const String getListMainCategory = "/get_list_main_category";
+  static const String getListSubcategory = "/get_list_sub_category";
+  static const String addPost = "/add_post";
 }

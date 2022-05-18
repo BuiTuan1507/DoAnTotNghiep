@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddPostInfoController extends GetxController {
-  Rx<CategoryModel> categoryModel = CategoryModel().obs;
+
+  Rx<MainCategory> mainCategory = MainCategory().obs;
+
+  Rx<SubCategory> subCategory = SubCategory().obs;
 
   RxList<File>? file = <File>[].obs;
 
@@ -22,7 +25,8 @@ class AddPostInfoController extends GetxController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      categoryModel.value = Get.arguments;
+      mainCategory.value = Get.arguments['mainCategory'];
+      subCategory.value = Get.arguments['subCategory'];
     }
     super.onInit();
   }

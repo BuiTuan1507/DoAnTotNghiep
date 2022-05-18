@@ -156,7 +156,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
                 padding: EdgeInsets.symmetric(
                     horizontal: width(10), vertical: height(10)),
                 child: Text(
-                  "Xe cộ - Xe đạp",
+                    (controller.mainCategory.value.sName ?? "" ) + " - " + (controller.subCategory.value.sName ?? ""),
                   style: AppStyles.textSmallBlackMedium,
                 )
             ),

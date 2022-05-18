@@ -1,4 +1,5 @@
 import 'package:do_an/models/category/category_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -28,18 +29,18 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
             SizedBox(
               height: height(10),
             ),
-            Container(
+            Obx(() => Container(
               padding: EdgeInsets.symmetric(
                   horizontal: width(10), vertical: height(20)),
               child: ListView.separated(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 // controller: scrollController,
-                itemCount: controller.categoryModel.value.categoryLv2?.length ?? 1,
+                itemCount: controller.listSubCategory.length,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
-                  return buildItemCategorylv2(context, controller.categoryModel.value.categoryLv2?[index] ?? CategoryLv2() );
+                  return buildItemCategorylv2(context, controller.listSubCategory[index] );
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -49,26 +50,36 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
                   );
                 },
               ),
+            )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: height(50)),
+                child: Obx(() => loadingLogin(controller.isLoading.value)),
+              ),
             )
           ]),
     );
   }
 
-  Widget buildItemCategorylv2(BuildContext context,CategoryLv2 categoryLv2) {
+  Widget buildItemCategorylv2(BuildContext context,SubCategory subCategory) {
     return Container(
       padding:
       EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-      color: (categoryLv2.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
+      color: (subCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
         onTap: (){
-          Get.toNamed(RouterLink.addPostInfoPage, arguments: controller.categoryModel.value);
+          Get.toNamed(RouterLink.addPostInfoPage, arguments: {
+            "mainCategory": controller.mainCategory.value,
+            "subCategory":subCategory
+          });
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              categoryLv2.name ?? " ",
+              subCategory.sName ?? " ",
               style: AppStyles.textSmallBlackRegular,
             ),
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
