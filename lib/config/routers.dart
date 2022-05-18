@@ -1,4 +1,5 @@
 import 'package:do_an/config/routes_link.dart';
+import 'package:do_an/modules/add_post/page/loading_post_page.dart';
 import 'package:get/get.dart';
 import '../modules/modules.dart';
 
@@ -41,6 +42,10 @@ class AppRouters {
       GetPage(
         name: RouterLink.registerLoading,
         page: () =>  LoadingRegister(),
+      ),
+      GetPage(
+        name: RouterLink.loadingPostPage,
+        page: () =>  LoadingPostPage(),
       ),
       GetPage(
         name: RouterLink.main,

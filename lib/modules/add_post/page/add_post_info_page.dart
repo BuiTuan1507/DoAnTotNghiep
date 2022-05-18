@@ -394,10 +394,10 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
             Padding(
               padding: EdgeInsets.only(right: width(10)),
             ),
-            Text(
+            Obx(() => Text(
               controller.selectedConditionUse.value,
               style: AppStyles.textSmallBlackMedium,
-            ),
+            )),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
@@ -436,10 +436,10 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
             Padding(
               padding: EdgeInsets.only(right: width(10)),
             ),
-            Text(
+            Obx(() => Text(
               controller.selectedFormUse.value,
               style: AppStyles.textSmallBlackMedium,
-            ),
+            )),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
@@ -542,8 +542,11 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
     return InkWell(
       onTap: () async {
       await Get.toNamed(RouterLink.selectedAddressPage)?.then((value) {
+        if(value != null){
           controller.address.value = value;
           controller.getAddress(controller.address.value);
+        }
+
         });
       },
       child: Container(
@@ -589,7 +592,9 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
         child: ButtonApply(
       tittle: "Đăng tin",
       style: AppStyles.textNormalWhiteSemiBold,
-      onClick: () => {},
+      onClick: () => {
+        controller.addPost()
+      },
       width: double.infinity,
       height: height(60),
       margin: EdgeInsets.symmetric(horizontal: width(15), vertical: height(15)),

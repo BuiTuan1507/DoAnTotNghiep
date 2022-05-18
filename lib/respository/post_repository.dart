@@ -19,7 +19,7 @@ class PostRepository{
         method: MethodType.post, url: url, param: param);
     return res;
   }
-  Future<ResponseModel> apiChangeAddress({required Map<String, dynamic> param,required String token}) async {
+  Future<ResponseModel> apiAddPost({required Map<String, dynamic> param,required String token}) async {
     var url = UrlApi.addPost;
     var res = await _request.requestBearerApi(
         method: MethodType.post, url: url, token: token,param: param);
