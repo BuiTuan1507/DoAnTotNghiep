@@ -1,14 +1,11 @@
 import 'package:do_an/config/config.dart';
 import 'package:do_an/models/category/category_model.dart';
-import 'package:do_an/utils/common/screen_utils.dart';
-import 'package:do_an/utils/theme/app_color.dart';
-import 'package:do_an/utils/theme/app_styles.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/constants/app_image.dart';
+
 import '../../modules.dart';
 
 class AddPostPage extends GetView<AddPostController> {

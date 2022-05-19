@@ -506,6 +506,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
             height: height(4),
           ),
           descriptionField(
+            textEditingController: controller.tittleController,
               hintText: "Nhập tiêu đề ...",
               maxLines: 2,
               maxLength: 200,
@@ -529,6 +530,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
               height: height(4),
             ),
             descriptionField(
+              textEditingController: controller.infoController,
                 hintText: "Nhập thông tin ...",
                 maxLines: 10,
                 maxLength: 1000,
@@ -542,6 +544,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
     return InkWell(
       onTap: () async {
       await Get.toNamed(RouterLink.selectedAddressPage)?.then((value) {
+        FocusManager.instance.primaryFocus?.unfocus();
         if(value != null){
           controller.address.value = value;
           controller.getAddress(controller.address.value);

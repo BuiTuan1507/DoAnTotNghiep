@@ -209,7 +209,6 @@ class Toast {
       double borderRadius, {
         bool isSuccessToast = false,
       }) {
-    log("1");
     return Container(
       width: Get.width,
       decoration: BoxDecoration(

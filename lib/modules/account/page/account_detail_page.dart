@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/routes_link.dart';
+import '../../../models/user/user_info_model.dart';
 import '../../../utils/utils.dart';
+import '../../../utils/widget/cache_image.dart';
+import '../../add_post/page/add_post_page.dart';
 import '../../modules.dart';
 
 class AccountDetailPage extends GetView<AccountDetailController> {
@@ -71,7 +74,7 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                 ),
               ),
               buildTextDisplayPost(controller.userInfoModel.value.posts?.length.toString() ?? "0"),
-              buildListPostProfile()
+              Obx(() => (controller.userInfoModel.value.posts?.length ?? 0)  > 0 ? buildListPost() :  buildListPostProfile())
             ],
           ))),
     );
@@ -374,7 +377,9 @@ class AccountDetailPage extends GetView<AccountDetailController> {
             ButtonApply(
               tittle: "Đăng tin",
               style: AppStyles.textSmallWhiteMedium,
-              onClick: () => {},
+              onClick: () => {
+                Get.toNamed(RouterLink.addPostPage)
+              },
               width: width(120),
               height: height(45),
               margin: EdgeInsets.symmetric(
@@ -384,6 +389,78 @@ class AccountDetailPage extends GetView<AccountDetailController> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildListPost(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
+      child: ListView.separated(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        // controller: scrollController,
+        itemCount: controller.userInfoModel.value.posts?.length ?? 0,
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        itemBuilder: (context, index) {
+          return buildItemPostSearch(context, index, controller.userInfoModel.value.posts![index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            indent: width(12),
+            endIndent: width(12),
+            height: height(1),
+          );
+        },
+      ),
+    );
+  }
+  Widget buildItemPostSearch (BuildContext context, int index, Posts post){
+    return Container(
+      height: height(120),
+      //width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: width(60),
+            width: width(80),
+            child: CacheImage(
+              imageUrl: post.media?.first.fileDownloadUri ?? MyImage.imageBanner,
+              boxFit: BoxFit.cover,
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: width(10)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(post.tittle ?? "", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: height(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(post.money.toString(), style: AppStyles.textSmallRedMedium,),
+                      Text (post.createTime ?? "",style: AppStyles.textSmallDarkNormal,)
+                    ],
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

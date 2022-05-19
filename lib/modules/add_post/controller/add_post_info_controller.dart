@@ -110,13 +110,13 @@ class AddPostInfoController extends GetxController {
   Future<List<String>> sendImage() async {
     List<String> listImageUrl = <String>[];
     if (file?.isNotEmpty == true) {
-      file?.forEach((element) async {
+      for(var element in file!){
         String filename = "";
         String extensionFile = "";
         String linkFile = "";
 
         double fileSizeByte =
-            element.readAsBytesSync().lengthInBytes.toDouble();
+        element.readAsBytesSync().lengthInBytes.toDouble();
         double fileSize = fileSizeByte / (1024 * 1024);
         bool uploadFileSuccess = false;
 
@@ -127,7 +127,7 @@ class AddPostInfoController extends GetxController {
             listImageUrl.add(linkFile);
           }
         } else {}
-      });
+      }
     }
     return listImageUrl;
   }
@@ -146,11 +146,12 @@ class AddPostInfoController extends GetxController {
 
   Future<void> addPost() async {
     FocusManager.instance.primaryFocus?.unfocus();
+
     String token = GlobalData.getUserModel().token ?? "";
     int userId = GlobalData.getUserModel().id ?? 0;
     isLoading.value = true;
-    bool check = ((file?.isNotEmpty ?? true) && moneyController.text.isNotEmpty && tittleController.text.isNotEmpty && infoController.text.isNotEmpty && address.value.id != null);
-    if (check) {
+    bool check = ( (file?.isNotEmpty ?? true) && moneyController.text.isNotEmpty && tittleController.text.isNotEmpty && infoController.text.isNotEmpty && address.value.id != null);
+    if (!check) {
       CommonUtil.showToast("Bạn phải điền đầy đủ thông tin");
       return;
     }
@@ -171,11 +172,12 @@ class AddPostInfoController extends GetxController {
         "content": infoController.text.trim(),
         "address": address.value.id
       };
-      ResponseModel responseModel =
-          await postRepository.apiAddPost(param: param, token: token);
+      ResponseModel responseModel = await postRepository.apiAddPost(param: param, token: token);
       if (responseModel.status) {
+        moneyController.clear();
+        tittleController.clear();
+        infoController.clear();
         Get.toNamed(RouterLink.loadingPostPage);
-        Get.back();
       } else {
         CommonUtil.showToast(responseModel.message);
       }
