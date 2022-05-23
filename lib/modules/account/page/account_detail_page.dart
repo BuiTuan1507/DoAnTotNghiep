@@ -26,14 +26,18 @@ class AccountDetailPage extends GetView<AccountDetailController> {
         backgroundColor: greenMoney,
       ),
       body: Obx(() => SingleChildScrollView(
-          child: Column(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              buildAvatarProfile(controller.userInfoModel.value.avatar ?? Constants.AVATAR_URL, context),
+              buildAvatarProfile(
+                  controller.userInfoModel.value.avatar ?? Constants.AVATAR_URL,
+                  context),
               Center(
                 child: Text(
-                  (controller.userInfoModel.value.firstName ?? "") + " " + (controller.userInfoModel.value.lastName ?? ""),
+                  (controller.userInfoModel.value.firstName ?? "") +
+                      " " +
+                      (controller.userInfoModel.value.lastName ?? ""),
                   style: AppStyles.textNormalBlackMedium,
                 ),
               ),
@@ -43,8 +47,12 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    textFollowUser(controller.userInfoModel.value.followers ?? 0, "Người theo dõi"),
-                    textFollowUser(controller.userInfoModel.value.followingUser ?? 0, "Đang theo dõi")
+                    textFollowUser(
+                        controller.userInfoModel.value.followers ?? 0,
+                        "Người theo dõi"),
+                    textFollowUser(
+                        controller.userInfoModel.value.followingUser ?? 0,
+                        "Đang theo dõi")
                   ],
                 ),
               ),
@@ -60,11 +68,14 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   endIndent: width(20),
                 ),
               ),
-              buildItemInfo(Icons.person, "Giới tính", controller.sexUser.value),
-              buildItemInfo(Icons.calendar_today, "Ngày sinh", controller.birthDay.value),
-              buildItemInfo(Icons.calendar_today, "Ngày tham gia",controller.joinTime.value),
-              buildItemInfo(Icons.location_on, "Địa chỉ",
-                  controller.addressUser.value),
+              buildItemInfo(
+                  Icons.person, "Giới tính", controller.sexUser.value),
+              buildItemInfo(
+                  Icons.calendar_today, "Ngày sinh", controller.birthDay.value),
+              buildItemInfo(Icons.calendar_today, "Ngày tham gia",
+                  controller.joinTime.value),
+              buildItemInfo(
+                  Icons.location_on, "Địa chỉ", controller.addressUser.value),
               buildItemInfo(Icons.star, "Đánh giá", controller.rating.value),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: height(0)),
@@ -74,8 +85,13 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   endIndent: width(20),
                 ),
               ),
-              buildTextDisplayPost(controller.listPostModel.value.posts?.length.toString() ?? "0"),
-              Obx(() => (controller.listPostModel.value.posts?.length ?? 0)  > 0 ? buildListPost() :  buildListPostProfile())
+              buildTextDisplayPost(
+                  controller.listPostModel.value.posts?.length.toString() ??
+                      "0"),
+              Obx(() => loadingLogin(controller.isLoading.value)),
+              Obx(() => (controller.listPostModel.value.posts?.length ?? 0) > 0
+                  ? buildListPost()
+                  : buildListPostProfile())
             ],
           ))),
     );
@@ -171,14 +187,16 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                     itemButtonSelectImage(
                       title: "Camera",
                       function: () {
-                        controller.changeImage(isCamera: true, context: context);
+                        controller.changeImage(
+                            isCamera: true, context: context);
                       },
                       iconButton: Icons.camera_alt_outlined,
                     ),
                     itemButtonSelectImage(
                         title: "Thư viện",
                         function: () {
-                          controller.changeImage(isCamera: false, context: context);
+                          controller.changeImage(
+                              isCamera: false, context: context);
                         },
                         iconButton: Icons.save_rounded),
                   ],
@@ -256,7 +274,7 @@ class AccountDetailPage extends GetView<AccountDetailController> {
         children: [
           Expanded(
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(RouterLink.editProfileDetailPage);
               },
               child: Container(
@@ -378,9 +396,7 @@ class AccountDetailPage extends GetView<AccountDetailController> {
             ButtonApply(
               tittle: "Đăng tin",
               style: AppStyles.textSmallWhiteMedium,
-              onClick: () => {
-                Get.toNamed(RouterLink.addPostPage)
-              },
+              onClick: () => {Get.toNamed(RouterLink.addPostPage)},
               width: width(120),
               height: height(45),
               margin: EdgeInsets.symmetric(
@@ -394,19 +410,25 @@ class AccountDetailPage extends GetView<AccountDetailController> {
     );
   }
 
-  Widget buildListPost(){
+  Widget buildListPost() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
       child: Column(
-        children: List.generate(controller.listPostModel.value.posts?.length ?? 0, (index) => buildItemPostSearch( index, controller.listPostModel.value.posts![index])),
+        children: List.generate(
+            controller.listPostModel.value.posts?.length ?? 0,
+            (index) => buildItemPostSearch(
+                index, controller.listPostModel.value.posts![index])),
       ),
     );
   }
-  Widget buildItemPostSearch (int index, Posts post){
+
+  Widget buildItemPostSearch(int index, Posts post) {
     return Container(
       height: height(120),
       //width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -415,7 +437,8 @@ class AccountDetailPage extends GetView<AccountDetailController> {
             height: width(60),
             width: width(80),
             child: CacheImage(
-              imageUrl: post.media?.first.fileDownloadUri ?? MyImage.imageBanner,
+              imageUrl:
+                  post.media?.first.fileDownloadUri ?? MyImage.imageBanner,
               boxFit: BoxFit.cover,
             ),
           ),
@@ -429,7 +452,12 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(post.tittle ?? "", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                        child: Text(
+                          post.tittle ?? "",
+                          style: AppStyles.textNormalBlackMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       )
                     ],
                   ),
@@ -439,8 +467,14 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(CommonUtil.formatMoney(post.money ?? 0), style: AppStyles.textSmallRedMedium,),
-                      Text (CommonUtil.parseDateTime(post.createTime ?? ""),style: AppStyles.textSmallDarkNormal,)
+                      Text(
+                        CommonUtil.formatMoney(post.money ?? 0),
+                        style: AppStyles.textSmallRedMedium,
+                      ),
+                      Text(
+                        CommonUtil.parseDateTime(post.createTime ?? ""),
+                        style: AppStyles.textSmallDarkNormal,
+                      )
                     ],
                   )
                 ],

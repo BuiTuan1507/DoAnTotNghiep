@@ -54,6 +54,7 @@ class Posts {
   int? idSubCategory;
   String? subCategory;
   int? idAddress;
+  String? address;
   bool? priority;
   List<Media>? media;
   List<dynamic>? likeUsers;
@@ -75,6 +76,7 @@ class Posts {
         this.idSubCategory,
         this.subCategory,
         this.idAddress,
+        this.address,
         this.priority,
         this.media,
         this.likeUsers,
@@ -96,6 +98,7 @@ class Posts {
     idSubCategory = json['idSubCategory'];
     subCategory = json['subCategory'];
     idAddress = json['idAddress'];
+    address = json['address'];
     priority = json['priority'];
     if (json['media'] != null) {
       media = <Media>[];
@@ -134,6 +137,7 @@ class Posts {
     data['idSubCategory'] = this.idSubCategory;
     data['subCategory'] = this.subCategory;
     data['idAddress'] = this.idAddress;
+    data['address'] = this.address;
     data['priority'] = this.priority;
     if (this.media != null) {
       data['media'] = this.media!.map((v) => v.toJson()).toList();

@@ -63,6 +63,7 @@ class CommonUtil {
 
  static String parseDateTime(String time) {
     String dateTimeString = "";
+    if(time == "") return "";
     try {
       DateTime dateTime = CommonUtil.parseStringToDate(
           time ,

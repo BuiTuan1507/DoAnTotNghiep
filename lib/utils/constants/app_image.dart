@@ -46,5 +46,5 @@ class MyIcon{
   static const String postBuyIcon = "assets/icon/post_buy.svg";
   static const String postSellIcon = "assets/icon/post_sell.svg";
   static const String friendsUser = "assets/icon/users.svg";
-
+  static const String watchIcon = "assets/icon/watch_icon.svg";
 }

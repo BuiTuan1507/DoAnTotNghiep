@@ -2,13 +2,16 @@ import 'package:do_an/utils/widget/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/routes_link.dart';
+import '../../../../models/user/post_user_model.dart';
 import '../../../../utils/utils.dart';
 
 class ItemProductWidget extends StatefulWidget {
-  const ItemProductWidget({Key? key}) : super(key: key);
+  Posts post;
+   ItemProductWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   State<ItemProductWidget> createState() => _ItemProductWidgetState();
@@ -22,8 +25,8 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
         Get.toNamed(RouterLink.productDetailPage);
       },
       child: Container(
-        height: width(150),
-        width: width(200),
+        height: width(120),
+        width: width(150),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         padding: EdgeInsets.symmetric(horizontal: width(5)),
         child: Column(
@@ -48,13 +51,20 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
   }
 
   Widget buildImage() {
+    String image = MyImage.imageBanner;
+    String lengthImage = "0";
+    if(widget.post.media?.isNotEmpty == true){
+      image = widget.post.media?.first.fileDownloadUri ?? MyImage.imageBanner;
+      lengthImage = widget.post.media?.length.toString() ?? "0";
+    }
+
     return Stack(
       children: [
         SizedBox(
-          height: width(150),
+          height: width(100),
           width: double.infinity,
           child: CacheImage(
-            imageUrl: MyImage.imageBanner,
+            imageUrl: image ,
             boxFit: BoxFit.cover,
           ),
         ),
@@ -69,7 +79,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
                   shape: BoxShape.circle,
                   color: grey_6),
               child: Text(
-                "5",
+                lengthImage,
                 style: AppStyles.textSmallGreenRegular,
               ),
             )),
@@ -92,8 +102,8 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
 
   Widget buildStatusPost() {
     return Container(
-      height: height(40),
-      padding: EdgeInsets.symmetric(horizontal: width(5), vertical: height(8)),
+      height: height(26),
+      padding: EdgeInsets.only(left: width(5), right:width(5) ,top: height(4)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -121,11 +131,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
           ),
           Padding(
             padding: EdgeInsets.only(left: width(10)),
-            child: Icon(
-              Icons.star,
-              size: size(20),
-              color: Colors.amber,
-            ),
+            child: SvgPicture.asset(MyIcon.watchIcon, color: black,),
           ),
           Padding(
             padding: EdgeInsets.only(right: width(5)),
@@ -141,14 +147,14 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
 
   Widget buildNameProduct() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: height(4), horizontal: width(3)),
+      padding: EdgeInsets.symmetric(vertical: height(3), horizontal: width(3)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children:  [
           Flexible(
               child: Text(
-            "Name Product eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            widget.post.content ?? '',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppStyles.textSmallBlackMedium,
@@ -162,7 +168,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width(3)),
       child: Text(
-        "8 trieu/thang",
+        CommonUtil.formatMoney(widget.post.money ?? 0),
         style: AppStyles.textSmallRedMedium,
       ),
     );
@@ -172,12 +178,12 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: height(4), horizontal: width(3)),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: Text("19/04", maxLines: 1, overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,)),
+          Expanded(child: Text(CommonUtil.parseDateTime(widget.post.createTime ?? ""), maxLines: 1, overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,)),
           const SizedBox(width:4),
-          Expanded(child: Text("Hoang Mai", maxLines: 1, overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular))
+          Expanded(child: Text(widget.post.address ?? "", maxLines: 2, overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular))
         ],
       ),
     );

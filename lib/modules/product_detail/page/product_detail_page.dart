@@ -444,6 +444,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         children: [
           Text("Tin đăng tương tự", style: AppStyles.textNormalDarkSemiBold,),
           SizedBox(height: height(15),),
+          /*
           Container(
             height: height(380),
             child: ListView(
@@ -460,6 +461,8 @@ class ProductDetailPage extends GetView<ProductDetailController>{
               ],
             ),
           )
+
+           */
         ],
       ),
     );

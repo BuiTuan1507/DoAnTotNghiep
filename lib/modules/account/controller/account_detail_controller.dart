@@ -28,6 +28,8 @@ class AccountDetailController extends GetxController {
 
   PostRepository postRepository = PostRepository();
 
+  RxBool isLoading = false.obs;
+
   Rx<String> sexUser = "".obs;
   Rx<String> joinTime = "".obs;
   Rx<String> birthDay = "".obs;
@@ -172,13 +174,17 @@ class AccountDetailController extends GetxController {
       "userId": userId,
     };
     try{
+      isLoading.value = true;
       ResponseModel responseModel = await postRepository.apiGetListPostPersonal(param: params, token: token);
+      isLoading.value = false;
       if(responseModel.status){
         listPostModel.value = ListPostModel.fromJson(responseModel.data);
       }else{
         CommonUtil.showToast(responseModel.message);
       }
+
     }catch(e){
+      isLoading.value = false;
       CommonUtil.showToast("Lấy bài đăng bị lỗi");
     }
   }
