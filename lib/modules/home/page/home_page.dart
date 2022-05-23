@@ -41,7 +41,7 @@ class HomePage extends GetView<HomeController> {
               )),
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             Get.toNamed(RouterLink.chatPage);
           },
           child: Container(
@@ -58,10 +58,13 @@ class HomePage extends GetView<HomeController> {
 
   Widget buildBodyHome() {
     return RefreshIndicator(
-      onRefresh: () async {},
+      onRefresh: () async {
+        controller.getListPostNoFilter();
+      },
       child: ListView(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
+        physics:
+          BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        controller: controller.scrollController,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width(12)),
@@ -77,16 +80,23 @@ class HomePage extends GetView<HomeController> {
             height: height(20),
           ),
           ListItemFeature(),
-
           ListCategoryHome(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-            child: Text("Tin đặc biệt", style: AppStyles.textNormalGreenSemiBold,),
+            padding: EdgeInsets.symmetric(
+                horizontal: width(20), vertical: height(15)),
+            child: Text(
+              "Tin đặc biệt",
+              style: AppStyles.textNormalGreenSemiBold,
+            ),
           ),
           buildListPostPriority(),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(0)),
-            child: Text("Tin đăng mới nhất", style: AppStyles.textNormalGreenSemiBold,),
+            padding: EdgeInsets.symmetric(
+                horizontal: width(20), vertical: height(0)),
+            child: Text(
+              "Tin đăng mới nhất",
+              style: AppStyles.textNormalGreenSemiBold,
+            ),
           ),
           buildListPostInHome()
         ],
@@ -94,38 +104,43 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget buildListPostPriority(){
+  Widget buildListPostPriority() {
     return Obx(() => Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(1)),
-      height: width(240),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: controller.listPriorityPost.length ,
-        itemBuilder: ( context, index) {
-          return Container(
-            child: ItemProductWidget(post: controller.listPriorityPost[index],),
-          );
-        },
-      ),
-    ));
+          padding:
+              EdgeInsets.symmetric(horizontal: width(20), vertical: height(1)),
+          height: width(240),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.listPriorityPost.length,
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            itemBuilder: (context, index) {
+              return Container(
+                child: ItemProductWidget(
+                  post: controller.listPriorityPost[index],
+                ),
+              );
+            },
+          ),
+        ));
   }
 
-  Widget buildListPostInHome(){
+  Widget buildListPostInHome() {
     return Obx(() => Container(
         padding: EdgeInsets.all(width(5)),
-        child: GridView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            padding: EdgeInsets.all(width(5)),
-            gridDelegate:  SliverGridDelegateWithMaxCrossAxisExtent(
-              crossAxisSpacing: width(10),
-              mainAxisSpacing: width(10),
-              childAspectRatio: 0.58,
-              maxCrossAxisExtent: width(170),),
-            itemCount: controller.listPost.length,
-            itemBuilder: (BuildContext context, int index){
-              return ItemProductWidget(post: controller.listPost[index],);
-            })
-    ));
+        child: GridView.count(
+         // scrollDirection: Axis.vertical,
+          physics:
+          ScrollPhysics(),
+          shrinkWrap: true,
+          padding: EdgeInsets.all(width(5)),
+          crossAxisCount: 2,
+          crossAxisSpacing: width(10),
+          mainAxisSpacing: width(10),
+          childAspectRatio: 0.7,
+          children: List.generate(controller.listPost.length, (index) {
+            return ItemProductWidget(post: controller.listPost[index]);
+          }),
+        )));
   }
 }

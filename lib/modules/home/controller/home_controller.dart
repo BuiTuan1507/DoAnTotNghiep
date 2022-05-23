@@ -57,9 +57,13 @@ class HomeController extends GetxController {
 
   bool isLoadMore = false;
 
+  ScrollController scrollController = ScrollController();
+
   @override
   void onInit() async {
+    initScrollController();
     await getListPostNoFilter();
+
     super.onInit();
   }
 
@@ -109,6 +113,22 @@ class HomeController extends GetxController {
       page = page + 1;
       await getListPostNoFilter();
     }
+  }
+  _scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      loadMorePost();
+    }
+
+
+  }
+  void initScrollController() {
+    scrollController.addListener(_scrollListener);
+  }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
 
