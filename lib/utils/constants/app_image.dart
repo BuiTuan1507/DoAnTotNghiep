@@ -7,6 +7,17 @@ class MyImage{
  static String chatLogo = "assets/images/chat_logo.svg";
  static const String wallClock = "assets/images/wall_clock.svg";
  static const  String warning = "assets/images/warning.svg";
+
+ // category
+  static const String foodImage = "assets/images/doan.png";
+ static const String electricImage = "assets/images/dodientu.png";
+ static const String houseImage = "assets/images/dogiadung.png";
+ static const String bookImage = "assets/images/sach.png";
+
+ static const String catImage = "assets/images/thucung.png";
+ static const String storeImage = "assets/images/van_phong_pham.png";
+ static const String bikeImage = "assets/images/xeco.png";
+ static const String manyImage = "assets/images/xemthem.png";
 }
 
 class MyIcon{

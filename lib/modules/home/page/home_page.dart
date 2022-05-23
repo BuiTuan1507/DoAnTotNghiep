@@ -61,44 +61,49 @@ class HomePage extends GetView<HomeController> {
       onRefresh: () async {
         controller.getListPostNoFilter();
       },
-      child: ListView(
-        physics:
-          BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        controller: controller.scrollController,
+      child: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: width(12)),
-            child: BannerWidget(
-              imageList: controller.imageBanner,
-              height: 180.h,
-              width: double.infinity,
-              isIndicator: 1,
-              isAutoPlay: true,
-            ),
+          ListView(
+            physics:
+            BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            controller: controller.scrollController,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width(12)),
+                child: BannerWidget(
+                  imageList: controller.imageBanner,
+                  height: 180.h,
+                  width: double.infinity,
+                  isIndicator: 1,
+                  isAutoPlay: true,
+                ),
+              ),
+              SizedBox(
+                height: height(20),
+              ),
+              ListItemFeature(),
+              ListCategoryHome(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width(20), vertical: height(15)),
+                child: Text(
+                  "Tin đặc biệt",
+                  style: AppStyles.textNormalGreenSemiBold,
+                ),
+              ),
+              buildListPostPriority(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width(20), vertical: height(0)),
+                child: Text(
+                  "Tin đăng mới nhất",
+                  style: AppStyles.textNormalGreenSemiBold,
+                ),
+              ),
+              buildListPostInHome()
+            ],
           ),
-          SizedBox(
-            height: height(20),
-          ),
-          ListItemFeature(),
-          ListCategoryHome(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: width(20), vertical: height(15)),
-            child: Text(
-              "Tin đặc biệt",
-              style: AppStyles.textNormalGreenSemiBold,
-            ),
-          ),
-          buildListPostPriority(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: width(20), vertical: height(0)),
-            child: Text(
-              "Tin đăng mới nhất",
-              style: AppStyles.textNormalGreenSemiBold,
-            ),
-          ),
-          buildListPostInHome()
+          Obx(() => loadingLogin(controller.isLoading.value))
         ],
       ),
     );

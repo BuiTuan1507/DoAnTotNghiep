@@ -22,61 +22,73 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(padding: EdgeInsets.symmetric(vertical: height(10), horizontal: width(5)),child: Text("Danh mục", style: AppStyles.textNormalGreenSemiBold,),),
-          GridView.count(
-            physics:  ScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            padding: EdgeInsets.all(width(5)),
-            crossAxisCount: 4,
-            crossAxisSpacing: width(10),
-            mainAxisSpacing: width(10),
-            childAspectRatio: 0.65,
-            children: <Widget>[
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-              buildItemCategory(MyImage.defaultImage,"Hoa Xoan"),
-            ],
+          Container(
+            height: height(300),
+            child: GridView.count(
+              physics:  ScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              padding: EdgeInsets.all(width(5)),
+              crossAxisCount: 2,
+              crossAxisSpacing: width(10),
+              mainAxisSpacing: width(10),
+              childAspectRatio: 1,
+              children: <Widget>[
+                buildItemCategory(MyImage.bikeImage,"Xe cộ", (){}),
+                buildItemCategory(MyImage.electricImage,"Đồ điện tử", (){}),
+                buildItemCategory(MyImage.storeImage,"Văn phòng phẩm", (){}),
+                buildItemCategory(MyImage.bookImage,"Tài liệu học tập", (){}),
+                buildItemCategory(MyImage.foodImage,"Đồ ăn thực phẩm", (){}),
+                buildItemCategory(MyImage.catImage,"Thú cưng", (){}),
+                buildItemCategory(MyImage.houseImage,"Đồ gia dụng", (){}),
+                buildItemCategory(MyImage.manyImage,"Xem thêm", (){}),
+              ],
+            ),
           )
         ],
       ),
     );
   }
 
-  Widget buildItemCategory (String image, String text){
-    return Container(
-     // margin: EdgeInsets.only(right: width(10)),
-      width: width(130),
-     child: Column(
-       children: <Widget>[
-         Container(
-           height: width(80),
-           width: width(80),
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(15),
-           ),
-           child: ClipRRect(
-             child: Image.asset(
-               image,
-               fit: BoxFit.cover,
+  Widget buildItemCategory (String image, String text, VoidCallback onClick){
+    return InkWell(
+      onTap: (){
+        onClick;
+      },
+      child: SizedBox(
+       // margin: EdgeInsets.only(right: width(10)),
+        width: width(130),
+       child: Column(
+         children: [
+           Container(
+             height: width(60),
+             width: width(90),
+             decoration: BoxDecoration(
+               borderRadius: BorderRadius.circular(15),
              ),
-             borderRadius: BorderRadius.circular(20),
+             child: ClipRRect(
+               child: Image.asset(
+                 image,
+                 fit: BoxFit.cover,
+               ),
+               borderRadius: BorderRadius.circular(20),
+             ),
            ),
-         ),
-         Container(
-           height: height(10),
-         ),
-         Text(
-           text,
-           style: AppStyles.textNormalBlackMedium,
-           textAlign: TextAlign.center,
-         )
-       ],
-     ),
+           Container(
+             height: height(10),
+           ),
+           Expanded(
+             child: Text(
+               text,
+               maxLines: 2,
+               style: AppStyles.textSmallGreenRegular,
+               textAlign: TextAlign.center,
+               overflow: TextOverflow.ellipsis,
+             ),
+           )
+         ],
+       ),
+      ),
     );
   }
 }

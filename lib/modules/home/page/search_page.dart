@@ -1,14 +1,16 @@
+import 'package:do_an/models/post/history_search_model.dart';
 import 'package:do_an/modules/home/controller/search_page_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../models/user/post_user_model.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/cache_image.dart';
 import '../widget/search_bar.dart';
 
 class SearchPage extends GetView<SearchController> {
-   const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +25,34 @@ class SearchPage extends GetView<SearchController> {
             onChanged: (text) {
               controller.searchPost(text);
             }),
-
       ),
-      body: ListView(
+      body: Stack(
         children: [
-          buildHistoryList(),
-
-          Obx(() =>  buildTextSearch(controller.keyword.value)),
-
-          buildSortPost(),
-          buildListPostSearch()
+          ListView(
+            children: [
+              Obx(() => buildHistoryList(controller.historySearch.value)),
+              Obx(() => Visibility(
+                visible: controller.isFirstSearch.value,
+                child: Column(
+                  children: [
+                    Obx(() => buildTextSearch(controller.keyword.value)),
+                    buildSortPost(),
+                    Obx(() => buildListPostSearch(listPost : controller.listPosts))
+                  ],
+                ),
+              ))
+            ],
+          ),
+          Obx(() => loadingLogin(controller.isLoading.value))
         ],
       ),
     );
   }
 
-  Widget buildHistoryList() {
+  Widget buildHistoryList(HistorySearch historySearch) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(10)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(15), vertical: height(10)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -55,27 +67,32 @@ class SearchPage extends GetView<SearchController> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: width(10)),
-                child: Icon(Icons.delete, size: size(22),color: grey_4,),
+                child: Icon(
+                  Icons.delete,
+                  size: size(22),
+                  color: grey_4,
+                ),
               )
             ],
           ),
-
           SizedBox(
             height: height(15),
           ),
-          Row(
-            children: [
-              Expanded(
-                  child: Wrap(
-                direction: Axis.horizontal,
-                runSpacing: width(10),
-                spacing: width(10),
-                children: controller.text
-                    .map((i) => buildItem(i))
-                    .toList(),
-              )),
-            ],
-          ),
+          historySearch.listSearch?.isNotEmpty == true
+              ? Row(
+                  children: [
+                    Expanded(
+                        child: Wrap(
+                      direction: Axis.horizontal,
+                      runSpacing: width(10),
+                      spacing: width(10),
+                      children: controller.historySearch.value.listSearch!
+                          .map((i) => buildItem(i.searchText ?? ""))
+                          .toList(),
+                    )),
+                  ],
+                )
+              : Container(),
           SizedBox(
             height: height(15),
           )
@@ -84,71 +101,84 @@ class SearchPage extends GetView<SearchController> {
     );
   }
 
-  Widget buildItem(String text){
+  Widget buildItem(String text) {
     return Container(
       width: width(40),
       margin: EdgeInsets.symmetric(horizontal: width(10), vertical: height(5)),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          width: width(1),
-          color: lightDarkHintText
-        )
-      ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(width: width(1), color: lightDarkHintText)),
       child: Center(
-        child: Text(text, style: AppStyles.textNormalDarkSemiBold,),
-      ),
-    );
-  }
-
-  Widget buildTextSearch(String value){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
-      child: RichText(
-        text: TextSpan(
-          text: "Kết quả tìm kiếm với từ khoá :",
-          style: AppStyles.textNormalBlackMedium,
-          children: <TextSpan>[
-            TextSpan(
-              text: value,
-              style: AppStyles.textNormalGreenSemiBold,
-            ),
-          ],
+        child: Text(
+          text,
+          style: AppStyles.textNormalDarkSemiBold,
         ),
       ),
     );
   }
 
-  Widget buildSortPost(){
+  Widget buildTextSearch(String value) {
+    return Visibility(
+      visible: controller.keyword.value != "",
+      child: Container(
+        padding:
+            EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+        child: RichText(
+          text: TextSpan(
+            text: "Kết quả tìm kiếm với từ khoá : ",
+            style: AppStyles.textNormalBlackMedium,
+            children: <TextSpan>[
+              TextSpan(
+                text: value,
+                style: AppStyles.textNormalGreenSemiBold,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSortPost() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(right: width(10)),
-            child: Text("Sắp xếp theo : ", style: AppStyles.textNormalBlackMedium,),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: grey_5
-            ),
-            child: Center(
-              child: Text("Giá", style: AppStyles.textSmallBlackRegular,),
+            child: Text(
+              "Sắp xếp theo : ",
+              style: AppStyles.textNormalBlackMedium,
             ),
           ),
-          SizedBox(width: width(10),),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
+            padding:
+                EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: grey_5
-            ),
+                borderRadius: BorderRadius.circular(20), color: grey_5),
             child: Center(
-              child: Text("Thời gian", style: AppStyles.textSmallBlackRegular,),
+              child: Text(
+                "Giá",
+                style: AppStyles.textSmallBlackRegular,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: width(10),
+          ),
+          Container(
+            padding:
+                EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), color: grey_5),
+            child: Center(
+              child: Text(
+                "Thời gian",
+                style: AppStyles.textSmallBlackRegular,
+              ),
             ),
           ),
         ],
@@ -156,33 +186,27 @@ class SearchPage extends GetView<SearchController> {
     );
   }
 
-  Widget buildListPostSearch(){
+  Widget buildListPostSearch( {required List<Posts> listPost}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
-      child: ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-       // controller: scrollController,
-        itemCount: 6,
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        itemBuilder: (context, index) {
-          return buildItemPostSearch(context, index);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            indent: width(12),
-            endIndent: width(12),
-            height: height(1),
-          );
-        },
+      padding:
+      EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+      child: Column(
+        children: List.generate(listPost.length , (index) => buildItemPostSearch(
+            index, listPost[index])),
       ),
     );
   }
-  Widget buildItemPostSearch (BuildContext context, int index){
+
+  Widget buildItemPostSearch( int index, Posts posts) {
+    String image = MyImage.imageBanner;
+    if (posts.media?.isNotEmpty == true) {
+      image = posts.media?.first.fileDownloadUri ?? MyImage.imageBanner;
+    }
     return Container(
-      height: height(120),
+      height: height(140),
       //width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
+      padding:
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -191,7 +215,7 @@ class SearchPage extends GetView<SearchController> {
             height: width(60),
             width: width(80),
             child: CacheImage(
-              imageUrl: MyImage.imageBanner,
+              imageUrl: image,
               boxFit: BoxFit.cover,
             ),
           ),
@@ -205,18 +229,29 @@ class SearchPage extends GetView<SearchController> {
                   Row(
                     children: [
                       Expanded(
-                        child: Text("Tên sản phẩm này, ..............", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                        child: Text(
+                          posts.content ?? '',
+                          style: AppStyles.textNormalBlackMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       )
                     ],
                   ),
                   SizedBox(
-                   height: height(10),
+                    height: height(10),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("3,2 tỷ", style: AppStyles.textSmallRedMedium,),
-                      Text ("19/04",style: AppStyles.textSmallDarkNormal,)
+                      Text(
+                        CommonUtil.formatMoney(posts.money ?? 0),
+                        style: AppStyles.textSmallRedMedium,
+                      ),
+                      Text(
+                        CommonUtil.parseDateTime(posts.createTime ?? ""),
+                        style: AppStyles.textSmallDarkNormal,
+                      )
                     ],
                   )
                 ],
