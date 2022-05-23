@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/routes_link.dart';
+import '../../../models/user/post_user_model.dart';
 import '../../../models/user/user_info_model.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/cache_image.dart';
@@ -73,8 +74,8 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   endIndent: width(20),
                 ),
               ),
-              buildTextDisplayPost(controller.userInfoModel.value.posts?.length.toString() ?? "0"),
-              Obx(() => (controller.userInfoModel.value.posts?.length ?? 0)  > 0 ? buildListPost() :  buildListPostProfile())
+              buildTextDisplayPost(controller.listPostModel.value.posts?.length.toString() ?? "0"),
+              Obx(() => (controller.listPostModel.value.posts?.length ?? 0)  > 0 ? buildListPost() :  buildListPostProfile())
             ],
           ))),
     );
@@ -395,31 +396,17 @@ class AccountDetailPage extends GetView<AccountDetailController> {
 
   Widget buildListPost(){
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
-      child: ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        // controller: scrollController,
-        itemCount: controller.userInfoModel.value.posts?.length ?? 0,
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        itemBuilder: (context, index) {
-          return buildItemPostSearch(context, index, controller.userInfoModel.value.posts![index]);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            indent: width(12),
-            endIndent: width(12),
-            height: height(1),
-          );
-        },
+      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+      child: Column(
+        children: List.generate(controller.listPostModel.value.posts?.length ?? 0, (index) => buildItemPostSearch( index, controller.listPostModel.value.posts![index])),
       ),
     );
   }
-  Widget buildItemPostSearch (BuildContext context, int index, Posts post){
+  Widget buildItemPostSearch (int index, Posts post){
     return Container(
       height: height(120),
       //width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
+      padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -452,8 +439,8 @@ class AccountDetailPage extends GetView<AccountDetailController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(post.money.toString(), style: AppStyles.textSmallRedMedium,),
-                      Text (post.createTime ?? "",style: AppStyles.textSmallDarkNormal,)
+                      Text(CommonUtil.formatMoney(post.money ?? 0), style: AppStyles.textSmallRedMedium,),
+                      Text (CommonUtil.parseDateTime(post.createTime ?? ""),style: AppStyles.textSmallDarkNormal,)
                     ],
                   )
                 ],

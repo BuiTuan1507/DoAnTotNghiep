@@ -10,6 +10,7 @@ import '../../../utils/theme/app_styles.dart';
 import '../../../utils/utils.dart';
 import '../../modules.dart';
 import '../widget/build_avatar_widget.dart';
+import '../widget/build_item_account_widget.dart';
 
 class AccountPage extends GetView<AccountController> {
   const AccountPage({Key? key}) : super(key: key);
@@ -102,56 +103,25 @@ class AccountPage extends GetView<AccountController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildItem("Đơn đã mua", controller.toPageBuy, MyIcon.cartIcon,
+          buildItem("Đơn đã mua", controller.toPageBuy, MyIcon.postSellIcon,
+              Colors.green.withOpacity(0.4)
+          ),
+          buildItem("Đơn đã bán", controller.toPageSell, MyIcon.postBuyIcon,
+              Colors.blue.withOpacity(0.4)),
+          buildItem("Tin đã lưu", controller.toPageSavePost, MyIcon.loveIcon,
               Colors.red.withOpacity(0.4)),
-          buildItem("Đơn đã bán", controller.toPageSell, MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
-          buildItem("Tin đã lưu", controller.toPageSavePost, MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
-          buildItem("Bạn bè".tr, controller.toPageFriend, MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
-          buildItem("Cài đặt".tr, controller.toPageSetting, MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
-          buildItem("Đăng xuất".tr, () => modalLogout(context), MyIcon.cartIcon,
-              Colors.red.withOpacity(0.4)),
+          buildItem("Bạn bè".tr, controller.toPageFriend, MyIcon.friendsUser,
+              Colors.amber.withOpacity(0.4)),
+          buildItem("Cài đặt".tr, controller.toPageSetting, MyIcon.settingIcon,
+              Colors.grey.withOpacity(0.9)),
+          buildItem("Đăng xuất".tr, () => modalLogout(context), MyIcon.logoutIcon,
+              Colors.grey.withOpacity(0.4)),
         ],
       ),
     );
   }
 
-  Widget buildItem(
-      String? tittle, VoidCallback onClick, String icon, Color color) {
-    return InkWell(
-      onTap: onClick,
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: width(10), vertical: height(18)),
-        child: Row(
-          children: [
-            Container(
-                height: width(32),
-                width: width(32),
-                padding: EdgeInsets.all(width(6)),
-                decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-                child: SvgPicture.asset(
-                  icon,
-                  color: Colors.white,
-                )),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: width(15)),
-                child: Text(
-                  tittle ?? "",
-                  style: AppStyles.textNormalBlackMedium,
-                ),
-              ),
-            ),
-            SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
-          ],
-        ),
-      ),
-    );
-  }
+
 
 
 

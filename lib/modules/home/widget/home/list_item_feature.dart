@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/utils.dart';
+
 class ListItemFeature extends StatefulWidget {
   const ListItemFeature({Key? key}) : super(key: key);
 
@@ -27,32 +29,43 @@ class _ListItemFeatureState extends State<ListItemFeature> {
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemCount: controller.listIcon.length,
-          itemBuilder: (context, index) => Container(
+          itemBuilder: (context, index) =>
+              Container(
               padding: EdgeInsets.only(right: width(10)),
               margin: EdgeInsets.symmetric(vertical: height(5)),
               width: width(80),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: width(30),
-                    width: width(30),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle
-                    ),
-                    child: SvgPicture.asset(
-                      controller.listIcon[index].icon ?? "",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: height(5)),
-                    child: Text(controller.listIcon[index].name ?? "", style: AppStyles.textNormalBlackMedium,),
-                  )
-                ],
-              ))),
+              child: buildItem(controller.listIcon[index])
+              )
+      ),
     );
   }
+
+  Widget buildItem(IconFeature iconFeature){
+    return InkWell(
+      onTap: (){
+        iconFeature.onClick;
+      },
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+                height: width(32),
+                width: width(32),
+                padding: EdgeInsets.all(width(6)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: iconFeature.color),
+                child: SvgPicture.asset(
+                  iconFeature.icon!,
+                  color: Colors.white,
+                )),
+            Container(
+              padding: EdgeInsets.only(top: height(5)),
+              child: Text(iconFeature.name ?? "", style: AppStyles.textSmallBlackMedium,),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
 }

@@ -1,7 +1,7 @@
 
 class ProdAppChatEnvironment{
- // final baseUrl = "http://10.0.2.2:8088";
-  final baseUrl = "https://0187-58-187-180-109.ap.ngrok.io";
+  final baseUrl = "http://10.0.2.2:8088";
+ // final baseUrl = "https://0187-58-187-180-109.ap.ngrok.io";
   final baseApi = "/api";
   final baseVersion = "";
   final receiveTimeout = 2 * 60 * 1000;
@@ -28,4 +28,10 @@ class UrlApi{
   static const String getListMainCategory = "/get_list_main_category";
   static const String getListSubcategory = "/get_list_sub_category";
   static const String addPost = "/add_post";
+  static const String getListPostPersonal = "/get_list_post_personal";
+  static const String getListPostNoFilter = "/get_list_post_no_filter";
+  static const String getListPostFilter = "/get_list_post_filter";
+  static const String getListPostSearch = "/search_post";
+  static const String getListHistorySearch = "/get_list_history_search_post";
+  static const String deleteHistorySearch = "/delete_list_history_search_post";
 }

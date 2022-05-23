@@ -40,4 +40,11 @@ class MyIcon{
   static const String shareIcon = "assets/icon/share_icon.svg";
 
   static const String smsIcon = "assets/icon/sms.png";
+
+  static const String logoutIcon = "assets/icon/Logout.svg";
+  static const String loveIcon = "assets/icon/love.svg";
+  static const String postBuyIcon = "assets/icon/post_buy.svg";
+  static const String postSellIcon = "assets/icon/post_sell.svg";
+  static const String friendsUser = "assets/icon/users.svg";
+
 }

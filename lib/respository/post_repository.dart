@@ -26,4 +26,43 @@ class PostRepository{
     return res;
   }
 
+  Future<ResponseModel> apiGetListPostPersonal({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostPersonal;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> apiGetListPostNoFilter({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostNoFilter;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> apiGetListPostFilter({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostFilter;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> apiSearchPost({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostSearch;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> apiGetListHistorySearch({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListHistorySearch;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> deleteHistorySearch({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.deleteHistorySearch;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+
+
+
 }
