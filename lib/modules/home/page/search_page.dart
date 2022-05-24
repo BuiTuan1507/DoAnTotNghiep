@@ -32,15 +32,18 @@ class SearchPage extends GetView<SearchController> {
             children: [
               Obx(() => buildHistoryList(controller.historySearch.value)),
               Obx(() => Visibility(
-                visible: controller.isFirstSearch.value,
-                child: Column(
-                  children: [
-                    Obx(() => buildTextSearch(controller.keyword.value)),
-                    buildSortPost(),
-                    Obx(() => buildListPostSearch(listPost : controller.listPosts))
-                  ],
-                ),
-              ))
+                    visible: controller.isFirstSearch.value,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Obx(() => buildTextSearch(controller.keyword.value)),
+                        buildSortPost(),
+                        Obx(() =>
+                            buildListPostSearch(listPost: controller.listPosts))
+                      ],
+                    ),
+                  ))
             ],
           ),
           Obx(() => loadingLogin(controller.isLoading.value))
@@ -65,12 +68,17 @@ class SearchPage extends GetView<SearchController> {
                 "Lịch sử tìm kiếm",
                 style: AppStyles.textLargeBlackSemiBold,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: width(10)),
-                child: Icon(
-                  Icons.delete,
-                  size: size(22),
-                  color: grey_4,
+              InkWell(
+                onTap: () {
+                  controller.setListHistorySearch();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: width(10)),
+                  child: Icon(
+                    Icons.delete,
+                    size: size(22),
+                    color: grey_4,
+                  ),
                 ),
               )
             ],
@@ -80,16 +88,16 @@ class SearchPage extends GetView<SearchController> {
           ),
           historySearch.listSearch?.isNotEmpty == true
               ? Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                        child: Wrap(
+                    Wrap(
                       direction: Axis.horizontal,
                       runSpacing: width(10),
                       spacing: width(10),
                       children: controller.historySearch.value.listSearch!
-                          .map((i) => buildItem(i.searchText ?? ""))
+                          .map((i) => buildItem(i))
                           .toList(),
-                    )),
+                    )
                   ],
                 )
               : Container(),
@@ -101,42 +109,73 @@ class SearchPage extends GetView<SearchController> {
     );
   }
 
-  Widget buildItem(String text) {
-    return Container(
-      width: width(40),
-      margin: EdgeInsets.symmetric(horizontal: width(10), vertical: height(5)),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: width(1), color: lightDarkHintText)),
-      child: Center(
-        child: Text(
-          text,
-          style: AppStyles.textNormalDarkSemiBold,
+  Widget buildItem(ListSearch listSearch) {
+    return Stack(
+      children: [
+        Visibility(
+          visible: listSearch.isSelected ?? false,
+          child: Positioned.fill(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                child: Container(
+                  padding: EdgeInsets.all(width(3)),
+                  child: Icon(
+                    Icons.clear,
+                    size: size(12),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-      ),
+        InkWell(
+          onTap: () {
+            if (listSearch.isSelected == false) {
+              controller.searchController.text = listSearch.searchText ?? "";
+              controller.searchPost("");
+            }else{
+              controller.deleteHistorySearch(listSearch);
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: width(15), vertical: height(7)),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: height(1), color: lightDarkHintText)),
+            child: Center(
+              child: Text(
+                listSearch.searchText ?? "",
+                style: AppStyles.textSmallBlackRegular,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget buildTextSearch(String value) {
-    return Visibility(
-      visible: controller.keyword.value != "",
-      child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
-        child: RichText(
-          text: TextSpan(
-            text: "Kết quả tìm kiếm với từ khoá : ",
-            style: AppStyles.textNormalBlackMedium,
-            children: <TextSpan>[
-              TextSpan(
-                text: value,
-                style: AppStyles.textNormalGreenSemiBold,
+    return Obx(() => Visibility(
+          visible: controller.keyword.value != "",
+          child: Container(
+            padding: EdgeInsets.only(
+                left: width(20), right: width(20), bottom: height(10)),
+            child: RichText(
+              text: TextSpan(
+                text: "Kết quả tìm kiếm với từ khoá : ",
+                style: AppStyles.textNormalBlackMedium,
+                children: <TextSpan>[
+                  TextSpan(
+                    text: value,
+                    style: AppStyles.textNormalGreenSemiBold,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Widget buildSortPost() {
@@ -186,18 +225,18 @@ class SearchPage extends GetView<SearchController> {
     );
   }
 
-  Widget buildListPostSearch( {required List<Posts> listPost}) {
+  Widget buildListPostSearch({required List<Posts> listPost}) {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
       child: Column(
-        children: List.generate(listPost.length , (index) => buildItemPostSearch(
-            index, listPost[index])),
+        children: List.generate(listPost.length,
+            (index) => buildItemPostSearch(index, listPost[index])),
       ),
     );
   }
 
-  Widget buildItemPostSearch( int index, Posts posts) {
+  Widget buildItemPostSearch(int index, Posts posts) {
     String image = MyImage.imageBanner;
     if (posts.media?.isNotEmpty == true) {
       image = posts.media?.first.fileDownloadUri ?? MyImage.imageBanner;

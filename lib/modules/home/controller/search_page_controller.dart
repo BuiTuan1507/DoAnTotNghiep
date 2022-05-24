@@ -116,4 +116,33 @@ class SearchController extends GetxController {
       CommonUtil.showToast("Lỗi khi lấy lịch sử");
     }
   }
+
+  void setListHistorySearch(){
+    if(historySearch.value.listSearch?.isNotEmpty == true){
+      historySearch.value.listSearch?.forEach((element) {
+        element.isSelected = !element.isSelected!;
+      });
+      historySearch.refresh();
+    }
+  }
+  Future<void> deleteHistorySearch(ListSearch listSearch) async{
+    try{
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "historySearchId": listSearch.id
+      };
+      ResponseModel responseModel = await postRepository.deleteHistorySearch(param: param, token: token);
+      if(responseModel.status){
+        historySearch.value.listSearch?.remove(listSearch);
+        historySearch.refresh();
+      }else {
+        CommonUtil.showToast(responseModel.message);
+      }
+    }catch(e){
+      CommonUtil.showToast("Lỗi khi xoá lịch sử");
+    }
+  }
 }

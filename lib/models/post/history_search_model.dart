@@ -24,12 +24,14 @@ class HistorySearch {
 class ListSearch {
   int? id;
   String? searchText;
+  bool? isSelected;
 
-  ListSearch({this.id, this.searchText});
+  ListSearch({this.id, this.searchText, this.isSelected});
 
   ListSearch.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     searchText = json['searchText'];
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
