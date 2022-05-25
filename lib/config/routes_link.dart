@@ -29,4 +29,5 @@ class RouterLink {
   static const String savePostPage = "/savePostPage";
   static const String friendUserPage = "/friendUserPage";
   static const String loadingPostPage = "/loadingPostPage";
+  static const String listCategoryPostPage = "/listCategoryPostPage";
 }

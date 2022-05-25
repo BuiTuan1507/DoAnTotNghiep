@@ -7,6 +7,8 @@ import 'package:do_an/respository/post_repository.dart';
 import 'package:get/get.dart';
 
 class AddPostController extends GetxController{
+
+
   RxBool isLoading = false.obs;
 
   RxList<MainCategory> listMainCategory = <MainCategory>[].obs;

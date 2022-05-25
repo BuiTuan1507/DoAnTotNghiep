@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../modules.dart';
 
 class AddPostPage extends GetView<AddPostController> {
+
   const AddPostPage({Key? key}) : super(key: key);
 
   @override
@@ -66,7 +67,11 @@ class AddPostPage extends GetView<AddPostController> {
       color: (mainCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
         onTap: (){
-          Get.toNamed(RouterLink.addPostCategoryPage, arguments: mainCategory);
+          Get.toNamed(RouterLink.addPostCategoryPage, arguments: {
+            "mainCategory": mainCategory,
+            "idMainCategory":mainCategory.id,
+            "state":0
+          });
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

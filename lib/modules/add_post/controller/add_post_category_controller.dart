@@ -11,12 +11,17 @@ class AddPostCategoryController extends GetxController {
 
   Rx<MainCategory> mainCategory = MainCategory().obs;
 
+  RxInt idMainCategory = 0.obs;
+  late int state ;
+
   PostRepository postRepository = PostRepository();
 
   @override
   void onInit() async {
     if(Get.arguments != null){
-      mainCategory.value = Get.arguments;
+      mainCategory.value = Get.arguments['mainCategory'];
+      idMainCategory.value = Get.arguments['idMainCategory'];
+      state = Get.arguments['state'];
     }
     await getListSubCategory();
     super.onInit();
@@ -24,7 +29,7 @@ class AddPostCategoryController extends GetxController {
 
   Future<void> getListSubCategory() async{
     Map<String,dynamic> param = {
-      "mainId":mainCategory.value.id
+      "mainId": idMainCategory.value
     };
     try {
       listSubCategory.clear();

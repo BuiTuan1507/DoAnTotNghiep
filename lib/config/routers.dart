@@ -1,5 +1,7 @@
 import 'package:do_an/config/routes_link.dart';
 import 'package:do_an/modules/add_post/page/loading_post_page.dart';
+import 'package:do_an/modules/list_category/binding/list_category_post_bindings.dart';
+import 'package:do_an/modules/list_category/page/list_category_post_page.dart';
 import 'package:get/get.dart';
 import '../modules/modules.dart';
 
@@ -146,6 +148,11 @@ class AppRouters {
           name: RouterLink.savePostPage,
           page: () =>   SavePostPage(),
           binding: SavePostBindings()
+      ),
+      GetPage(
+          name: RouterLink.listCategoryPostPage,
+          page: () =>   ListCategoryPostPage(),
+          binding: ListCategoryPostBindings()
       ),
     ];
   }

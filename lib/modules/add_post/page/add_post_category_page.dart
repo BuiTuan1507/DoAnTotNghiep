@@ -35,7 +35,7 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
               child: ListView.separated(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                // controller: scrollController,
+
                 itemCount: controller.listSubCategory.length,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
@@ -69,10 +69,17 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
       color: (subCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
       child: InkWell(
         onTap: (){
-          Get.toNamed(RouterLink.addPostInfoPage, arguments: {
-            "mainCategory": controller.mainCategory.value,
-            "subCategory":subCategory
-          });
+          if(controller.state == 0) {
+            Get.toNamed(
+                RouterLink.addPostInfoPage, arguments: {
+              "mainCategory": controller.mainCategory.value,
+              "subCategory":subCategory
+            }
+            );
+          }else{
+            Get.back(result: subCategory);
+          }
+
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
