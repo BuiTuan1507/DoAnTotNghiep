@@ -34,4 +34,11 @@ class UrlApi{
   static const String getListPostSearch = "/search_post";
   static const String getListHistorySearch = "/get_list_history_search_post";
   static const String deleteHistorySearch = "/delete_list_history_search_post";
+  static const String getDetailPost = "/get_detail_post";
+  static const String reportPost = "/report_post";
+  static const String followUser = "/follow_user";
+  static const String getListFriends = "/get_list_friends";
+  static const String getAnotherUserInfo = "/get_another_user_info";
+  static const String likePost = "/like_post";
+  static const String unlikePost = "/unlike_post";
 }

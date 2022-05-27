@@ -26,7 +26,8 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
       body: ListView(
         children: [
           buildSelectCategory(context),
-          Obx(()=> buildListPostFilter(listPost: controller.listPosts))
+          Obx(()=> buildListPostFilter(listPost: controller.listPosts)),
+          Obx(() => loadingLogin(controller.isLoading.value))
         ],
       ),
     );
