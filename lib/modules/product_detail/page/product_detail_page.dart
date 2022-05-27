@@ -34,16 +34,16 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 210.h,
-                    child: ImageProductWidget(
-                      imageList: controller.imageBanner,
+                  Obx(() => Container(
                       height: 210.h,
-                      width: double.infinity,
-                      isIndicator: 1,
-                      isAutoPlay: true,
-                    )
-                  ),
+                      child: ImageProductWidget(
+                        imageList: controller.listImage,
+                        height: 210.h,
+                        width: double.infinity,
+                        isIndicator: 1,
+                        isAutoPlay: true,
+                      )
+                  )),
                   SizedBox(height: height(10),),
                   buildListStatus(),
                   Padding(
@@ -207,7 +207,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
   }
 
   Widget buildListStatus (){
-    return Container(
+    return Obx(() => Container(
       height: height(50),
       padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(5)),
       child: Row(
@@ -216,7 +216,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         children: [
           Flexible(
             flex: 1,
-            child: buildItemStatusDetailPage("0", Icons.favorite_border, () { }),
+            child: buildItemStatusDetailPage(controller.detailPostModel.value.post?.liked.toString() ?? "0", Icons.favorite_border, () { }),
           ),
           VerticalDivider(
             endIndent: height(10),
@@ -240,7 +240,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           ),
         ],
       ),
-    );
+    ));
   }
   Widget buildItemStatusDetailPage(String tittle, IconData iconData, VoidCallback onClick) {
     return  Container(
@@ -257,7 +257,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
     );
   }
   Widget buildInfomationPost (){
-    return Container(
+    return Obx(() => Container(
       padding: EdgeInsets.symmetric(horizontal: width(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +266,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           Row(
             children: [
               Expanded(
-                child: Text("DDaay la ten san pham nay mn i ", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                child: Text(controller.detailPostModel.value.post?.tittle ?? "", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
 
               ),
             ],
@@ -276,7 +276,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: height(5)),
-                  child: Text("3,4 ty ", style: AppStyles.textSmallRedMedium,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                  child: Text(CommonUtil.formatMoney(controller.detailPostModel.value.post?.money ?? 0), style: AppStyles.textSmallRedMedium,maxLines: 1,overflow: TextOverflow.ellipsis,),
                 ),
               ),
             ],
@@ -284,22 +284,23 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("19/04", style: AppStyles.textSmallDarkRegular,),
-              Text("91 lượt xem", style: AppStyles.textSmallDarkRegular,)
+              Text(CommonUtil.parseDateTime(controller.detailPostModel.value.post?.createTime ?? ""), style: AppStyles.textSmallDarkRegular,),
+
+              Text( (controller.detailPostModel.value.post?.watch.toString() ?? "0") + " lượt xem", style: AppStyles.textSmallDarkRegular,)
             ],
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-                Icon(Icons.location_on_outlined, size:size(22)),
+              Icon(Icons.location_on_outlined, size:size(22)),
               SizedBox(width: width(10),),
               Text("Số 11, ngõ 21, Văn Quán, Hà Đông, Hà Nội", style: AppStyles.textSmallDarkRegular,)
             ],
           )
         ],
       ),
-    );
+    ));
   }
   Widget buildInfoUserPost (){
     return Container(
