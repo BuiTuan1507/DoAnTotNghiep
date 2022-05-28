@@ -30,4 +30,6 @@ class RouterLink {
   static const String friendUserPage = "/friendUserPage";
   static const String loadingPostPage = "/loadingPostPage";
   static const String listCategoryPostPage = "/listCategoryPostPage";
+  static const String reportPostPage = "/reportPostPage";
+  static const String watchUserPage = "/watchUserPage";
 }

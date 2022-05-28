@@ -60,6 +60,44 @@ class ProductDetailController extends GetxController {
         listImage.add(media.fileDownloadUri ?? "");
       }
     }
+  }
 
+  Future<void> likePost() async {
+    try {
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "idPost": post.value.id
+      };
+      ResponseModel responseModel = await detailPostRepository.apiLikePost(
+          param: param, token: token);
+      if (responseModel.status) {
+      } else {
+        CommonUtil.showToast(responseModel.message);
+      }
+    } catch (e) {
+      CommonUtil.showToast("Thích bài đăng thất bại");
+    }
+  }
+  Future<void> unLikePost() async {
+    try {
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "idPost": post.value.id
+      };
+      ResponseModel responseModel = await detailPostRepository.apiUnLikePost(
+          param: param, token: token);
+      if (responseModel.status) {
+      } else {
+        CommonUtil.showToast(responseModel.message);
+      }
+    } catch (e) {
+      CommonUtil.showToast("Lỗi lấy thông tin bài đăng");
+    }
   }
 }

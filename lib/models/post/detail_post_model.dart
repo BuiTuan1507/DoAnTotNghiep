@@ -156,6 +156,7 @@ class UserPostData {
   String? firstName;
   String? lastName;
   String? phoneNumber;
+  String? address;
 
   UserPostData(
       {this.id,
@@ -164,7 +165,9 @@ class UserPostData {
         this.lengthOfPost,
         this.firstName,
         this.lastName,
-        this.phoneNumber});
+        this.phoneNumber,
+        this.address
+      });
 
   UserPostData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -174,6 +177,7 @@ class UserPostData {
     firstName = json['firstName'];
     lastName = json['lastName'];
     phoneNumber = json['phoneNumber'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
@@ -185,6 +189,7 @@ class UserPostData {
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
     data['phoneNumber'] = this.phoneNumber;
+    data['address'] = this.address;
     return data;
   }
 }

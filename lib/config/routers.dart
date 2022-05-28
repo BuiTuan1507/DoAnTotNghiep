@@ -2,8 +2,12 @@ import 'package:do_an/config/routes_link.dart';
 import 'package:do_an/modules/add_post/page/loading_post_page.dart';
 import 'package:do_an/modules/list_category/binding/list_category_post_bindings.dart';
 import 'package:do_an/modules/list_category/page/list_category_post_page.dart';
+import 'package:do_an/modules/product_detail/page/watch_user_page.dart';
 import 'package:get/get.dart';
 import '../modules/modules.dart';
+import '../modules/product_detail/bindings/report_post_binding.dart';
+import '../modules/product_detail/bindings/watch_user_bindings.dart';
+import '../modules/product_detail/page/report_post_page.dart';
 
 class AppRouters {
   static List<GetPage> createRoutes() {
@@ -153,6 +157,16 @@ class AppRouters {
           name: RouterLink.listCategoryPostPage,
           page: () =>   ListCategoryPostPage(),
           binding: ListCategoryPostBindings()
+      ),
+      GetPage(
+          name: RouterLink.reportPostPage,
+          page: () =>   ReportPostPage(),
+          binding: ReportPostBindings()
+      ),
+      GetPage(
+          name: RouterLink.watchUserPage,
+          page: () =>   WatchUserPage(),
+          binding: WatchUserBindings()
       ),
     ];
   }
