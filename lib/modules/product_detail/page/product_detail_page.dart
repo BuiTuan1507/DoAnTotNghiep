@@ -437,7 +437,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
     );
   }
   Widget buildListSamePost(){
-    return Container(
+    return Obx(() => Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       child: Column(
         crossAxisAlignment:CrossAxisAlignment.start,
@@ -445,27 +445,20 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         children: [
           Text("Tin đăng tương tự", style: AppStyles.textNormalDarkSemiBold,),
           SizedBox(height: height(15),),
-          /*
-          Container(
+
+          SizedBox(
             height: height(380),
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: [
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-                ItemProductWidget(),
-              ],
+              itemCount: controller.listPosts.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemProductWidget(post: controller.listPosts[index]);
+              },
             ),
           )
 
-           */
         ],
       ),
-    );
+    ));
   }
 }

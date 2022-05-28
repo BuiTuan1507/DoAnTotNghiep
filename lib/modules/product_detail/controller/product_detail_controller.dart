@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/user/post_user_model.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
+import 'package:do_an/respository/post_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/post/detail_post_model.dart';
 import '../../../service/service.dart';
-import '../../../utils/constants/app_image.dart';
 
 class ProductDetailController extends GetxController {
 
@@ -23,7 +23,13 @@ class ProductDetailController extends GetxController {
 
   DetailPostRepository detailPostRepository = DetailPostRepository();
 
+  PostRepository postRepository = PostRepository();
+
   Rx<DetailPostModel> detailPostModel = DetailPostModel().obs;
+
+  Rx<ListPostModel> listPostFilter = ListPostModel().obs;
+
+  RxList<Posts> listPosts = <Posts>[].obs;
 
   @override
   void onInit() async {
@@ -31,6 +37,7 @@ class ProductDetailController extends GetxController {
       post.value = Get.arguments;
     }
     await getProductDetail();
+    await getListPostMainCategory();
     super.onInit();
   }
 
@@ -112,5 +119,43 @@ class ProductDetailController extends GetxController {
     } catch (e) {
       CommonUtil.showToast("Lỗi lấy thông tin bài đăng");
     }
+  }
+
+  Future<void> filterPost(Map<String, dynamic> param, String token)async {
+    try{
+      listPosts.clear();
+      isLoading.value = true;
+
+      ResponseModel responseModel = await postRepository.apiGetListPostFilter(param: param, token: token);
+
+      if(responseModel.status){
+        listPostFilter.value = ListPostModel.fromJson(responseModel.data);
+        listPosts.addAll(listPostFilter.value.priorityPosts ?? []);
+        listPosts.addAll(listPostFilter.value.posts ?? []);
+        listPosts.refresh();
+      }else{
+        CommonUtil.showToast(responseModel.message);
+      }
+      isLoading.value = false;
+
+    }catch(e){
+      isLoading.value = false;
+      CommonUtil.showToast("Có lỗi xảy ra");
+    }
+  }
+  Future<void> getListPostMainCategory() async {
+    String token = GlobalData.getUserModel().token ?? "";
+    int userId = GlobalData.getUserModel().id ?? 0;
+    Map<String, dynamic> param = {
+      "token": token,
+      "userId": userId,
+      "id_main_category": post.value.idMainCategory,
+      "subCategory": post.value.idSubCategory,
+      "formUse":"",
+      "conditionUse":"",
+      "startMoney":0,
+      "endMoney":0
+    };
+    await filterPost(param, token);
   }
 }

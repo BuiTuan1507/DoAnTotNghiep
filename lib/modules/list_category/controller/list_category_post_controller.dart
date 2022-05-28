@@ -22,6 +22,7 @@ class ListCategoryPostController extends GetxController {
   Rx<ListPostModel> listPostFilter = ListPostModel().obs;
 
   RxList<Posts> listPosts = <Posts>[].obs;
+
   @override
   void onInit() async {
     if(Get.arguments != null){
