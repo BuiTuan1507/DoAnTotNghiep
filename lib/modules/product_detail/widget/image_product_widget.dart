@@ -36,9 +36,6 @@ class _ImageProductWidgetState extends State<ImageProductWidget> {
   var currentIndexPage = 0;
   @override
   Widget build(BuildContext context) {
-    if (widget.imageList == null || widget.imageList!.isEmpty) {
-      return Container();
-    }
     return SizedBox(
       height: widget.height,
       width: widget.width,

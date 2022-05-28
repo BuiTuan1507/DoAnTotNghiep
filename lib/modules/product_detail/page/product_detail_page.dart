@@ -36,13 +36,13 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                 children: [
                   Obx(() => Container(
                       height: 210.h,
-                      child: ImageProductWidget(
+                      child:controller.listImage.isNotEmpty ? ImageProductWidget(
                         imageList: controller.listImage,
                         height: 210.h,
                         width: double.infinity,
                         isIndicator: 1,
                         isAutoPlay: true,
-                      )
+                      ) : Container()
                   )),
                   SizedBox(height: height(10),),
                   buildListStatus(),
@@ -295,7 +295,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
             children: [
               Icon(Icons.location_on_outlined, size:size(22)),
               SizedBox(width: width(10),),
-              Text("Số 11, ngõ 21, Văn Quán, Hà Đông, Hà Nội", style: AppStyles.textSmallDarkRegular,)
+              Text(controller.detailPostModel.value.userPostData?.address ?? "", style: AppStyles.textSmallDarkRegular,)
             ],
           )
         ],
@@ -303,16 +303,16 @@ class ProductDetailPage extends GetView<ProductDetailController>{
     ));
   }
   Widget buildInfoUserPost (){
-    return Container(
+    return Obx(() => Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: width(60),
+              height: width(60),
               width: width(60),
-              child: buildAvatar(MyImage.imageBanner, 40)),
+              child: buildAvatar(controller.detailPostModel.value.userPostData?.avatar ?? Constants.AVATAR_URL, 40)),
           SizedBox(
             width: width(10),
           ),
@@ -326,9 +326,9 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                   flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                  //  mainAxisAlignment: MainAxisAlignment.start,
+                    //  mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Ten use nay,.  nó sẽ dài như thế này  ", style: AppStyles.textSmallBlackMedium,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                      Text((controller.detailPostModel.value.userPostData?.firstName ?? "") + " " + (controller.detailPostModel.value.userPostData?.lastName ?? ""), style: AppStyles.textSmallBlackMedium,maxLines: 1,overflow: TextOverflow.ellipsis,),
                       SizedBox(height:height(5)),
                       RichText(
                         text: TextSpan(
@@ -336,7 +336,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                           style: AppStyles.textSmallDarkRegular,
                           children: <TextSpan>[
                             TextSpan(
-                              text: '29/04/2022',
+                              text: controller.dateJoin.value,
                               style: AppStyles.textSmallGreenSemiBold,
                             ),
                           ],
@@ -351,22 +351,22 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                   child: Container(
                     padding: EdgeInsets.symmetric( vertical: height(8)),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: grey_7.withOpacity(0.4)
+                        borderRadius: BorderRadius.circular(5),
+                        color: grey_7.withOpacity(0.4)
                     ),
                     child: Center(
-                      child:  RichText(
-                        text: TextSpan(
-                          text: "Tin đăng : ",
-                          style: AppStyles.textTinyDarkRegular,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '4',
-                              style: AppStyles.textTinyDarkRegular,
-                            ),
-                          ],
-                        ),
-                      )
+                        child:  RichText(
+                          text: TextSpan(
+                            text: "Tin đăng : ",
+                            style: AppStyles.textTinyDarkRegular,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: controller.detailPostModel.value.userPostData?.lengthOfPost.toString() ?? "0",
+                                style: AppStyles.textTinyDarkRegular,
+                              ),
+                            ],
+                          ),
+                        )
                     ),
                   ),
                 )
@@ -375,22 +375,22 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           )
         ],
       ),
-    );
+    ));
   }
   Widget buildInfoPost(){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+    return Obx(()=> Container(
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text("Chi tiết", style: AppStyles.textNormalBlackMedium,),
           SizedBox(height: height(15),),
-          Text("Day la thong tin chi tiet san pham nay eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", maxLines: 20,overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,),
+          Text(controller.detailPostModel.value.post?.content ?? "", maxLines: 20,overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,),
 
         ],
       ),
-    );
+    ));
   }
   Widget buildSupportChat(){
     return Container(

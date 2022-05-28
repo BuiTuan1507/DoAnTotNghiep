@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/user/post_user_model.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/post/detail_post_model.dart';
 import '../../../service/service.dart';
@@ -13,6 +16,8 @@ class ProductDetailController extends GetxController {
   Rx<Posts> post = Posts().obs;
 
   RxList<String> listImage = <String>[].obs;
+
+  Rx<String> dateJoin = " ".obs;
 
   RxBool isLoading = false.obs;
 
@@ -59,6 +64,14 @@ class ProductDetailController extends GetxController {
       for(var media in detailPostModel.value.post!.media!){
         listImage.add(media.fileDownloadUri ?? "");
       }
+    }
+    try{
+      DateTime joinTimeDate = DateFormat("yyyy-MM-dd hh:mm:ss")
+          .parse(detailPostModel.value.userPostData?.created ?? "");
+
+      dateJoin.value = DateFormat("dd-MM-yyyy").format(joinTimeDate);
+    }catch(e){
+      log(e.toString());
     }
   }
 
