@@ -23,6 +23,8 @@ class GlobalData{
   static void setUserLogin(UserModel? user) async{
     if(!CommonUtil.isEmpty(user)) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("id", user?.id.toString() ?? "");
+      prefs.setString("avatar", user?.avatar?? "");
       prefs.setString("token", user?.token ?? "");
       prefs.setString("firstName", user?.firstName?? "");
       prefs.setString("lastName", user?.lastName?? "");
@@ -33,6 +35,8 @@ class GlobalData{
   }
   static Future<void> clearUser () async{
     SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.remove("id");
+    await _prefs.remove("avatar");
     await _prefs.remove("token");
     await _prefs.remove("firstName");
     await _prefs.remove("lastName");

@@ -1,3 +1,4 @@
+import 'package:do_an/config/config.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,73 +27,79 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Obx(() => Container(
-                      height: 210.h,
-                      child:controller.listImage.isNotEmpty ? ImageProductWidget(
-                        imageList: controller.listImage,
+      body: RefreshIndicator(
+        onRefresh: () async  {
+          await controller.getProductDetail();
+          await controller.getListPostMainCategory();
+        },
+        child: Column(
+          children: [
+            Obx(() => controller.isLoading.value ? loadingLogin(controller.isLoading.value) : Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(() => Container(
                         height: 210.h,
-                        width: double.infinity,
-                        isIndicator: 1,
-                        isAutoPlay: true,
-                      ) : Container()
-                  )),
-                  SizedBox(height: height(10),),
-                  buildListStatus(),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: height(10)),
-                    child: Divider(
-                      endIndent: width(20),
-                      indent: width(20),
-                      thickness: height(1),
-                      color: grey_3,
+                        child:controller.listImage.isNotEmpty ? ImageProductWidget(
+                          imageList: controller.listImage,
+                          height: 210.h,
+                          width: double.infinity,
+                          isIndicator: 1,
+                          isAutoPlay: true,
+                        ) : Container()
+                    )),
+                    SizedBox(height: height(10),),
+                    buildListStatus(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: height(10)),
+                      child: Divider(
+                        endIndent: width(20),
+                        indent: width(20),
+                        thickness: height(1),
+                        color: grey_3,
+                      ),
                     ),
-                  ),
-                  buildInfomationPost(),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: height(10)),
-                    child: Divider(
-                      endIndent: width(20),
-                      indent: width(20),
-                      thickness: height(1),
-                      color: grey_3,
+                    buildInfomationPost(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: height(10)),
+                      child: Divider(
+                        endIndent: width(20),
+                        indent: width(20),
+                        thickness: height(1),
+                        color: grey_3,
+                      ),
                     ),
-                  ),
-                  buildInfoUserPost(),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: height(10)),
-                    child: Divider(
-                      endIndent: width(20),
-                      indent: width(20),
-                      thickness: height(1),
-                      color: grey_3,
+                    buildInfoUserPost(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: height(10)),
+                      child: Divider(
+                        endIndent: width(20),
+                        indent: width(20),
+                        thickness: height(1),
+                        color: grey_3,
+                      ),
                     ),
-                  ),
-                  buildInfoPost(),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: height(10)),
-                    child: Divider(
-                      endIndent: width(20),
-                      indent: width(20),
-                      thickness: height(1),
-                      color: grey_3,
+                    buildInfoPost(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: height(10)),
+                      child: Divider(
+                        endIndent: width(20),
+                        indent: width(20),
+                        thickness: height(1),
+                        color: grey_3,
+                      ),
                     ),
-                  ),
-                  buildSupportChat(),
-                  buildListSamePost()
-                ],
+                    buildSupportChat(),
+                    buildListSamePost()
+                  ],
+                ),
               ),
-            ),
-          ),
-          SafeArea(child: buildBottomBar())
-        ],
+            )),
+            SafeArea(child: buildBottomBar())
+          ],
+        )
       ),
 
     );
@@ -115,7 +122,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height : height(20)),
-              buildItemOptionalAppbar((){Get.back();},"Báo cáo bài đăng",Icons.report_problem_outlined),
+              buildItemOptionalAppbar((){Get.toNamed(RouterLink.reportPostPage);},"Báo cáo bài đăng",Icons.report_problem_outlined),
               buildItemOptionalAppbar((){Get.back();},"Lưu tin",Icons.post_add_rounded),
               buildItemOptionalAppbar((){Get.back();},"Chia sẻ bài viết",Icons.share),
               SizedBox(height: height(40),)
@@ -226,7 +233,8 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           ),
           Flexible(
             flex: 1,
-            child: buildItemStatusDetailPage("Lưu tin", Icons.save, () { }),
+            child: buildItemStatusDetailPage((controller.detailPostModel.value.post?.watch ?? 0).toString(), Icons.visibility_outlined, () {
+            }),
           ),
           VerticalDivider(
             endIndent: height(10),
@@ -236,42 +244,47 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           ),
           Flexible(
             flex: 1,
-            child: buildItemStatusDetailPage("Báo cáo", Icons.report_problem_outlined, () { }),
+            child: buildItemStatusDetailPage("Báo cáo", Icons.report_problem_outlined, () {
+              Get.toNamed(RouterLink.reportPostPage);
+            }),
           ),
         ],
       ),
     ));
   }
   Widget buildItemStatusDetailPage(String tittle, IconData iconData, VoidCallback onClick) {
-    return  Container(
-      padding: EdgeInsets.symmetric(horizontal: width(10),vertical: height(5)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(iconData, size: size(20),),
-          SizedBox(width: width(10),),
-          Text(tittle, style: AppStyles.textSmallBlackRegular,)
-        ],
+    return  InkWell(
+      onTap: onClick,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: width(10),vertical: height(5)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(iconData, size: size(20),color: grey_4,),
+            SizedBox(width: width(10),),
+            Text(tittle, style: AppStyles.textSmallBlackRegular,)
+          ],
+        ),
       ),
     );
   }
   Widget buildInfomationPost (){
-    return Obx(() => Container(
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: width(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
+          Obx(() => Row(
             children: [
               Expanded(
                 child: Text(controller.detailPostModel.value.post?.tittle ?? "", style: AppStyles.textNormalBlackMedium,maxLines: 2,overflow: TextOverflow.ellipsis,),
 
               ),
             ],
-          ),
-          Row(
+          )),
+          Obx(() =>  Row(
             children: [
               Expanded(
                 child: Padding(
@@ -280,16 +293,33 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                 ),
               ),
             ],
-          ),
+          )),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(CommonUtil.parseDateTime(controller.detailPostModel.value.post?.createTime ?? ""), style: AppStyles.textSmallDarkRegular,),
+              Obx(() => Text(CommonUtil.parseDateTime(controller.detailPostModel.value.post?.createTime ?? ""), style: AppStyles.textSmallDarkRegular,),),
 
-              Text( (controller.detailPostModel.value.post?.watch.toString() ?? "0") + " lượt xem", style: AppStyles.textSmallDarkRegular,)
+              Obx(() =>  InkWell(
+                onTap: (){
+                  if((controller.detailPostModel.value.post?.isLike ?? false)) {
+                    controller.unLikePost();
+                  }else {
+                    controller.likePost();
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: width(8), vertical: height(4)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: height(1), color: (controller.detailPostModel.value.post?.isLike ?? false) ? Colors.white : red),
+                    color: (controller.detailPostModel.value.post?.isLike ?? false) ? red.withOpacity(0.7) : Colors.white,
+                  ),
+                  child: (controller.detailPostModel.value.post?.isLike ?? false) ? Text("Đã lưu tin", style:  AppStyles.textSmallWhiteRegular,) : Text("Lưu tin", style:   AppStyles.textSmallRedRegular,),
+                ),
+              ))
             ],
           ),
-          Row(
+          Obx(() => Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -297,16 +327,16 @@ class ProductDetailPage extends GetView<ProductDetailController>{
               SizedBox(width: width(10),),
               Text(controller.detailPostModel.value.userPostData?.address ?? "", style: AppStyles.textSmallDarkRegular,)
             ],
-          )
+          ))
         ],
       ),
-    ));
+    );
   }
   Widget buildInfoUserPost (){
     return Obx(() => Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
@@ -323,13 +353,17 @@ class ProductDetailPage extends GetView<ProductDetailController>{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
-                  flex: 3,
+                  flex: 5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     //  mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text((controller.detailPostModel.value.userPostData?.firstName ?? "") + " " + (controller.detailPostModel.value.userPostData?.lastName ?? ""), style: AppStyles.textSmallBlackMedium,maxLines: 1,overflow: TextOverflow.ellipsis,),
-                      SizedBox(height:height(5)),
+                      Row(
+                        children: [
+                          Expanded(child: Text((controller.detailPostModel.value.userPostData?.firstName ?? "") + " " + (controller.detailPostModel.value.userPostData?.lastName ?? ""), style: AppStyles.textSmallBlackMedium,maxLines: 1,overflow: TextOverflow.ellipsis,)),
+                        ],
+                      ),
+                      SizedBox(height:height(12)),
                       RichText(
                         text: TextSpan(
                           text: "Ngày tham gia : ",
@@ -345,29 +379,46 @@ class ProductDetailPage extends GetView<ProductDetailController>{
                     ],
                   ),
                 ),
-                SizedBox(width: width(10),),
+                SizedBox(width: width(8),),
                 Flexible(
-                  flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.symmetric( vertical: height(8)),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: grey_7.withOpacity(0.4)
-                    ),
-                    child: Center(
-                        child:  RichText(
-                          text: TextSpan(
-                            text: "Tin đăng : ",
-                            style: AppStyles.textTinyDarkRegular,
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: controller.detailPostModel.value.userPostData?.lengthOfPost.toString() ?? "0",
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric( vertical: height(4), horizontal: width(6)),
+                        child: Center(
+                            child:  RichText(
+                              text: TextSpan(
+                                text: "Tin đăng: ",
                                 style: AppStyles.textTinyDarkRegular,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: controller.detailPostModel.value.userPostData?.lengthOfPost.toString() ?? "0",
+                                    style: AppStyles.textTinyDarkRegular,
+                                  ),
+                                ],
                               ),
-                            ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height:height(10)),
+
+                      InkWell(
+                        onTap: (){
+                          Get.toNamed(RouterLink.watchUserPage);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric( vertical: height(4), horizontal: width(6)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: greenMoney)
                           ),
-                        )
-                    ),
+                          child: Center(
+                              child:  Text("Xem trang", style: AppStyles.textTinyDarkRegular,)
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               ],
@@ -447,7 +498,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           SizedBox(height: height(15),),
 
           SizedBox(
-            height: height(380),
+            height: height(320),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: controller.listPosts.length,

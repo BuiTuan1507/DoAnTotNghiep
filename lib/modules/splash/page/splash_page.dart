@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/config.dart';
+import '../../../models/user/user_model.dart';
+import '../../../service/service.dart';
 import '../../../utils/utils.dart';
 
 class SplashPage extends StatelessWidget {
@@ -19,17 +21,29 @@ class SplashPage extends StatelessWidget {
 
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String uuid = prefs.getString("uid") ?? '';
+    String uuid = prefs.getString("id") ?? '';
     if (uuid == '') {
       Get.offAllNamed(RouterLink.login);
     } else {
-    //  String name = prefs.getString(LocaleKeys.nameUser) ?? "";
-   //   String email = prefs.getString(LocaleKeys.emailUser) ?? "";
-    //  String ccCurrency = prefs.getString(LocaleKeys.currency) ?? "";
+      int id = int.parse(prefs.getString("id") ?? "0") ;
+      String token = prefs.getString("token") ?? "";
+      String firstName = prefs.getString("firstName") ?? "";
+      String lastName = prefs.getString("lastName") ?? "";
+      String avatar = prefs.getString("avatar") ?? "";
+      String phoneNumber = prefs.getString("phoneNumber") ?? "";
+      bool  active = false;
 
-    //  UserModel userModel = UserModel(uuid: uuid, name: name, email: email,ccCurrency: ccCurrency);
-     // DataGlobal.setUserModel(userModel);
-      Get.offAllNamed(RouterLink.login);
+      UserModel newUser = UserModel(
+          id: id,
+          token: token,
+          firstName: firstName,
+          lastName: lastName,
+          avatar: avatar,
+          active: active,
+          phoneNumber: phoneNumber
+      );
+      GlobalData.setUserLogin(newUser);
+      Get.offAllNamed(RouterLink.main);
     }
   }
 

@@ -94,6 +94,11 @@ class ProductDetailController extends GetxController {
       ResponseModel responseModel = await detailPostRepository.apiLikePost(
           param: param, token: token);
       if (responseModel.status) {
+        int like = detailPostModel.value.post?.liked ?? 0 ;
+        DetailPostModel newDetailPostModel = DetailPostModel();
+        newDetailPostModel.post = detailPostModel.value.post?.copyWith(isLike: true, liked: like + 1);
+        newDetailPostModel.userPostData = detailPostModel.value.userPostData;
+        detailPostModel.value = newDetailPostModel;
       } else {
         CommonUtil.showToast(responseModel.message);
       }
@@ -113,6 +118,11 @@ class ProductDetailController extends GetxController {
       ResponseModel responseModel = await detailPostRepository.apiUnLikePost(
           param: param, token: token);
       if (responseModel.status) {
+        int like = detailPostModel.value.post?.liked ?? 0 ;
+        DetailPostModel newDetailPostModel = DetailPostModel();
+        newDetailPostModel.post = detailPostModel.value.post?.copyWith(isLike: false, liked: like -1 );
+        newDetailPostModel.userPostData = detailPostModel.value.userPostData;
+        detailPostModel.value = newDetailPostModel;
       } else {
         CommonUtil.showToast(responseModel.message);
       }
@@ -129,6 +139,7 @@ class ProductDetailController extends GetxController {
       ResponseModel responseModel = await postRepository.apiGetListPostFilter(param: param, token: token);
 
       if(responseModel.status){
+
         listPostFilter.value = ListPostModel.fromJson(responseModel.data);
         listPosts.addAll(listPostFilter.value.priorityPosts ?? []);
         listPosts.addAll(listPostFilter.value.posts ?? []);

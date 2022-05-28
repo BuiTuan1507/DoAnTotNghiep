@@ -121,6 +121,51 @@ class Post {
     data['isWatch'] = this.isWatch;
     return data;
   }
+
+  Post copyWith({
+    int? id,
+    String? createTime,
+    int? liked,
+    int? watch,
+    String? editTime,
+    String? conditionOfUse,
+    String? formUse,
+    int? money,
+    String? tittle,
+    String? content,
+    int? idMainCategory,
+    String? mainCategory,
+    int? idSubCategory,
+    String? subCategory,
+    int? idAddress,
+    String? address,
+    bool? priority,
+    List<Media>? media,
+    bool? isLike,
+    bool? isWatch,
+  }) => Post(
+      id: id ?? this.id,
+      createTime: createTime ?? this.createTime,
+      liked: liked ?? this.liked,
+      watch: watch ?? this.watch,
+      editTime: editTime ?? this.editTime,
+      conditionOfUse: conditionOfUse ?? this.conditionOfUse,
+      formUse: formUse ?? this.formUse,
+      money: money ?? this.money,
+      tittle: tittle ?? this.tittle,
+      content: content ?? this.content,
+      idMainCategory: idMainCategory ?? this.idMainCategory,
+      mainCategory: mainCategory ?? this.mainCategory,
+      idSubCategory: idSubCategory ?? this.idSubCategory,
+      subCategory: subCategory ?? this.subCategory,
+      idAddress: idAddress ?? this.idAddress,
+      address: address ??  this.address,
+      priority: priority ?? this.priority,
+      media: media ?? this.media,
+      isLike: isLike ?? this.isLike,
+      isWatch: isWatch ?? this.isWatch
+  );
+
 }
 
 class Media {
