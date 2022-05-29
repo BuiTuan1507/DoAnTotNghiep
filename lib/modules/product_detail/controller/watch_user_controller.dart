@@ -13,6 +13,8 @@ import '../../../utils/common/common_util.dart';
 class WatchUserController extends GetxController {
   RxBool isLoading = false.obs;
 
+  RxBool isLoadingFollow = false.obs;
+
   Rx<UserPostData> userData = UserPostData().obs;
 
   Rx<AnotherUserInfoModel> fullUserData = AnotherUserInfoModel().obs;
@@ -70,21 +72,33 @@ class WatchUserController extends GetxController {
         };
       }
 
-      isLoading.value = true;
+      isLoadingFollow.value = true;
 
       ResponseModel responseModel =
           await detailPostRepository.apiFollowUser(param: param, token: token);
 
       if (responseModel.status) {
         if (fullUserData.value.userInfo?.follower == false) {
-          fullUserData.value.userInfo?.follower = true;
+
+          int follow = fullUserData.value.userInfo?.followers ?? 0 ;
+
+          AnotherUserInfoModel newUserData = AnotherUserInfoModel();
+          newUserData.userInfo = fullUserData.value.userInfo?.copyWith(follower: true, followers: follow + 1);
+          newUserData.postData = fullUserData.value.postData;
+          fullUserData.value = newUserData;
+
           CommonUtil.showToast("Theo dõi" +
               (userData.value.firstName ?? "") +
               " " +
               (userData.value.lastName ?? "") +
               "thành công");
         } else {
-          fullUserData.value.userInfo?.follower = false;
+          int follow = fullUserData.value.userInfo?.followers ?? 0 ;
+
+          AnotherUserInfoModel newUserData = AnotherUserInfoModel();
+          newUserData.userInfo = fullUserData.value.userInfo?.copyWith(follower: false, followers: follow - 1);
+          newUserData.postData = fullUserData.value.postData;
+          fullUserData.value = newUserData;
           CommonUtil.showToast("Bỏ theo dõi" +
               (userData.value.firstName ?? "") +
               " " +
@@ -94,10 +108,10 @@ class WatchUserController extends GetxController {
       } else {
         CommonUtil.showToast(responseModel.message);
       }
-      isLoading.value = false;
+      isLoadingFollow.value = false;
     } catch (e) {
-      isLoading.value = false;
-      CommonUtil.showToast("Lỗi lấy thông tin bài đăng");
+      isLoadingFollow.value = false;
+      CommonUtil.showToast("Lỗi lấy theo dõi người dùng");
     }
   }
 

@@ -93,6 +93,34 @@ class UserInfo {
     data['follower'] = this.follower;
     return data;
   }
+
+  UserInfo copyWith({
+    int? id,
+    String? avatar,
+    String? created,
+    int? lengthOfPost,
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    int? followingUser,
+    int? followers,
+    double? rating,
+    Address? address,
+    bool? follower,
+  }) => UserInfo(
+      id: id ?? this.id,
+      avatar: avatar ?? this.avatar,
+      created: created ?? this.created,
+      lengthOfPost: lengthOfPost ?? this.lengthOfPost,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      followingUser: followingUser ?? this.followingUser,
+      followers: followers ?? this.followers,
+      rating: rating ?? this.rating,
+      address: address ?? this.address,
+      follower: follower ?? this.follower
+  );
 }
 
 class Address {

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../models/user/post_user_model.dart';
+
 import '../../../utils/utils.dart';
 import '../../../utils/widget/cache_image.dart';
 import '../../account/widget/build_avatar_widget.dart';
 
-class WatchUserPage extends GetView<WatchUserController>{
+class WatchUserPage extends GetView<WatchUserController> {
   const WatchUserPage({Key? key}) : super(key: key);
 
   @override
@@ -18,16 +18,20 @@ class WatchUserPage extends GetView<WatchUserController>{
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:Obx(() => Text((controller.userData.value.firstName ?? "") + (controller.userData.value.lastName ?? ""), style: AppStyles.textNormalWhiteSemiBold)),
+        title: Obx(() => Text(
+            (controller.userData.value.firstName ?? "") +
+                (controller.userData.value.lastName ?? ""),
+            style: AppStyles.textNormalWhiteSemiBold)),
         backgroundColor: greenMoney,
       ),
       body: Obx(() => SingleChildScrollView(
-          child: Column(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               buildAvatarProfile(
-                  controller.fullUserData.value.userInfo?.avatar ?? Constants.AVATAR_URL,
+                  controller.fullUserData.value.userInfo?.avatar ??
+                      Constants.AVATAR_URL,
                   context),
               Center(
                 child: Text(
@@ -47,7 +51,8 @@ class WatchUserPage extends GetView<WatchUserController>{
                         controller.fullUserData.value.userInfo?.followers ?? 0,
                         "Người theo dõi"),
                     textFollowUser(
-                        controller.fullUserData.value.userInfo?.followingUser ?? 0,
+                        controller.fullUserData.value.userInfo?.followingUser ??
+                            0,
                         "Đang theo dõi")
                   ],
                 ),
@@ -64,7 +69,6 @@ class WatchUserPage extends GetView<WatchUserController>{
                   endIndent: width(20),
                 ),
               ),
-
               buildItemInfo(Icons.calendar_today, "Ngày tham gia",
                   controller.joinTime.value),
               buildItemInfo(Icons.star, "Đánh giá", controller.rating.value),
@@ -80,35 +84,31 @@ class WatchUserPage extends GetView<WatchUserController>{
                   controller.fullUserData.value.postData?.length.toString() ??
                       "0"),
               Obx(() => loadingLogin(controller.isLoading.value)),
-              Obx(() => (controller.fullUserData.value.postData?.length ?? 0) > 0
-                  ? buildListPost()
-                  : buildListPostProfile())
+              Obx(() =>
+                  (controller.fullUserData.value.postData?.length ?? 0) > 0
+                      ? buildListPost()
+                      : buildListPostProfile())
             ],
           ))),
     );
   }
 
-  Widget buildListPostProfile(){
+  Widget buildListPostProfile() {
     return Container();
   }
 
   Widget buildAvatarProfile(String image, BuildContext context) {
     return Center(
       child: Container(
-          padding: EdgeInsets.symmetric(vertical: height(20)),
+          padding: EdgeInsets.only(top: height(20)),
           height: width(115),
           width: width(115),
-          child: Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.expand,
-            children: [
-              buildAvatar(image, 40.0),
-
-            ],
-          )),
+          child:
+              Stack(clipBehavior: Clip.none, fit: StackFit.expand, children: [
+            buildAvatar(image, 40.0),
+          ])),
     );
   }
-
 
   GestureDetector itemButtonSelectImage({
     required String title,
@@ -170,32 +170,35 @@ class WatchUserPage extends GetView<WatchUserController>{
   }
 
   Widget buildButton() {
-    return Container(
+    return Obx(() => Container(
       padding: EdgeInsets.symmetric(vertical: height(5), horizontal: width(20)),
       child: Row(
         children: [
           Expanded(
             child: InkWell(
               onTap: () {
-             //   Get.toNamed(RouterLink.editProfileDetailPage);
+                controller.followUser();
               },
               child: Container(
                 height: height(45),
                 decoration: BoxDecoration(
-                    color: grey_5, borderRadius: BorderRadius.circular(10)),
+                    color: (controller.fullUserData.value.userInfo?.follower ??
+                        false)
+                        ? greenMoney
+                        : grey_5,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.edit,
-                        size: size(20),
-                        color: black.withOpacity(0.8),
-                      ),
-                      SizedBox(
-                        width: width(10),
-                      ),
-                      Text(
+                      (controller.fullUserData.value.userInfo?.follower ??
+                          false)
+                          ? Text(
+                        "Bỏ theo dõi",
+                        style: AppStyles.textSmallWhiteMedium,
+                      )
+                          : Text(
                         "Theo dõi",
                         style: AppStyles.textSmallBlackMedium,
                       )
@@ -222,7 +225,7 @@ class WatchUserPage extends GetView<WatchUserController>{
           )
         ],
       ),
-    );
+    ));
   }
 
   Widget buildItemInfo(IconData icon, String tittle, String value) {
@@ -280,16 +283,14 @@ class WatchUserPage extends GetView<WatchUserController>{
     );
   }
 
-
-
   Widget buildListPost() {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
       child: Column(
         children: List.generate(
             controller.fullUserData.value.postData?.length ?? 0,
-                (index) => buildItemPostSearch(
+            (index) => buildItemPostSearch(
                 index, controller.fullUserData.value.postData![index])),
       ),
     );
@@ -300,7 +301,7 @@ class WatchUserPage extends GetView<WatchUserController>{
       height: height(120),
       //width: double.infinity,
       padding:
-      EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
+          EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -310,7 +311,7 @@ class WatchUserPage extends GetView<WatchUserController>{
             width: width(80),
             child: CacheImage(
               imageUrl:
-              post.media?.first.fileDownloadUri ?? MyImage.imageBanner,
+                  post.media?.first.fileDownloadUri ?? MyImage.imageBanner,
               boxFit: BoxFit.cover,
             ),
           ),
