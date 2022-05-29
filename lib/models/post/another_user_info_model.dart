@@ -41,7 +41,7 @@ class UserInfo {
   String? phoneNumber;
   int? followingUser;
   int? followers;
-  int? rating;
+  double? rating;
   Address? address;
   bool? follower;
 

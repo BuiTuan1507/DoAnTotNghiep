@@ -31,11 +31,12 @@ class AccountDetailController extends GetxController {
   RxBool isLoading = false.obs;
 
   Rx<String> sexUser = "".obs;
-  Rx<String> joinTime = "".obs;
+
   Rx<String> birthDay = "".obs;
 
   Rx<String> addressUser = "Chưa có".obs;
 
+  Rx<String> joinTime = "".obs;
   Rx<String> rating = "Chưa đánh giá".obs;
 
   @override

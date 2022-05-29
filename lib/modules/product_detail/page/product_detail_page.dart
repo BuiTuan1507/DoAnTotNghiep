@@ -393,7 +393,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
 
                       InkWell(
                         onTap: (){
-                          Get.toNamed(RouterLink.watchUserPage);
+                          Get.toNamed(RouterLink.watchUserPage, arguments: controller.detailPostModel.value.userPostData);
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric( vertical: height(4), horizontal: width(6)),

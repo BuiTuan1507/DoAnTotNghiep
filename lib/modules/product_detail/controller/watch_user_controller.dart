@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:do_an/models/post/another_user_info_model.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/post/detail_post_model.dart';
 import '../../../models/response_model.dart';
@@ -16,13 +19,34 @@ class WatchUserController extends GetxController {
 
   DetailPostRepository detailPostRepository = DetailPostRepository();
 
+  Rx<String> joinTime = "".obs;
+  Rx<String> rating = "Chưa đánh giá".obs;
+
   @override
   void onInit() async {
     if (Get.arguments != null) {
-      userData = Get.arguments;
+      userData.value = Get.arguments;
     }
     await getAnotherUserInfo();
+
     super.onInit();
+  }
+
+  void initData() {
+
+    try {
+      DateTime joinTimeDate = DateFormat("yyyy-MM-dd hh:mm:ss")
+          .parse(fullUserData.value.userInfo?.created ?? "");
+
+
+      joinTime.value = DateFormat("dd-MM-yyyy").format(joinTimeDate);
+    } catch (e) {
+      log(e.toString());
+    }
+
+    if (fullUserData.value.userInfo?.rating != 0) {
+      rating.value = (fullUserData.value.userInfo?.rating ?? 0).toString();
+    }
   }
 
   Future<void> followUser() async {
@@ -94,12 +118,14 @@ class WatchUserController extends GetxController {
 
       if (responseModel.status) {
         fullUserData.value = AnotherUserInfoModel.fromJson(responseModel.data);
+        initData();
       } else {
         CommonUtil.showToast(responseModel.message);
       }
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
+      log(e.toString());
       CommonUtil.showToast("Lỗi lấy thông tin người dùng");
     }
   }
