@@ -87,11 +87,11 @@ class WatchUserController extends GetxController {
           newUserData.postData = fullUserData.value.postData;
           fullUserData.value = newUserData;
 
-          CommonUtil.showToast("Theo dõi" +
+          CommonUtil.showToast("Theo dõi " +
               (userData.value.firstName ?? "") +
               " " +
               (userData.value.lastName ?? "") +
-              "thành công");
+              " thành công");
         } else {
           int follow = fullUserData.value.userInfo?.followers ?? 0 ;
 
@@ -99,11 +99,11 @@ class WatchUserController extends GetxController {
           newUserData.userInfo = fullUserData.value.userInfo?.copyWith(follower: false, followers: follow - 1);
           newUserData.postData = fullUserData.value.postData;
           fullUserData.value = newUserData;
-          CommonUtil.showToast("Bỏ theo dõi" +
+          CommonUtil.showToast("Bỏ theo dõi " +
               (userData.value.firstName ?? "") +
               " " +
               (userData.value.lastName ?? "") +
-              "thành công");
+              " thành công");
         }
       } else {
         CommonUtil.showToast(responseModel.message);
