@@ -1,3 +1,4 @@
+import 'package:do_an/config/config.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/post/detail_post_model.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
@@ -13,11 +14,13 @@ class ReportPostController extends GetxController {
   final TextEditingController tittleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
-  Rx<Post> repostPost = Post().obs;
+  RxInt reportPost = 0.obs;
 
   @override
   void onInit() {
-    repostPost.value = Get.arguments;
+    if(Get.arguments != null){
+      reportPost.value = Get.arguments;
+    }
     super.onInit();
   }
 
@@ -32,17 +35,23 @@ class ReportPostController extends GetxController {
         Map<String, dynamic> param = {
           "token": token,
           "userId": userId,
-          "idPost": 59,
-          "subject":"Hello",
-          "details":"1222332"
+          "idPost": reportPost.value,
+          "subject": tittleController.text.trim(),
+          "details":contentController.text.trim()
         };
+        isLoading.value = true ;
         ResponseModel responseModel = await detailPostRepository.apiReportPost(param: param, token: token);
+        tittleController.clear();
+        contentController.clear();
         if (responseModel.status) {
           CommonUtil.showToast("Bạn đã báo cáo bài đăng thành công", isSuccessToast: true);
+          Get.back();
         } else {
           CommonUtil.showToast(responseModel.message);
         }
+        isLoading.value = false ;
       } catch (e) {
+        isLoading.value = false ;
         CommonUtil.showToast("Lỗi thêm bài đăng");
       }
     }else{

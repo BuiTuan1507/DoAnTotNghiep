@@ -34,7 +34,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         },
         child: Column(
           children: [
-            Obx(() => controller.isLoading.value ? loadingLogin(controller.isLoading.value) : Expanded(
+            Obx(() => controller.isLoading.value ? Expanded(child: loadingLogin(controller.isLoading.value)) : Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +122,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height : height(20)),
-              buildItemOptionalAppbar((){Get.toNamed(RouterLink.reportPostPage);},"Báo cáo bài đăng",Icons.report_problem_outlined),
+              buildItemOptionalAppbar((){Get.toNamed(RouterLink.reportPostPage, arguments: controller.detailPostModel.value.post?.id);},"Báo cáo bài đăng",Icons.report_problem_outlined),
               buildItemOptionalAppbar((){Get.back();},"Lưu tin",Icons.post_add_rounded),
               buildItemOptionalAppbar((){Get.back();},"Chia sẻ bài viết",Icons.share),
               SizedBox(height: height(40),)
@@ -155,10 +155,10 @@ class ProductDetailPage extends GetView<ProductDetailController>{
   Widget buildBottomBar (){
     return Container(
       height: height(80),
-     padding: EdgeInsets.only(top: height(10), bottom: height(10), left: width(10)),
+     padding: EdgeInsets.only(top: height(10), bottom: height(10), left: width(20), right: width(20)),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
             flex: 1,
@@ -183,19 +183,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
             flex: 1,
               child: buildItemBottomBar("Chat", Icons.message_rounded)),
 
-          Flexible(
-            flex: 1,
-            child: Container(
-
-              decoration: BoxDecoration(
-                  color: greenMoney,
-                borderRadius: BorderRadius.circular(3)
-              ),
-              child: Center(
-                child: Text("Mua ngay", style: AppStyles.textSmallWhiteMedium,),
-              ),
-            ),
-          )
+        
 
         ],
       ),
@@ -245,7 +233,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           Flexible(
             flex: 1,
             child: buildItemStatusDetailPage("Báo cáo", Icons.report_problem_outlined, () {
-              Get.toNamed(RouterLink.reportPostPage);
+              Get.toNamed(RouterLink.reportPostPage, arguments: controller.detailPostModel.value.post?.id);
             }),
           ),
         ],
@@ -430,15 +418,43 @@ class ProductDetailPage extends GetView<ProductDetailController>{
   }
   Widget buildInfoPost(){
     return Obx(()=> Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("Chi tiết", style: AppStyles.textNormalBlackMedium,),
-          SizedBox(height: height(15),),
-          Text(controller.detailPostModel.value.post?.content ?? "", maxLines: 20,overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,),
 
+          RichText(
+            text: TextSpan(
+              text: "Điều kiện sử dụng : ",
+              style:AppStyles.textNormalBlackMedium,
+              children: <TextSpan>[
+                TextSpan(
+                  text: controller.detailPostModel.value.post?.conditionOfUse ?? "",
+                  style: AppStyles.textSmallGreenSemiBold,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: height(10),),
+          RichText(
+            text: TextSpan(
+              text: "Hình thức : ",
+              style:AppStyles.textNormalBlackMedium,
+              children: <TextSpan>[
+                TextSpan(
+                  text: controller.detailPostModel.value.post?.formUse ?? "",
+                  style: AppStyles.textSmallGreenSemiBold,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: height(10),),
+
+          Text("Chi tiết", style: AppStyles.textNormalBlackMedium,),
+          SizedBox(height: height(10),),
+          Text(controller.detailPostModel.value.post?.content ?? "", maxLines: 20,overflow: TextOverflow.ellipsis,style: AppStyles.textTinyStrongDarkRegular,),
+          SizedBox(height: height(10),),
         ],
       ),
     ));
