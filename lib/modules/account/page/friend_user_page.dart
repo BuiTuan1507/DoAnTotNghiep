@@ -20,8 +20,7 @@ class FriendUserPage extends GetView<FriendUserController>{
             "Bạn bè",
             style: AppStyles.textNormalWhiteSemiBold,
           ),
-          backgroundColor: greenMoney,
-          automaticallyImplyLeading: false,
+          backgroundColor: greenMoney
         ),
         body: Obx(() => DefaultTabController(
           length: 2,

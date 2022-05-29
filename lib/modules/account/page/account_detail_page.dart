@@ -98,6 +98,9 @@ class AccountDetailPage extends GetView<AccountDetailController> {
   }
 
   Widget buildAvatarProfile(String image, BuildContext context) {
+    if(image == "") {
+      image = Constants.AVATAR_URL;
+    }
     return Center(
       child: Container(
           padding: EdgeInsets.symmetric(vertical: height(20)),
