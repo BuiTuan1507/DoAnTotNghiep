@@ -1,3 +1,5 @@
+import 'package:do_an/models/models.dart';
+import 'package:do_an/respository/login_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,17 +16,25 @@ class SplashPage extends StatelessWidget {
   }
 
   void fetchSomething() async {
-    //TODO Call API from server and do sth
-    await Future.delayed(const Duration(seconds: 2));
-    checkLogin();
+    try{
+      checkLogin();
+      await Future.delayed(const Duration(seconds: 2));
+
+    }catch (e) {
+      CommonUtil.showToast("Có lỗi xảy ra");
+    }
+    
   }
 
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("id") ?? '';
+    LoginRepository loginRepository = LoginRepository();
+
     if (uuid == '') {
       Get.offAllNamed(RouterLink.login);
     } else {
+
       int id = int.parse(prefs.getString("id") ?? "0") ;
       String token = prefs.getString("token") ?? "";
       String firstName = prefs.getString("firstName") ?? "";
@@ -33,17 +43,26 @@ class SplashPage extends StatelessWidget {
       String phoneNumber = prefs.getString("phoneNumber") ?? "";
       bool  active = false;
 
-      UserModel newUser = UserModel(
-          id: id,
-          token: token,
-          firstName: firstName,
-          lastName: lastName,
-          avatar: avatar,
-          active: active,
-          phoneNumber: phoneNumber
-      );
-      GlobalData.setUserLogin(newUser);
-      Get.offAllNamed(RouterLink.main);
+      Map<String,dynamic> param = {
+        "token": token,
+        "userId": id
+      };
+      ResponseModel responseModel = await loginRepository.apiCheckToken(param: param, token: token);
+      if(responseModel.status){
+        UserModel newUser = UserModel(
+            id: id,
+            token: token,
+            firstName: firstName,
+            lastName: lastName,
+            avatar: avatar,
+            active: active,
+            phoneNumber: phoneNumber
+        );
+        GlobalData.setUserLogin(newUser);
+        Get.offAllNamed(RouterLink.main);
+      }else{
+        Get.offAllNamed(RouterLink.login);
+      }
     }
   }
 

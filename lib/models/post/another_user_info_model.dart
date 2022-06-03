@@ -189,6 +189,10 @@ class PostData {
   List<Media>? media;
   bool? isLike;
   bool? isWatch;
+  int? state;
+  bool? isExpired;
+  int? rating;
+  String? textRating;
 
   PostData(
       {this.id,
@@ -210,7 +214,9 @@ class PostData {
         this.priority,
         this.media,
         this.isLike,
-        this.isWatch});
+        this.isWatch,
+        this.state, this.isExpired, this.rating, this.textRating
+        });
 
   PostData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -238,6 +244,10 @@ class PostData {
     }
     isLike = json['isLike'];
     isWatch = json['isWatch'];
+    state = json['state'];
+    isExpired = json['isExpired'];
+    rating = json['rating'];
+    textRating = json['textRating'];
   }
 
   Map<String, dynamic> toJson() {
@@ -264,6 +274,10 @@ class PostData {
     }
     data['isLike'] = this.isLike;
     data['isWatch'] = this.isWatch;
+    data['state'] = this.state;
+    data['isExpired'] = this.isExpired;
+    data['rating'] = this.rating;
+    data['textRating'] = this.textRating;
     return data;
   }
 }

@@ -41,4 +41,14 @@ class UrlApi{
   static const String getAnotherUserInfo = "/get_another_user_info";
   static const String likePost = "/like_post";
   static const String unlikePost = "/unlike_post";
+
+  static const String checkToken = "/check_token";
+  static const String extendPost = "/extend_post";
+  static const String cancelPost = "/cancel_post";
+  static const String buyPost = "/buy_post";
+  static const String sellPost = "/sell_post";
+  static const String ratingPost = "/rating_post";
+  static const String getListNotificationPost = "/get_list_notification";
+  static const String readNotification = "/read_notification";
+
 }

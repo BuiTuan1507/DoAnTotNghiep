@@ -1,13 +1,13 @@
-import 'package:do_an/modules/notification/controller/notification_controller.dart';
-import 'package:flutter/cupertino.dart';
+ import 'package:do_an/modules/notification/controller/notification_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/utils.dart';
 
 class NotificationPage extends GetView<NotificationController>{
+  const NotificationPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,15 +72,23 @@ class NotificationPage extends GetView<NotificationController>{
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: buildListPost())
+        Expanded(child: buildListNotification())
       ],
     );
   }
-  Widget buildListPost(){
+  Widget buildListNotification(){
     return Container(
-      child: Center(
-        child: Text("Không có sản phẩm nào"),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+      child: ListView.builder(
+        itemCount: controller.listNotificationData.value.listNotification?.length,
+          itemBuilder:(context, index) {
+          return buildItemNotification(context, index);
+          } ),
+    );
+  }
+  Widget buildItemNotification(BuildContext buildContext, int index){
+    return Container(
+
     );
   }
 }
