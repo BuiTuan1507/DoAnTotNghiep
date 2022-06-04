@@ -68,5 +68,64 @@ class NotificationController extends GetxController{
     }
   }
 
+  String getTittleNotification(ListNotification listNotification){
+    String tittle = "";
+    switch(listNotification.typeNotification) {
+      case 0: {
+        tittle = (listNotification.name ?? "") + " vừa đăng tin";
+      }
+      break;
+      case 1: {
+        tittle = "";
+      }
+      break;
+      case 2: {
+        tittle = "";
+      }
+      break;
+
+      case 3: {
+        tittle = (listNotification.name ?? "") + " muốn mua sản phẩm ";
+      }
+      break;
+
+      case 4  :{
+        tittle = "Đánh giá sản phẩm";
+      }
+      break;
+    }
+    return tittle;
+  }
+  String getContentPost(ListNotification listNotification){
+    String content = "";
+    switch(listNotification.typeNotification) {
+      case 0: {
+        content = (listNotification.tittlePost ?? "") ;
+      }
+      break;
+      case 1: {
+        content = listNotification.tittlePost ?? "";
+      }
+      break;
+      case 2: {
+        content = listNotification.tittlePost ?? "";
+      }
+      break;
+
+      case 3: {
+        content = listNotification.tittlePost ?? "";
+      }
+      break;
+
+      case 4  :{
+        content = listNotification.tittlePost ?? "";
+      }
+      break;
+    }
+    return content;
+  }
+
+
+
 
 }

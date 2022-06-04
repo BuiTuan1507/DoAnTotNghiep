@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../models/post/list_notification_model.dart';
 import '../../../utils/utils.dart';
+import '../../account/widget/build_avatar_widget.dart';
 
 class NotificationPage extends GetView<NotificationController>{
   const NotificationPage({Key? key}) : super(key: key);
@@ -82,13 +84,54 @@ class NotificationPage extends GetView<NotificationController>{
       child: ListView.builder(
         itemCount: controller.listNotificationData.value.listNotification?.length,
           itemBuilder:(context, index) {
-          return buildItemNotification(context, index);
+          return buildItemNotification(context, controller.listNotificationData.value.listNotification?[index] ?? ListNotification());
           } ),
     );
   }
-  Widget buildItemNotification(BuildContext buildContext, int index){
+  Widget buildItemNotification(BuildContext buildContext, ListNotification listNotification){
+    String image = listNotification.avatarUser ?? "";
+    if(image == ""){
+      image = Constants.AVATAR_URL;
+    }
     return Container(
-
+      color: (listNotification.isReading ?? true) ? Colors.white : greenMoney.withOpacity(0.5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: width(60),
+              width: width(60),
+              child: buildAvatar(image, 35)),
+          SizedBox(
+            width: width(10),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: controller.getTittleNotification(listNotification),
+                    style: AppStyles.textSmallDarkRegular,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: controller.getContentPost(listNotification),
+                        style: AppStyles.textSmallGreenSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  CommonUtil.parseDateTime(listNotification.dateTime ?? ""),
+                  style: AppStyles.textSmallDarkNormal,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
