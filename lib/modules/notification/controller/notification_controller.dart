@@ -125,6 +125,29 @@ class NotificationController extends GetxController{
     return content;
   }
 
+  Future<void> sellPost (ListNotification listNotification) async {
+    try {
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> params = {
+        "token": token,
+        "userId": userId,
+        "postId": listNotification.idPost,
+        "buyUserId": listNotification.idUserCreate
+      };
+      ResponseModel responseModel = await notificationRepository.apiSellPost(param: params, token: token);
+
+      if(responseModel.status){
+        CommonUtil.showToast("Đã bán đơn hàng thành công");
+        // update list
+      }else{
+        CommonUtil.showToast(responseModel.message);
+      }
+    }catch(e){
+      CommonUtil.showToast("Lỗi khi bán bài đăng");
+    }
+    
+  }
 
 
 

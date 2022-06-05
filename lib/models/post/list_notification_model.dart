@@ -33,6 +33,7 @@ class ListNotification {
   int? userId;
   int? idPost;
   bool? isReading;
+  int? idUserCreate;
 
   ListNotification(
       {this.id,
@@ -44,7 +45,8 @@ class ListNotification {
         this.dateTime,
         this.userId,
         this.idPost,
-        this.isReading
+        this.isReading,
+        this.idUserCreate
       });
 
   ListNotification.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,7 @@ class ListNotification {
     userId = json['userId'];
     idPost = json['idPost'];
     isReading = json['isReading'];
+    idUserCreate= json['idUserCreate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +75,7 @@ class ListNotification {
     data['userId'] = this.userId;
     data['idPost'] = this.idPost;
     data['isReading'] = this.isReading;
+    data['idUserCreate'] = this.idUserCreate;
     return data;
   }
 }

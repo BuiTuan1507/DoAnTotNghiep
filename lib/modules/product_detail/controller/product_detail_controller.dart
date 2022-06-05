@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/user/post_user_model.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
+import 'package:do_an/respository/notification_repository.dart';
 import 'package:do_an/respository/post_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,8 @@ class ProductDetailController extends GetxController {
   Rx<ListPostModel> listPostFilter = ListPostModel().obs;
 
   RxList<Posts> listPosts = <Posts>[].obs;
+
+  NotificationRepository notificationRepository = NotificationRepository();
 
   @override
   void onInit() async {
@@ -169,4 +172,25 @@ class ProductDetailController extends GetxController {
     };
     await filterPost(param, token);
   }
+
+  Future<void> buyPost() async {
+   try{
+     String token = GlobalData.getUserModel().token ?? "";
+     int userId = GlobalData.getUserModel().id ?? 0;
+     Map<String, dynamic> param = {
+       "token": token,
+       "userId": userId,
+       "postId" : detailPostModel.value.post?.id
+     };
+     ResponseModel responseModel = await notificationRepository.apiBuyPost(param: param, token: token);
+     if(responseModel.status){
+       CommonUtil.showToast("Bạn đã gửi thông báo mua thành công");
+     }else{
+       CommonUtil.showToast(responseModel.message);
+     }
+   }catch(e){
+     CommonUtil.showToast("Lỗi gửi thông báo mua sản phẩm");
+   }
+  }
+
 }
