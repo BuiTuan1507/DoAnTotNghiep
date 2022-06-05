@@ -58,15 +58,15 @@ class NotificationPage extends GetView<NotificationController>{
             },
             body: TabBarView(
               children: [
-                buildTabView(),
-                buildTabView(),
+               Obx(() =>  buildTabView(controller.activeNotification),),
+                Obx(() => buildTabView(controller.notification),)
               ],
             ),
           ),
         )
     );
   }
-  Widget buildTabView() {
+  Widget buildTabView(List<ListNotification> list) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,17 +74,17 @@ class NotificationPage extends GetView<NotificationController>{
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: buildListNotification())
+        Expanded(child: buildListNotification(list))
       ],
     );
   }
-  Widget buildListNotification(){
+  Widget buildListNotification(List<ListNotification> list){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
       child: ListView.builder(
-        itemCount: controller.listNotificationData.value.listNotification?.length,
+        itemCount:list.length,
           itemBuilder:(context, index) {
-          return buildItemNotification(context, controller.listNotificationData.value.listNotification?[index] ?? ListNotification());
+          return buildItemNotification(context, list[index]);
           } ),
     );
   }

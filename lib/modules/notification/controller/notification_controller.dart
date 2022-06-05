@@ -14,6 +14,11 @@ class NotificationController extends GetxController{
 
   NotificationRepository notificationRepository = NotificationRepository();
 
+  RxList<ListNotification> activeNotification = <ListNotification>[].obs;
+
+  RxList<ListNotification> notification = <ListNotification>[].obs;
+
+
   Rx<ListNotificationModel> listNotificationData = ListNotificationModel().obs;
   @override
   void onInit() async {
@@ -34,6 +39,15 @@ class NotificationController extends GetxController{
       ResponseModel responseModel = await notificationRepository.apiGetListNotification(param: params, token: token);
       if(responseModel.status){
         listNotificationData.value = ListNotificationModel.fromJson(responseModel.data);
+        if(listNotificationData.value.listNotification?.isNotEmpty == true){
+          listNotificationData.value.listNotification?.forEach((element) {
+            if(element.typeNotification == 1 || element.typeNotification == 2 || element.typeNotification == 4){
+              notification.add(element);
+            }else{
+              activeNotification.add(element);
+            }
+          });
+        }
       }else{
         CommonUtil.showToast(responseModel.message);
       }
