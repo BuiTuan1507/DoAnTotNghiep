@@ -37,7 +37,6 @@ class ListPostModel {
     return data;
   }
 }
-
 class Posts {
   int? id;
   String? createTime;
@@ -57,8 +56,12 @@ class Posts {
   String? address;
   bool? priority;
   List<Media>? media;
-  List<dynamic>? likeUsers;
-  List<dynamic>? watchUsers;
+  bool? isLike;
+  bool? isWatch;
+  int? state;
+  bool? isExpired;
+  int? rating;
+  String? textRating;
 
   Posts(
       {this.id,
@@ -79,8 +82,12 @@ class Posts {
         this.address,
         this.priority,
         this.media,
-        this.likeUsers,
-        this.watchUsers});
+        this.isLike,
+        this.isWatch,
+        this.state,
+        this.isExpired,
+        this.rating,
+        this.textRating});
 
   Posts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -106,18 +113,12 @@ class Posts {
         media!.add(new Media.fromJson(v));
       });
     }
-    if (json['likeUsers'] != null) {
-      likeUsers = <dynamic>[];
-      json['likeUsers'].forEach((v) {
-        likeUsers!.add(v);
-      });
-    }
-    if (json['watchUsers'] != null) {
-      watchUsers = <Null>[];
-      json['watchUsers'].forEach((v) {
-        watchUsers!.add(v);
-      });
-    }
+    isLike = json['isLike'] ?? false;
+    isWatch = json['isWatch'] ?? false;
+    state = json['state'];
+    isExpired = json['isExpired'];
+    rating = json['rating'] ?? 0.0;
+    textRating = json['textRating'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -142,12 +143,12 @@ class Posts {
     if (this.media != null) {
       data['media'] = this.media!.map((v) => v.toJson()).toList();
     }
-    if (this.likeUsers != null) {
-      data['likeUsers'] = this.likeUsers!.map((v) => v.toJson()).toList();
-    }
-    if (this.watchUsers != null) {
-      data['watchUsers'] = this.watchUsers!.map((v) => v.toJson()).toList();
-    }
+    data['isLike'] = this.isLike;
+    data['isWatch'] = this.isWatch;
+    data['state'] = this.state;
+    data['isExpired'] = this.isExpired;
+    data['rating'] = this.rating;
+    data['textRating'] = this.textRating;
     return data;
   }
 }

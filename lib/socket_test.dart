@@ -14,13 +14,18 @@ void onConnect(StompFrame frame) {
       print(frame.body ?? "1");
     },
   );
+// send message
 
   Timer.periodic(Duration(seconds: 10), (_) {
     stompClient.send(
       destination: '/app/chat',
-      body: json.encode({'from': "123", "text":"123456"}),
+      body: json.encode({'text':"545454"}),
     );
   });
+
+
+
+
 }
 
 final stompClient = StompClient(
@@ -51,6 +56,6 @@ void connectSocket(){
 
 
 void main() {
- // stompClient.activate();
-  connectSocket();
+  stompClient.activate();
+//  connectSocket();
 }
