@@ -44,6 +44,10 @@ class Post {
   List<Media>? media;
   bool? isLike;
   bool? isWatch;
+  int? state;
+  bool? isExpired;
+  double? rating;
+  String? textRating;
 
   Post(
       {this.id,
@@ -65,7 +69,9 @@ class Post {
         this.priority,
         this.media,
         this.isLike,
-        this.isWatch});
+        this.isWatch,
+        this.state, this.isExpired, this.rating, this.textRating
+      });
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -93,6 +99,10 @@ class Post {
     }
     isLike = json['isLike'];
     isWatch = json['isWatch'];
+    state = json['state'];
+    isExpired = json['isExpired'];
+    rating = json['rating'];
+    textRating = json['textRating'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +129,10 @@ class Post {
     }
     data['isLike'] = this.isLike;
     data['isWatch'] = this.isWatch;
+    data['state'] = this.state;
+    data['isExpired'] = this.isExpired;
+    data['rating'] = this.rating;
+    data['textRating'] = this.textRating;
     return data;
   }
 
@@ -143,6 +157,10 @@ class Post {
     List<Media>? media,
     bool? isLike,
     bool? isWatch,
+    int? state,
+    bool? isExpired,
+    double? rating,
+    String? textRating
   }) => Post(
       id: id ?? this.id,
       createTime: createTime ?? this.createTime,
@@ -163,7 +181,11 @@ class Post {
       priority: priority ?? this.priority,
       media: media ?? this.media,
       isLike: isLike ?? this.isLike,
-      isWatch: isWatch ?? this.isWatch
+      isWatch: isWatch ?? this.isWatch,
+      state : state ?? this.state ,
+       isExpired : isExpired ?? this.isExpired,
+       rating : rating ?? this.rating,
+      textRating : textRating ?? this.textRating
   );
 
 }

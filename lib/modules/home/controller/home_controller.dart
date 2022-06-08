@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/post_repository.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,7 @@ class HomeController extends GetxController {
 
   int page = 0;
 
-  int pageSize = 3;
+  int pageSize = 6;
 
   bool isLoadMore = false;
 
@@ -90,6 +92,7 @@ class HomeController extends GetxController {
         ListPostModel listPostModel =
             ListPostModel.fromJson(responseModel.data);
         if (listPostModel.posts?.isEmpty == true) {
+          isLoading.value = false;
           isLoadMore = false;
           return;
         }
@@ -99,11 +102,12 @@ class HomeController extends GetxController {
           listPriorityPost.value = listPostModel.priorityPosts ?? <Posts>[];
         }
 
-        listPost.addAll(listPostModel.priorityPosts ?? <Posts>[]);
+        listPost.addAll(listPostModel.posts ?? <Posts>[]);
       }
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
+      log(e.toString());
       CommonUtil.showToast("Lỗi lấy bài đăng");
     }
   }

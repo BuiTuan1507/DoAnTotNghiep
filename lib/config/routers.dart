@@ -74,6 +74,11 @@ class AppRouters {
         binding: AddPostBindings(),
       ),
       GetPage(
+        name: RouterLink.notificationPage,
+        page: () =>  const NotificationPage(),
+        binding: NotificationBindings(),
+      ),
+      GetPage(
         name: RouterLink.accountPage,
         page: () =>  const AccountPage(),
         binding: AccountBindings(),

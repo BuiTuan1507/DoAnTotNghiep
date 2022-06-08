@@ -128,7 +128,7 @@ class MainPage extends StatelessWidget {
 
     _controller.currentIndex.value = index;
     pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 250), curve: Curves.decelerate);
+        duration: const Duration(milliseconds: 100), curve: Curves.decelerate);
 
   }
 

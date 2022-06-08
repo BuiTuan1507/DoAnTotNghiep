@@ -12,6 +12,7 @@ class MainBindings extends Bindings{
     Get.lazyPut<AddPostController>(() => AddPostController());
     Get.lazyPut<AccountController>(() => AccountController());
     Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<NotificationController>(() => NotificationController());
 
 
     Get.lazyPut<MainController>(() => MainController());

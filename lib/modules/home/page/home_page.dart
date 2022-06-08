@@ -110,24 +110,27 @@ class HomePage extends GetView<HomeController> {
   }
 
   Widget buildListPostPriority() {
-    return Obx(() => Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: width(20), vertical: height(1)),
-          height: width(240),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: controller.listPriorityPost.length,
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            itemBuilder: (context, index) {
-              return Container(
-                child: ItemProductWidget(
-                  post: controller.listPriorityPost[index],
-                ),
-              );
-            },
+    return Obx(() => Visibility(
+      visible: controller.listPriorityPost.isNotEmpty,
+      child: Container(
+            padding:
+                EdgeInsets.symmetric(horizontal: width(20), vertical: height(1)),
+            height: width(240),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.listPriorityPost.length,
+              physics:
+                  BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              itemBuilder: (context, index) {
+                return Container(
+                  child: ItemProductWidget(
+                    post: controller.listPriorityPost[index],
+                  ),
+                );
+              },
+            ),
           ),
-        ));
+    ));
   }
 
   Widget buildListPostInHome() {

@@ -191,7 +191,7 @@ class PostData {
   bool? isWatch;
   int? state;
   bool? isExpired;
-  int? rating;
+  double? rating;
   String? textRating;
 
   PostData(
