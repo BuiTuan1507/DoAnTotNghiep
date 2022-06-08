@@ -20,4 +20,9 @@ class SexType {
     SexType(tittle: "Nữ", isSelected: false),
     SexType(tittle: "Khác", isSelected: false),
   ];
+
+  static List<SexType> listPriority = [
+    SexType(tittle: "Tin ưu tiên", isSelected: false),
+    SexType(tittle: "Tin bình thường", isSelected: false),
+  ];
 }

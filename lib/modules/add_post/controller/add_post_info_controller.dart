@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../config/routes_link.dart';
+import '../../../models/register/sex_type.dart';
 import '../../../service/service.dart';
 import '../../../utils/utils.dart';
 
@@ -27,6 +28,8 @@ class AddPostInfoController extends GetxController {
 
   RxList<String> listFormUse =
       ["Mới", "Như Mới", "Tốt", "Khá", "Kém", "Không chọn"].obs;
+
+  RxList<SexType> listPriority = SexType.listPriority.obs;
 
   Rx<String> selectedConditionUse = "Không chọn".obs;
 
@@ -51,6 +54,16 @@ class AddPostInfoController extends GetxController {
       subCategory.value = Get.arguments['subCategory'];
     }
     super.onInit();
+  }
+
+  changeTypePriority(SexType sexType){
+    for (var element in listPriority) {
+      element.isSelected = false;
+    }
+    int index = listPriority.indexOf(sexType);
+    if(index == -1 ) return;
+    listPriority[index].isSelected = true;
+listPriority.refresh();
   }
 
   openImage() async {
@@ -150,7 +163,8 @@ class AddPostInfoController extends GetxController {
     String token = GlobalData.getUserModel().token ?? "";
     int userId = GlobalData.getUserModel().id ?? 0;
     isLoading.value = true;
-    bool check = ( (file?.isNotEmpty ?? true) && moneyController.text.isNotEmpty && tittleController.text.isNotEmpty && infoController.text.isNotEmpty && address.value.id != null);
+    SexType sexType = listPriority.firstWhere((element) => element.isSelected == true,orElse:() => SexType());
+    bool check = ( (file?.isNotEmpty ?? true) && moneyController.text.isNotEmpty && tittleController.text.isNotEmpty && infoController.text.isNotEmpty && address.value.id != null && sexType.tittle != null);
     if (!check) {
       CommonUtil.showToast("Bạn phải điền đầy đủ thông tin");
       return;

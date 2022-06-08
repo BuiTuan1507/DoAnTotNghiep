@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/routes_link.dart';
+import '../../../models/register/sex_type.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/curreny_formatter.dart';
 import '../widget/description_field.dart';
@@ -192,10 +193,12 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
                 : buildListImage()),
             buildConditionUse(context),
             buildForm(context),
+
             buildMoneyField(),
             buildTittlePostField(),
             buildInfoPostField(),
             buildAddressField(),
+            buildButtonSelectPriority(),
             SizedBox(
               height: height(20),
             ),
@@ -604,5 +607,50 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24), color: greenMoney),
     ));
+  }
+  Widget buildButtonSelectPriority(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      child: Obx(() => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: controller.listPriority.map((element) => buildPriorityItem(element)).toList(),
+      )),
+    );
+  }
+
+  Widget buildPriorityItem(SexType sexType) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            sexType.tittle ?? "",
+            style: AppStyles.textSmallGreenRegular,
+          ),
+          SizedBox(width: width(10),),
+          InkWell(
+              onTap: () {
+                controller.changeTypePriority(sexType);
+              },
+              child: Container(
+                height: width(17),
+                width: width(17),
+                margin: EdgeInsets.all(height(1)),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(width: width(1.5), color: greenMoney)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border:
+                    Border.all(color: Colors.white, width: width(2)),
+                    shape: BoxShape.circle,
+                    color: (sexType.isSelected ?? false ? greenMoney : Colors.white),
+                  ),
+                ),
+              ))
+        ],
+      ),
+    );
   }
 }

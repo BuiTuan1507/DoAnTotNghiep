@@ -191,6 +191,7 @@ class BirthDayRegisterPage extends GetView<BirthdayRegisterController>{
       ),
     );
   }
+
   Widget buildBirthDayCheckTime(){
 
     return Obx(() => Container(

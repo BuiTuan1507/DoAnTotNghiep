@@ -50,5 +50,5 @@ class UrlApi{
   static const String ratingPost = "/rating_post";
   static const String getListNotificationPost = "/get_list_notification";
   static const String readNotification = "/read_notification";
-
+  static const String getSettingInfo = "/get_info_setting";
 }

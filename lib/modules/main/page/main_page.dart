@@ -63,8 +63,8 @@ class MainPage extends StatelessWidget {
             barItem(
                 label: "Thông báo",
                 iconImage: MyIcon.notificationIcon,
+                redNotification: _controller.settingUserModel.value.notification.toString(),
                 index: 3,
-
             ),
             barItem(
                 label: "Cá nhân",

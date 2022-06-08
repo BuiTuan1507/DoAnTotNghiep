@@ -80,7 +80,8 @@ class NotificationPage extends GetView<NotificationController>{
   }
   Widget buildListNotification(List<ListNotification> list){
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+      padding: EdgeInsets.symmetric( vertical: height(5)),
+
       child: ListView.builder(
         itemCount:list.length,
           itemBuilder:(context, index) {
@@ -94,7 +95,8 @@ class NotificationPage extends GetView<NotificationController>{
       image = Constants.AVATAR_URL;
     }
     return Container(
-      color: (listNotification.isReading ?? true) ? Colors.white : greenMoney.withOpacity(0.5),
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      color: (listNotification.isReading ?? true) ? Colors.transparent : greenMoney.withOpacity(0.2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -102,7 +104,7 @@ class NotificationPage extends GetView<NotificationController>{
           SizedBox(
               height: width(60),
               width: width(60),
-              child: buildAvatar(image, 35)),
+              child: buildAvatar(image, 30)),
           SizedBox(
             width: width(10),
           ),
@@ -113,7 +115,7 @@ class NotificationPage extends GetView<NotificationController>{
               children: [
                 RichText(
                   text: TextSpan(
-                    text: controller.getTittleNotification(listNotification),
+                    text: controller.getTittleNotification(listNotification) + " ",
                     style: AppStyles.textSmallDarkRegular,
                     children: <TextSpan>[
                       TextSpan(
@@ -123,9 +125,12 @@ class NotificationPage extends GetView<NotificationController>{
                     ],
                   ),
                 ),
-                Text(
-                  CommonUtil.parseDateTime(listNotification.dateTime ?? ""),
-                  style: AppStyles.textSmallDarkNormal,
+                Padding(
+                  padding: EdgeInsets.only(top: height(5)),
+                  child: Text(
+                    CommonUtil.parseDateTime(listNotification.dateTime ?? ""),
+                    style: AppStyles.textTinyDarkRegular,
+                  ),
                 )
               ],
             ),
