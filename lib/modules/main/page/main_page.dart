@@ -2,6 +2,7 @@ import 'package:do_an/modules/post/page/post_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/utils.dart';
 import '../../modules.dart';
@@ -62,7 +63,8 @@ class MainPage extends StatelessWidget {
             barItem(
                 label: "Thông báo",
                 iconImage: MyIcon.notificationIcon,
-                index: 3
+                index: 3,
+
             ),
             barItem(
                 label: "Cá nhân",
@@ -104,9 +106,9 @@ class MainPage extends StatelessWidget {
           width: width(35),
           height: height(25),
           child: Stack(
+            alignment: Alignment.center,
             children: [
-
-              Align(
+              Container(
                 alignment: Alignment.bottomCenter,
                 child: SvgPicture.asset(
                   iconImage,
@@ -116,6 +118,34 @@ class MainPage extends StatelessWidget {
                   color: _controller.currentIndex.value == index ? greenMoney : lightDarkHintText,
                 ),
               ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Visibility(
+                  visible: redNotification.isNotEmpty ? true : false,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: width(2), vertical: height(1)),
+                    alignment: Alignment.center,
+                    constraints: BoxConstraints(
+                      minWidth: width(20),
+                      minHeight: height(20),
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: HexColor("#D82828"),
+                    ),
+                    child: Text(
+                      redNotification,
+                      style: GoogleFonts.sarabun(
+                        fontSize: size(9),
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
             ],
 
           ),
