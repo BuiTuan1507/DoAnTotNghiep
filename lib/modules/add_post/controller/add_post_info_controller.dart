@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:do_an/models/category/category_model.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/user/user_info_model.dart';
+import 'package:do_an/modules/main/controller/main_controller.dart';
 import 'package:do_an/respository/post_repository.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -171,6 +172,7 @@ listPriority.refresh();
     }
     try {
       List<String> image = await sendImage();
+      bool priority = sexType.tittle == "Tin ưu tiên" ? true : false;
       Map<String, dynamic> param = {
         "token": token,
         "userId": userId,
@@ -184,18 +186,23 @@ listPriority.refresh();
         "money": int.parse(formatMoney(moneyController.text.trim())),
         "tittle": tittleController.text.trim(),
         "content": infoController.text.trim(),
-        "address": address.value.id
+        "address": address.value.id,
+        "priority":  priority
       };
       ResponseModel responseModel = await postRepository.apiAddPost(param: param, token: token);
       if (responseModel.status) {
         moneyController.clear();
         tittleController.clear();
         infoController.clear();
+        MainController mainController = Get.find();
+        await mainController.getSettingUser();
         Get.toNamed(RouterLink.loadingPostPage);
       } else {
         CommonUtil.showToast(responseModel.message);
       }
+      isLoading.value = false;
     } catch (e) {
+      isLoading.value = false;
       CommonUtil.showToast(e.toString());
     }
   }

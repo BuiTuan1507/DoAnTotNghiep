@@ -202,7 +202,11 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
             SizedBox(
               height: height(20),
             ),
-            buildButtonAddPost()
+            buildButtonAddPost(),
+            SizedBox(
+              height: height(20),
+            ),
+            Obx(() => loadingLogin(controller.isLoading.value))
           ],
         ),
       ),

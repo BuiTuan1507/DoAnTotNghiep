@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../models/user/post_user_model.dart';
 import '../../../utils/utils.dart';
 
 class PostPage extends GetView<PostController>{
@@ -44,19 +45,19 @@ class PostPage extends GetView<PostController>{
                       tabs:  [
                         Tab(
 
-                          text: 'Đang hiển thị ('+ controller.countPost.toString()+")" ,
+                          text: 'Đang hiển thị ('+ controller.activeListPost.length.toString()+")" ,
                         ),
                         Tab(
-                          text: 'Chờ duyệt ('+ controller.pendingPost.toString()+")",
+                          text: 'Chờ duyệt ('+ controller.inExtendListPost.toString()+")",
                         ),
                         Tab(
-                          text: 'Hết hạn ('+ controller.expirePost.toString()+")",
+                          text: 'Cần gia hạn ('+ controller.extendListPost.toString()+")",
                         ),
                         Tab(
-                          text: 'Không được duyệt ('+ controller.notApprovePost.toString()+")",
+                          text: 'Tin bị huỷ ('+ controller.cancelListPost.toString()+")",
                         ),
                         Tab(
-                          text: 'Ẩn tin ('+ controller.hiddenPost.toString()+")",
+                          text: 'Đã bán ('+ controller.sellListPost.toString()+")",
                         )
                       ],
                     ),
@@ -65,18 +66,18 @@ class PostPage extends GetView<PostController>{
           },
           body: TabBarView(
             children: [
-              buildTabView(),
-              buildTabView(),
-              buildTabView(),
-              buildTabView(),
-              buildTabView(),
+              buildTabView(controller.activeListPost),
+              buildTabView(controller.inExtendListPost),
+              buildTabView(controller.extendListPost),
+              buildTabView(controller.cancelListPost),
+              buildTabView(controller.sellListPost),
             ],
           ),
         ),
       )
     );
   }
-  Widget buildTabView() {
+  Widget buildTabView(List<Posts> posts) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -84,15 +85,26 @@ class PostPage extends GetView<PostController>{
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: buildListPost())
+        Expanded(child: buildListPost( posts))
       ],
     );
   }
-  Widget buildListPost(){
+  Widget buildListPost(List<Posts> posts){
     return Container(
-      child: Center(
-        child: Text("Không có sản phẩm nào"),
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+      child: posts.isNotEmpty ? ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context , index) {
+          return Container(
+
+          );
+        },
+      ) :  Center(
+        child: Text("Không có bài đăng nào"),
       ),
     );
+  }
+  Widget buildItemPost(){
+    return Container();
   }
 }
