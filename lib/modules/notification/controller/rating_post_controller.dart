@@ -24,6 +24,10 @@ class RatingPostController extends GetxController {
   }
 
   Future<void> sendRating () async {
+    if(ratingPost.value == 0.0){
+      CommonUtil.showToast("Bạn phải đánh giá sao thì mới được gửi");
+      return;
+    }
     try{
       String token = GlobalData.getUserModel().token ?? "";
       int userId = GlobalData.getUserModel().id ?? 0;
@@ -37,11 +41,14 @@ class RatingPostController extends GetxController {
       ResponseModel responseModel = await notificationRepository.apiRatingPost(param: params, token: token);
       if(responseModel.status){
         CommonUtil.showToast("Đánh giá thành công, cám ơn bạn", isSuccessToast: true);
+        Get.back();
       }else{
         CommonUtil.showToast(responseModel.message);
+        Get.back();
       }
     }catch(e){
       CommonUtil.showToast(e.toString());
+      Get.back();
     }
   }
 }

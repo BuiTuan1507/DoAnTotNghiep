@@ -27,7 +27,9 @@ class RatingPostPage extends GetView<RatingPostController>{
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             buildStar(),
-            buildComment()
+            buildComment(),
+            SizedBox(height: height(50),),
+            buildButtonAddRating()
           ],
         ),
       ),
@@ -47,7 +49,7 @@ class RatingPostPage extends GetView<RatingPostController>{
           itemPadding: EdgeInsets.symmetric(horizontal: width(3)),
           itemBuilder: (context, _) =>  Icon(
             Icons.star,
-            color: greenMoney
+            color: amber
           ),
           onRatingUpdate: (rating) {
             controller.ratingPost.value = rating;
@@ -65,7 +67,7 @@ class RatingPostPage extends GetView<RatingPostController>{
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width(20)),
-            child: Text("Đánh giá", style: AppStyles.textSmallBlackMedium,),
+            child: Text("Phản hồi của bạn (không bắt buộc) :", style: AppStyles.textSmallBlackMedium,),
           ),
           SizedBox(height: height(20),),
           descriptionField(

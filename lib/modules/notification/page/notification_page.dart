@@ -47,12 +47,16 @@ class NotificationPage extends GetView<NotificationController> {
                     labelColor: amber,
                     unselectedLabelColor: lightDarkHintText.withOpacity(0.74),
                     tabs: [
-                      Tab(
-                        text: "Hoạt động",
-                      ),
-                      Tab(
-                        text: "Thông báo",
-                      ),
+                      Obx(() => Tab(
+                        text: "Hoạt động (" +
+                            controller.activeNotification.length.toString() +
+                            ")",
+                      )),
+                      Obx(() => Tab(
+                        text: "Thông báo (" +
+                            controller.notification.length.toString() +
+                            ")",
+                      )),
                     ],
                   ),
                 )),
@@ -88,11 +92,15 @@ class NotificationPage extends GetView<NotificationController> {
   Widget buildListNotification(List<ListNotification> list) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: height(5)),
-      child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return buildItemNotification(context, list[index]);
-          }),
+      child: list.isNotEmpty == true
+          ? ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return buildItemNotification(context, list[index]);
+              })
+          : const Center(
+              child: Text("Không có thông báo nào"),
+            ),
     );
   }
 

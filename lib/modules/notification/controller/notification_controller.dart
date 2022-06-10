@@ -273,7 +273,7 @@ class NotificationController extends GetxController {
       case 4:
       {
         if(listNotification.isReading == false){
-          Get.toNamed(RouterLink.ratingPostPage);
+          Get.toNamed(RouterLink.ratingPostPage, arguments: listNotification);
         }
       }
       break;

@@ -1,7 +1,7 @@
 
 class ProdAppChatEnvironment{
- // final baseUrl = "http://10.0.2.2:8088";
-  final baseUrl = "https://c16f-42-115-113-236.ap.ngrok.io";
+  final baseUrl = "http://10.0.2.2:8088";
+ // final baseUrl = "https://c16f-42-115-113-236.ap.ngrok.io";
   final baseApi = "/api";
   final baseVersion = "";
   final receiveTimeout = 2 * 60 * 1000;
