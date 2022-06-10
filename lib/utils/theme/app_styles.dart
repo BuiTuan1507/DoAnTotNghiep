@@ -75,6 +75,9 @@ class AppStyles {
   static TextStyle textNormalBlackMedium = GoogleFonts.sarabun(
       fontSize: fontSizeNormal, fontWeight: fontWeightMedium, color: black);
 
+  static TextStyle textNormalBlackRegular = GoogleFonts.sarabun(
+      fontSize: fontSizeNormal, fontWeight: fontWeightRegular, color: black);
+
   static TextStyle textNormalGreenSemiBold = GoogleFonts.sarabun(
       fontSize: fontSizeNormal,
       fontWeight: fontWeightSemiBold,

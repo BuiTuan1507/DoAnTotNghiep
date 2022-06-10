@@ -11,7 +11,7 @@ import '../../../utils/common/common_util.dart';
 class MainController extends GetxController{
   RxInt currentIndex = 0.obs;
 
-  Rx<SettingUserModel> settingUserModel = SettingUserModel().obs;
+  Rx<SettingUserModel> settingUserModel = SettingUserModel(notification: 0).obs;
 
   PostRepository postRepository = PostRepository();
 

@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:do_an/modules/post/controller/post_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/user/post_user_model.dart';
 import '../../../utils/utils.dart';
@@ -43,22 +46,21 @@ class PostPage extends GetView<PostController>{
                       labelColor: amber,
                       unselectedLabelColor: lightDarkHintText.withOpacity(0.74),
                       tabs:  [
-                        Tab(
-
+                        Obx(() => Tab(
                           text: 'Đang hiển thị ('+ controller.activeListPost.length.toString()+")" ,
-                        ),
-                        Tab(
-                          text: 'Chờ duyệt ('+ controller.inExtendListPost.toString()+")",
-                        ),
-                        Tab(
-                          text: 'Cần gia hạn ('+ controller.extendListPost.toString()+")",
-                        ),
-                        Tab(
-                          text: 'Tin bị huỷ ('+ controller.cancelListPost.toString()+")",
-                        ),
-                        Tab(
-                          text: 'Đã bán ('+ controller.sellListPost.toString()+")",
-                        )
+                        )),
+                        Obx(() => Tab(
+                          text: 'Chờ duyệt ('+ controller.inExtendListPost.length.toString()+")",
+                        )),
+                        Obx(() => Tab(
+                          text: 'Cần gia hạn ('+ controller.extendListPost.length.toString()+")",
+                        )),
+                        Obx(() => Tab(
+                          text: 'Tin bị huỷ ('+ controller.cancelListPost.length.toString()+")",
+                        )),
+                        Obx(() => Tab(
+                          text: 'Đã bán ('+ controller.sellListPost.length.toString()+")",
+                        ))
                       ],
                     ),
                   )),
@@ -66,18 +68,23 @@ class PostPage extends GetView<PostController>{
           },
           body: TabBarView(
             children: [
-              buildTabView(controller.activeListPost),
-              buildTabView(controller.inExtendListPost),
-              buildTabView(controller.extendListPost),
-              buildTabView(controller.cancelListPost),
-              buildTabView(controller.sellListPost),
+
+             Obx(() =>  buildTabView(controller.activeListPost , context),),
+
+              Obx(() => buildTabView(controller.inExtendListPost, context),),
+
+              Obx(() => buildTabView(controller.extendListPost, context),),
+
+              Obx(() => buildTabView(controller.cancelListPost, context),),
+              Obx(() => buildTabView(controller.sellListPost, context),)
+
             ],
           ),
         ),
       )
     );
   }
-  Widget buildTabView(List<Posts> posts) {
+  Widget buildTabView(List<Posts> posts, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -85,26 +92,128 @@ class PostPage extends GetView<PostController>{
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: buildListPost( posts))
+        Expanded(child: buildListPost( posts, context))
       ],
     );
   }
-  Widget buildListPost(List<Posts> posts){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
-      child: posts.isNotEmpty ? ListView.builder(
-        itemCount: posts.length,
-        itemBuilder: (context , index) {
-          return Container(
+  Widget buildListPost(List<Posts> posts, BuildContext context){
+    return Stack(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(10)),
+          child: posts.isNotEmpty ? ListView.builder(
+            itemCount: posts.length,
+            itemBuilder: (context , index) {
+              return buildItemPost(posts[index] , context);
+            },
+          ) :  Center(
+            child: Text("Không có bài đăng nào"),
+          ),
+        ),
+        Obx(() => loadingLogin( controller.isLoading.value))
+      ],
+    );
+  }
+  Widget buildItemPost(Posts post, BuildContext context){
+    String image = post.media?.first.fileDownloadUri ?? "";
+    if(image == ""){
+      image = Constants.PRODUCT_URL;
+    }
+    String dateTime = post.editTime ?? "";
+   DateTime time =   DateFormat("yyyy-MM-dd hh:mm:ss")
+        .parse(dateTime);
+   DateTime newTime = DateTime(time.year, time.month + 1, time.day);
 
-          );
-        },
-      ) :  Center(
-        child: Text("Không có bài đăng nào"),
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: width(60),
+              width: width(60),
+              child: buildAvatarProduct(imageUrl: image)),
+          SizedBox(
+            width: width(10),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(post.tittle ?? "" ,style: AppStyles.textNormalBlackMedium,),
+                SizedBox(height: height(5),),
+                RichText(
+                  text: TextSpan(
+                    text: "Thời hạn :",
+                    style: AppStyles.textSmallDarkRegular,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: DateFormat("dd-MM-yyyy").format(newTime),
+                        style: AppStyles.textSmallGreenSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: (){
+              MyDialog.popUpAsk(context, tittle: "Thông báo", hintText: "Bạn có muốn huỷ bài đăng", onSubmit: () {}, onCancel: () {});
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(4)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: height(1), color: greenMoney)
+              ),
+              child: Text("Huỷ", style: AppStyles.textSmallBlackMedium,),
+            ),
+          )
+        ],
       ),
     );
   }
-  Widget buildItemPost(){
-    return Container();
+
+  Widget buildAvatarProduct({required String imageUrl}){
+    return (imageUrl != "")
+        ? CachedNetworkImage(
+      imageUrl: imageUrl,
+      imageBuilder: (context, image) {
+        return Container(
+          height: width(60),
+          width: width(40),
+          decoration: BoxDecoration(
+              image: DecorationImage(image: image, fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(15)
+          ),
+        );
+      },
+      placeholder: (context, image) {
+        return Container(
+          height: width(60),
+          width: width(40),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+                  fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(15)
+          ),
+        );
+      },
+    )
+        : Container(
+      height: width(60),
+      width: width(40),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+              fit: BoxFit.cover),
+          borderRadius: BorderRadius.circular(15)
+      ),
+    );
   }
+
+
 }
