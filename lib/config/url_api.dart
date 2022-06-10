@@ -1,7 +1,7 @@
 
 class ProdAppChatEnvironment{
  // final baseUrl = "http://10.0.2.2:8088";
-  final baseUrl = "https://85a2-42-115-113-236.ap.ngrok.io";
+  final baseUrl = "https://c16f-42-115-113-236.ap.ngrok.io";
   final baseApi = "/api";
   final baseVersion = "";
   final receiveTimeout = 2 * 60 * 1000;
@@ -41,7 +41,6 @@ class UrlApi{
   static const String getAnotherUserInfo = "/get_another_user_info";
   static const String likePost = "/like_post";
   static const String unlikePost = "/unlike_post";
-
   static const String checkToken = "/check_token";
   static const String extendPost = "/extend_post";
   static const String cancelPost = "/cancel_post";

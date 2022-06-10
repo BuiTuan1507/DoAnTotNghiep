@@ -22,7 +22,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.toNamed(RouterLink.productDetailPage, arguments: widget.post);
+        Get.toNamed(RouterLink.productDetailPage, arguments: widget.post.id);
       },
       child: Container(
         height: width(120),

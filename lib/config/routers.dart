@@ -2,6 +2,9 @@ import 'package:do_an/config/routes_link.dart';
 import 'package:do_an/modules/add_post/page/loading_post_page.dart';
 import 'package:do_an/modules/list_category/binding/list_category_post_bindings.dart';
 import 'package:do_an/modules/list_category/page/list_category_post_page.dart';
+import 'package:do_an/modules/notification/bindings/rating_bindings.dart';
+import 'package:do_an/modules/notification/controller/rating_post_controller.dart';
+import 'package:do_an/modules/notification/page/rating_post_page.dart';
 import 'package:do_an/modules/product_detail/page/watch_user_page.dart';
 import 'package:get/get.dart';
 import '../modules/modules.dart';
@@ -172,6 +175,11 @@ class AppRouters {
           name: RouterLink.watchUserPage,
           page: () =>   WatchUserPage(),
           binding: WatchUserBindings()
+      ),
+      GetPage(
+          name: RouterLink.ratingPostPage,
+          page: () =>   RatingPostPage(),
+          binding: RatingBindings()
       ),
     ];
   }

@@ -14,7 +14,7 @@ import '../../../service/service.dart';
 
 class ProductDetailController extends GetxController {
 
-  Rx<Posts> post = Posts().obs;
+  RxInt post = 0.obs;
 
   RxList<String> listImage = <String>[].obs;
 
@@ -51,7 +51,7 @@ class ProductDetailController extends GetxController {
       Map<String, dynamic> param = {
         "token": token,
         "userId": userId,
-        "idPost": post.value.id
+        "idPost": post.value
       };
       isLoading.value = true;
       ResponseModel responseModel = await detailPostRepository.apiGetDetailPost(
@@ -92,7 +92,7 @@ class ProductDetailController extends GetxController {
       Map<String, dynamic> param = {
         "token": token,
         "userId": userId,
-        "idPost": post.value.id
+        "idPost": post.value
       };
       ResponseModel responseModel = await detailPostRepository.apiLikePost(
           param: param, token: token);
@@ -116,7 +116,7 @@ class ProductDetailController extends GetxController {
       Map<String, dynamic> param = {
         "token": token,
         "userId": userId,
-        "idPost": post.value.id
+        "idPost": post.value
       };
       ResponseModel responseModel = await detailPostRepository.apiUnLikePost(
           param: param, token: token);
@@ -163,8 +163,8 @@ class ProductDetailController extends GetxController {
     Map<String, dynamic> param = {
       "token": token,
       "userId": userId,
-      "id_main_category": post.value.idMainCategory,
-      "subCategory": post.value.idSubCategory,
+      "id_main_category": detailPostModel.value.post?.idMainCategory,
+      "subCategory": detailPostModel.value.post?.idSubCategory,
       "formUse":"",
       "conditionUse":"",
       "startMoney":0,

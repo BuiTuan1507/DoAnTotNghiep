@@ -320,4 +320,110 @@ class MyDialog{
               ));
         });
   }
+
+
+  static popUpAskBuy(BuildContext context,
+      {
+        required String tittle,
+        required String namePost,
+        required String nameUser,
+        required VoidCallback onSubmit,
+        required VoidCallback onCancel,
+        required VoidCallback chat,
+        String btnHuyText = 'Từ chối',
+        String textButtonAccept = 'Bán'}) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (builder) {
+          return Dialog(
+              insetPadding: EdgeInsets.all(width(18)),
+              child: Container(
+                height: height(255),
+                width: width(343),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(tittle,
+                                  style: GoogleFonts.sarabun(
+                                      fontSize: size(16),
+                                      fontWeight: FontWeight.bold)),
+                            ]),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: height(10)),
+                        child: Center(child: RichText(
+                          text: TextSpan(
+                            text: nameUser +
+                                " ",
+                            style: AppStyles.textSmallDarkRegular,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: namePost,
+                                style: AppStyles.textSmallGreenSemiBold,
+                              ),
+                            ],
+                          ),
+                        ),),
+                      ),
+                      SizedBox(height: height(40),),
+                      Padding(
+                        padding: const EdgeInsets.all(18),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                  onTap: onCancel,
+                                  child: Container(
+                                      padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: grey_5),
+                                          borderRadius:
+                                          BorderRadius.circular(3),
+                                          color: Colors.white),
+                                      child: Center(
+                                          child: Text(btnHuyText,
+                                              style:
+                                              GoogleFonts.sarabun(
+                                                  color: black
+                                              ))))),
+                              SizedBox(width: width(20)),
+                              InkWell(
+                                  onTap: chat,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: greenMoney),
+                                    padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                    child: Center(
+                                      child: Text("Chat",
+                                          style: GoogleFonts.sarabun(color: Colors.white)),
+                                    ),
+                                  )),
+                              SizedBox(width: width(20)),
+                              InkWell(
+                                  onTap: onSubmit,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: greenMoney),
+                                    padding: EdgeInsets.only(top:height(7),bottom: height(7),right: width(16),left: width(16)),
+                                    child: Center(
+                                      child: Text(textButtonAccept,
+                                          style: GoogleFonts.sarabun(color: Colors.white)),
+                                    ),
+                                  )),
+                            ]),
+                      ),
+                    ]),
+              ));
+        });
+  }
 }
