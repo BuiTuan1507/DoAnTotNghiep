@@ -4,6 +4,7 @@
 import 'package:do_an/models/user/post_user_model.dart';
 import 'package:do_an/respository/notification_repository.dart';
 import 'package:do_an/respository/post_repository.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:get/get.dart';
 
@@ -90,7 +91,7 @@ class PostController extends GetxController{
       CommonUtil.showToast("Lấy bài đăng bị lỗi");
     }
   }
-  Future<void> extendPost (int postId) async {
+  Future<void> extendPost (int postId, BuildContext buildContext) async {
     try{
       String token = GlobalData.getUserModel().token ?? "";
       int userId = GlobalData.getUserModel().id ?? 0;
@@ -108,6 +109,9 @@ class PostController extends GetxController{
         activeListPost.add(posts);
         activeListPost.refresh();
 
+        Get.back();
+        MyDialog.popUpSendMessageSuccess(buildContext, "Bài đăng đã được gia hạn thành công");
+
       }else{
         CommonUtil.showToast(responseModel.message);
       }
@@ -116,7 +120,7 @@ class PostController extends GetxController{
     }
     
   }
-  Future<void> cancelPost(int postId, int statePost) async {
+  Future<void> cancelPost(int postId, int statePost, BuildContext buildContext) async {
     try{
       String token = GlobalData.getUserModel().token ?? "";
       int userId = GlobalData.getUserModel().id ?? 0;
@@ -141,6 +145,8 @@ class PostController extends GetxController{
           cancelListPost.add(posts);
           cancelListPost.refresh();
         }
+        Get.back();
+        MyDialog.popUpSendMessageSuccess(buildContext, "Bạn đã huỷ bài đăng thành công");
       }else{
         CommonUtil.showToast(responseModel.message);
       }

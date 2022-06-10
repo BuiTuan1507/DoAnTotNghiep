@@ -69,14 +69,15 @@ class PostPage extends GetView<PostController>{
           body: TabBarView(
             children: [
 
-             Obx(() =>  buildTabView(controller.activeListPost , context),),
+              Obx(() =>  buildTabView(controller.activeListPost , context, 1),),
 
-              Obx(() => buildTabView(controller.inExtendListPost, context),),
+              Obx(() => buildTabView(controller.inExtendListPost, context, 1),),
 
-              Obx(() => buildTabView(controller.extendListPost, context),),
+              Obx(() => buildTabView(controller.extendListPost, context, 2),),
 
-              Obx(() => buildTabView(controller.cancelListPost, context),),
-              Obx(() => buildTabView(controller.sellListPost, context),)
+              Obx(() => buildTabView(controller.cancelListPost, context , 3),),
+
+              Obx(() => buildTabView(controller.sellListPost, context , 4),)
 
             ],
           ),
@@ -84,7 +85,7 @@ class PostPage extends GetView<PostController>{
       )
     );
   }
-  Widget buildTabView(List<Posts> posts, BuildContext context) {
+  Widget buildTabView(List<Posts> posts, BuildContext context, int state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -92,11 +93,11 @@ class PostPage extends GetView<PostController>{
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: buildListPost( posts, context))
+        Expanded(child: buildListPost( posts, context,  state))
       ],
     );
   }
-  Widget buildListPost(List<Posts> posts, BuildContext context){
+  Widget buildListPost(List<Posts> posts, BuildContext context, int state){
     return Stack(
       children: [
         Container(
@@ -104,7 +105,30 @@ class PostPage extends GetView<PostController>{
           child: posts.isNotEmpty ? ListView.builder(
             itemCount: posts.length,
             itemBuilder: (context , index) {
-              return buildItemPost(posts[index] , context);
+              if(state == 1) {
+                return Padding(padding: EdgeInsets.symmetric(vertical: height(7)),
+                    child: buildItemPost(posts[index] , context));
+              }else if (state == 2){
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: height(7)),
+                  child: buildItemPostExtend(posts[index] , context),
+                );
+              } else if( state == 3) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: height(7)),
+                  child: buildItemPostCancel(posts[index] , context),
+                );
+              }
+              else if( state == 4) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: height(7)),
+                  child: buildItemPostSell(posts[index] , context),
+                );
+              }
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: height(7)),
+                child: buildItemPost(posts[index] , context),
+              );
             },
           ) :  Center(
             child: Text("Không có bài đăng nào"),
@@ -145,7 +169,7 @@ class PostPage extends GetView<PostController>{
                 SizedBox(height: height(5),),
                 RichText(
                   text: TextSpan(
-                    text: "Thời hạn :",
+                    text: "Thời hạn : ",
                     style: AppStyles.textSmallDarkRegular,
                     children: <TextSpan>[
                       TextSpan(
@@ -160,7 +184,11 @@ class PostPage extends GetView<PostController>{
           ),
           InkWell(
             onTap: (){
-              MyDialog.popUpAsk(context, tittle: "Thông báo", hintText: "Bạn có muốn huỷ bài đăng", onSubmit: () {}, onCancel: () {});
+              MyDialog.popUpAsk(context, tittle: "Thông báo ", hintText: "Bạn có muốn huỷ bài đăng ?", onSubmit: () {
+                controller.cancelPost(post.id ?? 0, post.state ?? 0, context);
+              }, onCancel: () {
+                Get.back();
+              });
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(4)),
@@ -215,5 +243,189 @@ class PostPage extends GetView<PostController>{
     );
   }
 
+  Widget buildItemPostExtend(Posts post, BuildContext context){
+    String image = post.media?.first.fileDownloadUri ?? "";
+    if(image == ""){
+      image = Constants.PRODUCT_URL;
+    }
+    String dateTime = post.editTime ?? "";
+    DateTime time =   DateFormat("yyyy-MM-dd hh:mm:ss")
+        .parse(dateTime);
+    DateTime newTime = DateTime(time.year, time.month , time.day);
 
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: width(60),
+              width: width(60),
+              child: buildAvatarProduct(imageUrl: image)),
+          SizedBox(
+            width: width(10),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(post.tittle ?? "" ,style: AppStyles.textNormalBlackMedium,),
+                SizedBox(height: height(5),),
+                RichText(
+                  text: TextSpan(
+                    text: "Hết hạn lúc:",
+                    style: AppStyles.textSmallDarkRegular,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: DateFormat("dd-MM-yyyy").format(newTime),
+                        style: AppStyles.textSmallGreenSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              InkWell(
+                onTap: (){
+                  MyDialog.popUpAsk(context, tittle: "Thông báo", hintText: "Bạn có muốn gia hạn bài đăng (tốn 100 điểm) ? ", onSubmit: () {
+                    controller.extendPost(post.id ?? 0, context);
+                  }, onCancel: () {
+                    Get.back();
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(4)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: height(1), color: greenMoney)
+                  ),
+                  child: Text("Gia hạn", style: AppStyles.textSmallBlackMedium,),
+                ),
+              ),
+              SizedBox(height: height(5),),
+              InkWell(
+                onTap: (){
+                  MyDialog.popUpAsk(context, tittle: "Thông báo", hintText: "Bạn có muốn huỷ bài đăng ?", onSubmit: () {
+                    controller.cancelPost(post.id ?? 0, post.state ?? 0, context);
+                  }, onCancel: () {
+                    Get.back();
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: width(10), vertical: height(4)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: height(1), color: greenMoney)
+                  ),
+                  child: Text("Huỷ", style: AppStyles.textSmallBlackMedium,),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildItemPostCancel(Posts post, BuildContext context){
+    String image = post.media?.first.fileDownloadUri ?? "";
+    if(image == ""){
+      image = Constants.PRODUCT_URL;
+    }
+    String dateTime = post.createTime ?? "";
+    DateTime time =   DateFormat("yyyy-MM-dd hh:mm:ss")
+        .parse(dateTime);
+    DateTime newTime = DateTime(time.year, time.month + 1, time.day);
+
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: width(60),
+              width: width(60),
+              child: buildAvatarProduct(imageUrl: image)),
+          SizedBox(
+            width: width(10),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(post.tittle ?? "" ,style: AppStyles.textNormalBlackMedium,),
+                SizedBox(height: height(5),),
+                RichText(
+                  text: TextSpan(
+                    text: "Ngày đăng :",
+                    style: AppStyles.textSmallDarkRegular,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: DateFormat("dd-MM-yyyy").format(newTime),
+                        style: AppStyles.textSmallGreenSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildItemPostSell(Posts post, BuildContext context){
+    String image = post.media?.first.fileDownloadUri ?? "";
+    if(image == ""){
+      image = Constants.PRODUCT_URL;
+    }
+    String dateTime = post.editTime ?? "";
+    DateTime time =   DateFormat("yyyy-MM-dd hh:mm:ss")
+        .parse(dateTime);
+    DateTime newTime = DateTime(time.year, time.month + 1, time.day);
+
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: width(60),
+              width: width(60),
+              child: buildAvatarProduct(imageUrl: image)),
+          SizedBox(
+            width: width(10),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(post.tittle ?? "" ,style: AppStyles.textNormalBlackMedium,),
+                SizedBox(height: height(5),),
+                RichText(
+                  text: TextSpan(
+                    text: "Đã bán vào :",
+                    style: AppStyles.textSmallDarkRegular,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: DateFormat("dd-MM-yyyy").format(newTime),
+                        style: AppStyles.textSmallGreenSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

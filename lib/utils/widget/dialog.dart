@@ -29,11 +29,14 @@ class MyDialog{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(children: [
-                        SvgPicture.asset(MyIcon.successIcon),
+                        SvgPicture.asset(MyIcon.successIcon, color: greenMoney,),
                         const SizedBox(width: 10),
-                        Text(text,
-                            style: GoogleFonts.sarabun(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Expanded(
+                          child: Text(text,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.sarabun(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                        ),
                       ]),
                       InkWell(
                           onTap: () {
@@ -260,6 +263,7 @@ class MyDialog{
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(10),
@@ -276,10 +280,11 @@ class MyDialog{
                         padding: EdgeInsets.symmetric(vertical: height(10)),
                         child: Center(child: Text(hintText, style: AppStyles.textNormalBlackRegular,)),
                       ),
+                      SizedBox(height: height(30),),
                       Padding(
                         padding: const EdgeInsets.all(18),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
                                   onTap: onCancel,
@@ -296,7 +301,7 @@ class MyDialog{
                                               GoogleFonts.sarabun(
                                                   color: black
                                               ))))),
-                              SizedBox(width: width(10)),
+                              SizedBox(width: width(20)),
                               InkWell(
                                   onTap: onSubmit,
                                   child: Container(
