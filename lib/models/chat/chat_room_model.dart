@@ -7,6 +7,7 @@ class ChatRoomModel {
   int? idCustomer;
   String? avatarCustomer;
   String? nameCustomer;
+  bool? isUserAddPost;
   String? tittlePost;
   String? avatarPost;
   LastMessage? lastMessage;
@@ -19,6 +20,7 @@ class ChatRoomModel {
         this.idCustomer,
         this.avatarCustomer,
         this.nameCustomer,
+        this.isUserAddPost,
         this.tittlePost,
         this.avatarPost,
         this.lastMessage,
@@ -31,6 +33,7 @@ class ChatRoomModel {
     idCustomer = json['idCustomer'];
     avatarCustomer = json['avatarCustomer'];
     nameCustomer = json['nameCustomer'];
+    isUserAddPost = json['isUserAddPost'];
     tittlePost = json['tittlePost'];
     avatarPost = json['avatarPost'];
     lastMessage = json['lastMessage'] != null
@@ -47,6 +50,7 @@ class ChatRoomModel {
     data['idCustomer'] = this.idCustomer;
     data['avatarCustomer'] = this.avatarCustomer;
     data['nameCustomer'] = this.nameCustomer;
+    data['isUserAddPost'] = this.isUserAddPost;
     data['tittlePost'] = this.tittlePost;
     data['avatarPost'] = this.avatarPost;
     if (this.lastMessage != null) {

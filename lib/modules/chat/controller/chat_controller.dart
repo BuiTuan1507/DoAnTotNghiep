@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../models/chat/chat_room_model.dart';
 
 import '../../../models/response_model.dart';
-import '../../../models/user/post_user_model.dart';
 import '../../../service/service.dart';
 import '../../../utils/common/common_util.dart';
 
@@ -18,6 +17,10 @@ class ChatController extends GetxController {
   RxBool isLoading = false.obs;
 
   RxList<ChatRoomModel> listChatRoomModel = <ChatRoomModel>[].obs;
+
+  RxList<ChatRoomModel> sellChat = <ChatRoomModel>[].obs;
+
+  RxList<ChatRoomModel> buyChat = <ChatRoomModel>[].obs;
 
   ChatRepository chatRepository = ChatRepository();
 
@@ -69,6 +72,16 @@ class ChatController extends GetxController {
 
         for (var item in _listData) {
           listChatRoomModel.add(ChatRoomModel.fromJson(item));
+        }
+        if(listChatRoomModel.isNotEmpty){
+          for(ChatRoomModel chatRoom in listChatRoomModel){
+            if(chatRoom.isUserAddPost ?? true){
+              sellChat.add(chatRoom);
+            }else{
+              buyChat.add(chatRoom);
+            }
+          }
+
         }
       }
       isLoading.value = false;
