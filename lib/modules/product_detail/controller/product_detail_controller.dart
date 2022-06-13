@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:do_an/config/config.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/user/post_user_model.dart';
+import 'package:do_an/respository/chat_repository.dart';
 import 'package:do_an/respository/detail_post_repository.dart';
 import 'package:do_an/respository/notification_repository.dart';
 import 'package:do_an/respository/post_repository.dart';
@@ -33,6 +35,8 @@ class ProductDetailController extends GetxController {
   RxList<Posts> listPosts = <Posts>[].obs;
 
   NotificationRepository notificationRepository = NotificationRepository();
+
+  ChatRepository chatRepository = ChatRepository();
 
   @override
   void onInit() async {
@@ -191,6 +195,31 @@ class ProductDetailController extends GetxController {
    }catch(e){
      CommonUtil.showToast("Lỗi gửi thông báo mua sản phẩm");
    }
+  }
+
+  Future<void> addChatRoom() async {
+    try{
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "userChat" : detailPostModel.value.userPostData?.id,
+        "postId":detailPostModel.value.post?.id,
+      };
+
+      ResponseModel responseModel = await chatRepository.apiAddChatRoom(param: param, token: token);
+
+      if(responseModel.status){
+        // to list room
+        Get.toNamed(RouterLink.chatPage);
+      }else{
+        CommonUtil.showToast(responseModel.message);
+      }
+    }catch(e){
+      log(e.toString());
+      CommonUtil.showToast("Lỗi gửi thêm room chat");
+    }
   }
 
 }

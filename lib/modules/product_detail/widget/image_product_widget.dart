@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,7 @@ class ImageProductWidget extends StatefulWidget {
 class _ImageProductWidgetState extends State<ImageProductWidget> {
   CarouselController carouselController = CarouselController();
   var currentIndexPage = 0;
+  ProductDetailController productDetailController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -148,27 +150,30 @@ class _ImageProductWidgetState extends State<ImageProductWidget> {
           SizedBox(height: height(10),),
           buildItemContact("Nhắn tin SMS",Icons.sms, (){Get.back();}),
           SizedBox(height: height(10),),
-          buildItemContact("Chat",Icons.message_rounded, (){Get.back();}),
+          buildItemContact("Chat",Icons.message_rounded, (){productDetailController.addChatRoom();}),
         ],
       ),
     );
   }
   Widget buildItemContact (String tittle, IconData iconData, VoidCallback onClick) {
-    return Container(
-      width: width(120),
-      height: width(30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(iconData, size: size(20),color: greenMoney,),
-          SizedBox(width: width(10),),
-          Text(tittle, style: AppStyles.textTinyDarkRegular,)
-        ],
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        width: width(120),
+        height: width(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(iconData, size: size(20),color: greenMoney,),
+            SizedBox(width: width(10),),
+            Text(tittle, style: AppStyles.textTinyDarkRegular,)
+          ],
+        ),
       ),
     );
 

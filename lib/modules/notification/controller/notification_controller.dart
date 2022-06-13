@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:do_an/config/config.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/post/list_notification_model.dart';
 import 'package:do_an/modules/main/controller/main_controller.dart';
 import 'package:do_an/modules/modules.dart';
+import 'package:do_an/respository/chat_repository.dart';
 import 'package:do_an/respository/notification_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:do_an/utils/utils.dart';
@@ -24,6 +27,8 @@ class NotificationController extends GetxController {
   RxList<ListNotification> notification = <ListNotification>[].obs;
 
   Rx<ListNotificationModel> listNotificationData = ListNotificationModel().obs;
+
+  ChatRepository chatRepository = ChatRepository();
   @override
   void onInit() async {
     await getListNotification();
@@ -262,7 +267,7 @@ class NotificationController extends GetxController {
           if(listNotification.isReading == false){
             String tittle = getTittleNotification(listNotification);
             String content = getContentPost(listNotification);
-            MyDialog.popUpAskBuy(context,chat: () { createChatRoom(); }, onCancel: () {
+            MyDialog.popUpAskBuy(context,chat: () { createChatRoom(listNotification); }, onCancel: () {
               sellPost(listNotification, false);
             }, onSubmit: () {
               sellPost(listNotification, true);
@@ -287,7 +292,28 @@ class NotificationController extends GetxController {
     await readingNotification(listNotification);
   }
 
-  Future<void> createChatRoom() async{
+  Future<void> createChatRoom(ListNotification listNotification) async {
+    try{
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "userChat" : listNotification.idUserCreate,
+        "postId": listNotification.idPost,
+      };
 
+      ResponseModel responseModel = await chatRepository.apiAddChatRoom(param: param, token: token);
+
+      if(responseModel.status){
+        // to list room
+        Get.toNamed(RouterLink.chatPage);
+      }else{
+        CommonUtil.showToast(responseModel.message);
+      }
+    }catch(e){
+      log(e.toString());
+      CommonUtil.showToast("Lỗi gửi thêm room chat");
+    }
   }
 }

@@ -19,7 +19,16 @@ void onConnect(StompFrame frame) {
   Timer.periodic(Duration(seconds: 10), (_) {
     stompClient.send(
       destination: '/app/chat',
-      body: json.encode({'text':"545454"}),
+      body: json.encode({
+        "token":"",
+        "userId":77,
+        "message":"d l nh li",
+        "dateTime":"",
+        "isReading":false,
+        "type": "text",
+        "idChatRoom": 172,
+        "media":""
+      }),
     );
   });
 

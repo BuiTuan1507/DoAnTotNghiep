@@ -155,7 +155,7 @@ class ProductDetailPage extends GetView<ProductDetailController>{
   Widget buildBottomBar (){
     return Container(
       height: height(80),
-     padding: EdgeInsets.only(top: height(10), bottom: height(10), left: width(20), right: width(20)),
+     padding: EdgeInsets.only(top: height(10), bottom: height(10), left: width(10), right: width(10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -181,7 +181,24 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           ),
           Flexible(
             flex: 1,
-              child: buildItemBottomBar("Chat", Icons.message_rounded)),
+              child: InkWell(
+                onTap: (){
+                  controller.addChatRoom();
+                },
+                  child: buildItemBottomBar("Chat", Icons.message_rounded))),
+          VerticalDivider(
+            indent: height(10),
+            endIndent: height(10),
+            thickness: height(1),
+            color: grey_4,
+          ),
+          Flexible(
+              flex: 1,
+              child: InkWell(
+                  onTap: (){
+                    controller.buyPost();
+                  },
+                  child: buildItemBottomBar("Mua ngay", Icons.add_shopping_cart_rounded))),
 
         
 
