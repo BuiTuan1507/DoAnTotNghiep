@@ -81,8 +81,7 @@ class ChatPage extends GetView<ChatController>{
             child: TextField(
               controller: controller.controller,
               onChanged: (value){
-                controller.search(value);
-
+              //  controller.search(value);
               },
               decoration: InputDecoration(
                 hintText: "Search...",
@@ -90,7 +89,7 @@ class ChatPage extends GetView<ChatController>{
                 prefixIcon: Icon(Icons.search,color: Colors.grey.shade600, size: 20,),
                 filled: true,
                 fillColor: Colors.grey.shade100,
-                contentPadding: EdgeInsets.all(8),
+                contentPadding: EdgeInsets.all(width(5)),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(
@@ -100,17 +99,19 @@ class ChatPage extends GetView<ChatController>{
               ),
             ),
           ),
-          ListView.builder(
-            itemCount: controller.listChat.length,
+          Obx(() => ListView.builder(
+            physics:
+            const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            controller: controller.scrollController,
+            itemCount: controller.listChatRoomModel.length,
             shrinkWrap: true,
             padding: const EdgeInsets.only(top: 16),
-            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index){
               return ChatItemWidget(
-                chatUser: controller.listChat[index],
+                chatUser: controller.listChatRoomModel[index],
               );
             },
-          ),
+          )),
         ],
       ),
     );

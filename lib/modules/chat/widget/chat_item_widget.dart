@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:do_an/models/chat/chat_room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,8 +14,8 @@ import 'avatar_widget.dart';
 
 
 class ChatItemWidget extends StatefulWidget{
-  final ChatUsers chatUser;
-  const ChatItemWidget({required this.chatUser});
+  final ChatRoomModel chatUser;
+   ChatItemWidget({required this.chatUser});
   @override
   _ChatItemWidgetState createState() => _ChatItemWidgetState();
 }
@@ -27,7 +28,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
         Get.toNamed(RouterLink.chatDetailPage, arguments: widget.chatUser);
       },
       child: Container(
-        padding: EdgeInsets.only(left: 16,right: 16,top: 10,bottom: 10),
+        padding: EdgeInsets.symmetric(horizontal: width(12), vertical: height(10)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +48,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               ),
             ),
             SizedBox(width: width(10),),
-            buildAvatarProduct(imageUrl: '')
+            buildAvatarProduct(imageUrl: widget.chatUser.avatarPost ?? "")
           ],
         ),
       ),
@@ -96,14 +97,14 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
   }
 
 
-  Widget buildNameItem(ChatUsers chatUsers) {
+  Widget buildNameItem(ChatRoomModel chatRoomModel) {
     return  Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
           child: Text(
-            chatUsers.name,
+            chatRoomModel.nameCustomer ?? "",
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.sarabun(
                 fontWeight: FontWeight.w600,
@@ -113,7 +114,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
             softWrap: true,
           ),
         ),
-        buildTimeItem(chatUsers)
+        buildTimeItem(chatRoomModel)
       ],
     );
   }
@@ -131,45 +132,66 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
     );
   }
 
-  Container buildTimeItem(ChatUsers chatUsers) {
+  Container buildTimeItem(ChatRoomModel chatRoomModel) {
     return Container(
       padding: EdgeInsets.only(left: width(10)),
       child: Text(
-          chatUsers.time,
+          CommonUtil.parseDateTime(chatRoomModel.createTime ?? ""),
           maxLines: 1,
           style: GoogleFonts.sarabun(
               fontWeight:
-              (chatUsers.isRead == true) ? FontWeight.w600 : FontWeight.w400,
+              ((chatRoomModel.lastMessage?.isReading ?? false) == true) ? FontWeight.w600 : FontWeight.w400,
               fontSize: size(14),
               fontStyle: FontStyle.normal,
-              color: (chatUsers.isRead == true)
+              color: ((chatRoomModel.lastMessage?.isReading ?? false) == true)
                   ? HexColor("#000000")
                   : HexColor("#828282"))),
     );
   }
 
-  Widget buildLastMessage(ChatUsers chatUsers) {
+  Widget buildLastMessage(ChatRoomModel chatRoomModel) {
+    String message = "";
+    switch(chatRoomModel.lastMessage?.type) {
+      case "text": {
+        message = chatRoomModel.lastMessage?.message ?? "";
+      }
+      break;
+
+      case "image": {
+        message = "Hình ảnh";
+      }
+      break;
+      case "video": {
+        message = "Video";
+      }
+      break;
+
+      default: {
+
+      }
+      break;
+    }
     return Row(
       children: [
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(bottom: height(3)),
             child: Text(
-                chatUsers.messageText,
+                message,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.sarabun(
-                  color: chatUsers.isRead == true ? black : HexColor("#828282"),
+                  color: (chatRoomModel.lastMessage?.isReading ?? false) == true ? black : HexColor("#828282"),
                   fontSize: size(14),
                   height: 1.6,
                   fontWeight:
-                  chatUsers.isRead == true ? FontWeight.w700 : FontWeight.w400,
+                  (chatRoomModel.lastMessage?.isReading ?? false) == true ? FontWeight.w700 : FontWeight.w400,
                 )),
           ),
         ),
         SizedBox(width: width(13)),
         Visibility(
-          visible: (chatUsers.newMessageCount) > 0,
+          visible: (chatRoomModel.countReadMessage ?? 0) > 0,
           child: Container(
             alignment: Alignment.center,
             height: radius(20),
@@ -179,7 +201,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               horizontal: width(7),
             ),
             child: Text(
-              chatUsers.newMessageCount.toString(),
+              chatRoomModel.countReadMessage.toString(),
               style: GoogleFonts.sarabun(
                   fontWeight: FontWeight.w400,
                   fontSize: size(11),

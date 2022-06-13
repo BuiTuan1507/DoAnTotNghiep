@@ -1,48 +1,104 @@
+import 'dart:developer';
+
+import 'package:do_an/respository/chat_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../../models/chat/chat_users_model.dart';
+import '../../../models/chat/chat_room_model.dart';
 
-class ChatController extends GetxController{
+import '../../../models/response_model.dart';
+import '../../../models/user/post_user_model.dart';
+import '../../../service/service.dart';
+import '../../../utils/common/common_util.dart';
 
+class ChatController extends GetxController {
   RxInt currentIndex = 0.obs;
 
   final TextEditingController controller = TextEditingController();
-  List<ChatUsers> chatUsers = [
-    ChatUsers(name: "Jane Russel", messageText: "Awesome Setup", imageURL: "assets/images/userImage1.jpg", time: "Now" , isRead: false, newMessageCount: 0),
-    ChatUsers(name: "Glady's Murphy", messageText: "That's Great", imageURL: "assets/images/userImage2.jpg", time: "Yesterday", isRead: true, newMessageCount: 2),
-    ChatUsers(name: "Jorge Henry", messageText: "Hey where are you?", imageURL: "assets/images/userImage2.jpg", time: "31 Mar" ,isRead: false, newMessageCount: 0),
-    ChatUsers(name: "Philip Fox", messageText: "Busy! Call me in 20 mins", imageURL: "assets/images/userImage2.jpg", time: "28 Mar",isRead: true, newMessageCount: 3),
-    ChatUsers(name: "Debra Hawkins", messageText: "Thankyou, It's awesome", imageURL: "assets/images/userImage2.jpg", time: "23 Mar",isRead: false, newMessageCount: 0),
-    ChatUsers(name: "Jacob Pena", messageText: "will update you in evening", imageURL: "assets/images/userImage2.jpg", time: "17 Mar",isRead: false, newMessageCount: 1),
-    ChatUsers(name: "Andrey Jones", messageText: "Can you please share the file?", imageURL: "assets/images/userImage2.jpg", time: "24 Feb",isRead: false, newMessageCount: 0),
-    ChatUsers(name: "John Wick", messageText: "How are you?", imageURL: "assets/images/userImage2.jpg", time: "18 Feb",isRead: false, newMessageCount: 0),
-  ];
-  List<ChatUsers> listChat = [];
+  RxBool isLoading = false.obs;
+
+  RxList<ChatRoomModel> listChatRoomModel = <ChatRoomModel>[].obs;
+
+  ChatRepository chatRepository = ChatRepository();
+
+  int page = 0;
+
+  int pageSize = 6;
+
+  bool isLoadMore = false;
+
+  ScrollController scrollController = ScrollController();
+
   @override
-  void onInit() {
-    listChat = chatUsers;
+  void onInit() async {
+    initScrollController();
+    await getListRoomChat();
+
     super.onInit();
   }
-  void search(String text){
-    List<ChatUsers> listChatSearch = [];
-    for (var element in chatUsers) {
-      if(element.name.contains(text)){
-        listChatSearch.add(element);
-      }else {
-        String firstCharacter =  text.substring(0,1).toUpperCase();
-        if(text.length > 1) {
-          text = firstCharacter + text.substring(1,text.length);
-        }else {
-          text = firstCharacter;
+
+  Future<void> getListRoomChat() async {
+    String token = GlobalData.getUserModel().token ?? "";
+    int userId = GlobalData.getUserModel().id ?? 0;
+    if (page == 0) {
+      listChatRoomModel.value = [];
+    }
+    try {
+      isLoading.value = true;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "page": page,
+        "size": pageSize,
+        "sortBy": "id",
+        "sortDir": "asc"
+      };
+      ResponseModel responseModel = await chatRepository.apiGetListChatRoom(
+          param: param, token: token);
+      if (responseModel.status) {
+
+        dynamic _listData = responseModel.data;
+
+
+        if (_listData.isEmpty == true) {
+          isLoading.value = false;
+          isLoadMore = false;
+          return;
         }
-        if(element.name.contains(text)) {
-          listChatSearch.add(element);
+        isLoadMore = true;
+
+        for (var item in _listData) {
+          listChatRoomModel.add(ChatRoomModel.fromJson(item));
         }
       }
-
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      log(e.toString());
+      CommonUtil.showToast("Lỗi lấy room chat");
     }
-    if(text == "") listChat = chatUsers;
-    listChat = listChatSearch;
+  }
+
+  Future<void> loadMorePost() async {
+    if (isLoadMore) {
+      page = page + 1;
+      await getListRoomChat();
+    }
+  }
+  _scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      loadMorePost();
+    }
+
+
+  }
+  void initScrollController() {
+    scrollController.addListener(_scrollListener);
+  }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
