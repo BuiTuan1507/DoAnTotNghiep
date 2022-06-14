@@ -95,6 +95,7 @@ class SearchController extends GetxController {
       getListSearchPost();
     });
   }
+
   Future<void> getListHistorySearch() async {
     try{
       String token = GlobalData.getUserModel().token ?? "";

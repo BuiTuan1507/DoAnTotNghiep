@@ -91,17 +91,17 @@ class ChatPage extends GetView<ChatController> {
                 padding: EdgeInsets.only(
                     top: height(13), left: width(12), right: width(12)),
                 child: TextField(
-                  controller: controller.controller,
+                  controller: controller.searchController,
                   onChanged: (value) {
-                    //  controller.search(value);
+                      controller.searchPost();
                   },
                   decoration: InputDecoration(
-                    hintText: "Search...",
+                    hintText: "Tìm kiếm",
                     hintStyle: TextStyle(color: Colors.grey.shade600),
                     prefixIcon: Icon(
                       Icons.search,
                       color: Colors.grey.shade600,
-                      size: 20,
+                      size: size(18),
                     ),
                     filled: true,
                     fillColor: Colors.grey.shade100,

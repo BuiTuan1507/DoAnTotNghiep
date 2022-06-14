@@ -21,6 +21,13 @@ class ChatRepository {
     return res;
   }
 
+  Future<ResponseModel> apiSearchChatRoom({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.searchChatRoom;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+
   Future<ResponseModel> apiGetDetailChatRoom({required Map<String, dynamic> param,required String token}) async {
     var url = UrlApi.getDetailChatRoom;
     var res = await _request.requestBearerApi(

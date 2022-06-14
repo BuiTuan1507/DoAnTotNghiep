@@ -1,7 +1,7 @@
 
 class ProdAppChatEnvironment{
 //  final baseUrl = "http://10.0.2.2:8088";
- final baseUrl = "https://22ab-42-115-113-236.ap.ngrok.io";
+ final baseUrl = "https://0ec8-42-115-113-236.ap.ngrok.io";
   final baseApi = "/api";
   final baseVersion = "";
   final receiveTimeout = 2 * 60 * 1000;
@@ -57,4 +57,5 @@ class UrlApi{
   static const String getDetailChatRoom = "/get_detail_chat_room";
   static const String getListMessage = "/get_list_message";
   static const String deleteChatRoom = "/delete_chat_room";
+  static const String searchChatRoom = "/search_chat_room";
 }
