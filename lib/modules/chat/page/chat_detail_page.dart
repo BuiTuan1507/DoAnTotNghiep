@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:do_an/config/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -78,7 +79,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
           Column(
             children: [
               buildProductView(),
-              BodyChatWidget(),
+              const BodyChatWidget(),
               Visibility(
                 visible: controller.messages.isNotEmpty,
                 child: sendModelWithFile(fileModel: controller.fileImage),
@@ -100,7 +101,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       flexibleSpace: SafeArea(
-        child: Container(
+        child: Obx(() => Container(
           padding: EdgeInsets.only(right: width(10)),
           child: Row(
             children: <Widget>[
@@ -117,7 +118,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               SizedBox(
                 width: width(2),
               ),
-              buildAvatarUser(imageUrl: '', size: 40),
+              buildAvatarUser(imageUrl: controller.detailChatRoomModel.value.infoUserChat?.avatar ?? "", size: 40),
               SizedBox(
                 width: width(12),
               ),
@@ -127,7 +128,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      controller.chatUsers.name,
+                      controller.detailChatRoomModel.value.infoUserChat?.name ?? "",
                       style: AppStyles.textNormalBlackMedium,
                     ),
                     SizedBox(
@@ -140,8 +141,8 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                           height:height(8),
                           width: height(8),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: greenMoney
+                              shape: BoxShape.circle,
+                              color: greenMoney
                           ),
                         ),
                         SizedBox(width: width(8),),
@@ -175,7 +176,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               ),
             ],
           ),
-        ),
+        )),
       ),
     );
   }
@@ -254,47 +255,52 @@ class ChatDetailPage extends GetView<ChatDetailController>{
 
 
   Widget buildProductView(){
-    return Container(
-      height: height(70),
-      //width: double.infinity,
-      color: HexColor("F5F5F5"),
-      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(10)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: height(50),
-            width: height(50),
-            child: CacheImage(
-              imageUrl: MyImage.imageBanner,
-              boxFit: BoxFit.cover,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: width(10)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text("Tên sản phẩm này, ..............", style: AppStyles.textSmallBlackRegular,maxLines: 2,overflow: TextOverflow.ellipsis,),
-                  ),
-                  SizedBox(
-                    height: height(10),
-                  ),
-                  Expanded(child: Text("3,2 tỷ", style: AppStyles.textSmallRedMedium,))
-                ],
+    return Obx(() => InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.productDetailPage, arguments: controller.detailChatRoomModel.value.infoPostChat?.id ?? 0);
+      },
+      child: Container(
+        height: height(70),
+        //width: double.infinity,
+        color: HexColor("F5F5F5"),
+        padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(10)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height(50),
+              width: height(50),
+              child: CacheImage(
+                imageUrl: controller.detailChatRoomModel.value.infoPostChat?.image ?? "",
+                boxFit: BoxFit.cover,
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-              child: SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC")))
-        ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: width(10)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(controller.detailChatRoomModel.value.infoPostChat?.tittle ?? "", style: AppStyles.textSmallBlackRegular,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                    ),
+                    SizedBox(
+                      height: height(10),
+                    ),
+                    Expanded(child: Text(CommonUtil.formatMoney(controller.detailChatRoomModel.value.infoPostChat?.money ?? 0,), style: AppStyles.textSmallRedMedium,))
+                  ],
+                ),
+              ),
+            ),
+            Align(
+                alignment: Alignment.centerRight,
+                child: SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC")))
+          ],
+        ),
       ),
-    );
+    ));
   }
 
 

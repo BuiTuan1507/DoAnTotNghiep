@@ -1,10 +1,12 @@
 
 import 'package:do_an/models/chat/chat_users_model.dart';
+import 'package:do_an/models/chat/message_model.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../service/share_prefencers/global_data.dart';
 import '../../../utils/utils.dart';
 import 'avatar_widget.dart';
 
@@ -17,33 +19,38 @@ class BodyChatWidget extends StatefulWidget {
 
 class _BodyChatWidgetState extends State<BodyChatWidget> {
   ChatDetailController controller = Get.find();
+  int userId = GlobalData.getUserModel().id ?? 0;
   @override
   Widget build(BuildContext context) {
+
     return Expanded(
-      child: ListView(
+      child: Obx(()=> ListView(
+        controller: controller.scrollController,
+        reverse: true,
         shrinkWrap: true,
         physics:
-        BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
 
-        children: List.generate(controller.messages.length, (index) =>  
-            buildTextMessage(controller.messages[index])
+        children: List.generate(controller.listMessage.length, (index) =>
+            buildTextMessage(controller.listMessage[index], userId)
         ),
-      ),
+      )),
     );
   }
-  Widget buildTextMessage(ChatMessage chatMessage){
+  Widget buildTextMessage(MessageModel messageModel, int userId){
     Widget widgetLeft;
     Widget widgetRight;
 
-    widgetLeft =  chatMessage.messageType == "receiver" ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(chatMessage);
-    widgetRight =  chatMessage.messageType != "receiver" ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(chatMessage);
+
+    widgetLeft =  messageModel.idUser == userId ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(messageModel);
+    widgetRight =  messageModel.idUser != userId ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(messageModel);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width(8), vertical: height(6)),
       child: Align(
-        alignment: (chatMessage.messageType == "receiver" ? Alignment.topLeft:Alignment.topRight),
+        alignment: (messageModel.idUser == userId? Alignment.topLeft:Alignment.topRight),
         child: Column(
-          crossAxisAlignment:chatMessage.messageType == "receiver" ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          crossAxisAlignment:messageModel.idUser == userId ? CrossAxisAlignment.start : CrossAxisAlignment.end,
           mainAxisAlignment:   MainAxisAlignment.start ,
           children: [
             Visibility(
@@ -60,7 +67,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
               ),
             ),
             Row(
-              mainAxisAlignment:chatMessage.messageType == "receiver" ? MainAxisAlignment.start : MainAxisAlignment.end,
+              mainAxisAlignment: messageModel.idUser == userId ? MainAxisAlignment.start : MainAxisAlignment.end,
 
               children: [
                 widgetLeft,
@@ -68,30 +75,30 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
                 widgetRight
               ],
             ),
-            sendMessageState(chatMessage),
+            sendMessageState(messageModel),
             Visibility(
-              visible: chatMessage.sendMessageStatus,
-                child: errorMessageState(chatMessage)
+              visible: messageModel.sendMessageStatus ?? false,
+                child: errorMessageState(messageModel)
             )
           ],
         ),
       ),
     );
   }
-  Widget chatContent (ChatMessage chatMessage){
+  Widget chatContent (MessageModel messageModel){
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: (chatMessage.messageType  == "receiver" ? Colors.grey.shade200 : Colors.blue[200]),
+        color: ( messageModel.idUser == userId ? Colors.grey.shade200 : Colors.blue[200]),
       ),
       padding: EdgeInsets.all(width(8)),
-      child: Text(chatMessage.messageContent, style: AppStyles.textSmallBlackRegular),
+      child: Text( messageModel.message ?? "", style: AppStyles.textSmallBlackRegular),
     );
   }
 
   Widget sendMessageState(
-      ChatMessage mess) {
-    if(mess.sendMessageStatus && mess.messageType  != "receiver") {
+      MessageModel messageModel) {
+    if((messageModel.sendMessageStatus ?? true) && messageModel.idUser == userId) {
       return Container(
         margin: EdgeInsets.only(
           right: width(7),
@@ -122,7 +129,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
   }
 
   Widget errorMessageState(
-      ChatMessage mess) {
+      MessageModel mess) {
     String textError = "Gửi không thành công. Nhấn để gửi lại!";
     return GestureDetector(
       behavior: HitTestBehavior.opaque,

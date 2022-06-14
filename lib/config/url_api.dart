@@ -1,7 +1,7 @@
 
 class ProdAppChatEnvironment{
 //  final baseUrl = "http://10.0.2.2:8088";
- final baseUrl = "https://0ec8-42-115-113-236.ap.ngrok.io";
+ final baseUrl = "https://08b3-42-115-113-236.ap.ngrok.io";
   final baseApi = "/api";
   final baseVersion = "";
   final receiveTimeout = 2 * 60 * 1000;
@@ -50,8 +50,6 @@ class UrlApi{
   static const String getListNotificationPost = "/get_list_notification";
   static const String readNotification = "/read_notification";
   static const String getSettingInfo = "/get_info_setting";
-
-  // chat
   static const String addChatRoom = "/add_chat_room";
   static const String getListChatRoom = "/get_list_chat_room";
   static const String getDetailChatRoom = "/get_detail_chat_room";
