@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/login_repository.dart';
 import 'package:flutter/material.dart';
@@ -47,22 +49,28 @@ class SplashPage extends StatelessWidget {
         "token": token,
         "userId": id
       };
-      ResponseModel responseModel = await loginRepository.apiCheckToken(param: param, token: token);
-      if(responseModel.status){
-        UserModel newUser = UserModel(
-            id: id,
-            token: token,
-            firstName: firstName,
-            lastName: lastName,
-            avatar: avatar,
-            active: active,
-            phoneNumber: phoneNumber
-        );
-        GlobalData.setUserLogin(newUser);
-        Get.offAllNamed(RouterLink.main);
-      }else{
-        Get.offAllNamed(RouterLink.login);
+
+      try{
+        ResponseModel responseModel = await loginRepository.apiCheckToken(param: param, token: token);
+        if(responseModel.status){
+          UserModel newUser = UserModel(
+              id: id,
+              token: token,
+              firstName: firstName,
+              lastName: lastName,
+              avatar: avatar,
+              active: active,
+              phoneNumber: phoneNumber
+          );
+          GlobalData.setUserLogin(newUser);
+          Get.offAllNamed(RouterLink.main);
+        }else{
+          Get.offAllNamed(RouterLink.login);
+        }
+      }catch(e){
+        log(e.toString());
       }
+
     }
   }
 

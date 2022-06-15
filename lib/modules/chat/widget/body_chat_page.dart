@@ -1,4 +1,6 @@
+import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:do_an/models/chat/chat_users_model.dart';
 import 'package:do_an/models/chat/message_model.dart';
 import 'package:do_an/modules/modules.dart';
@@ -20,45 +22,53 @@ class BodyChatWidget extends StatefulWidget {
 class _BodyChatWidgetState extends State<BodyChatWidget> {
   ChatDetailController controller = Get.find();
   int userId = GlobalData.getUserModel().id ?? 0;
+
   @override
   Widget build(BuildContext context) {
-
     return Expanded(
-      child: Obx(()=> ListView(
-        controller: controller.scrollController,
-        reverse: true,
-        shrinkWrap: true,
-        physics:
-        const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-
-        children: List.generate(controller.listMessage.length, (index) =>
-            buildTextMessage(controller.listMessage[index], userId)
-        ),
-      )),
+      child: Obx(() => ListView(
+            controller: controller.scrollController,
+            reverse: true,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            children: List.generate(
+                controller.listMessage.length,
+                (index) =>
+                    buildTextMessage(controller.listMessage[index], userId)),
+          )),
     );
   }
-  Widget buildTextMessage(MessageModel messageModel, int userId){
+
+  Widget buildTextMessage(MessageModel messageModel, int userId) {
     Widget widgetLeft;
     Widget widgetRight;
 
-
-    widgetLeft =  messageModel.idUser == userId ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(messageModel);
-    widgetRight =  messageModel.idUser != userId ? buildAvatarUser(imageUrl: '', size: 20) : chatContent(messageModel);
+    widgetLeft = messageModel.idUser == userId
+        ? buildAvatarUser(imageUrl: '', size: 20)
+        : chatContent(messageModel);
+    widgetRight = messageModel.idUser != userId
+        ? buildAvatarUser(imageUrl: '', size: 20)
+        : chatContent(messageModel);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width(8), vertical: height(6)),
       child: Align(
-        alignment: (messageModel.idUser == userId? Alignment.topLeft:Alignment.topRight),
+        alignment: (messageModel.idUser == userId
+            ? Alignment.topLeft
+            : Alignment.topRight),
         child: Column(
-          crossAxisAlignment:messageModel.idUser == userId ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-          mainAxisAlignment:   MainAxisAlignment.start ,
+          crossAxisAlignment: messageModel.idUser == userId
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Visibility(
               visible: true,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: height(10)),
                 child: Text(
-                  "19:31",
+                  CommonUtil.parseDateTime(messageModel.dateTime ?? ""),
                   style: GoogleFonts.sarabun(
                     color: greySubText,
                     fontSize: size(12),
@@ -67,38 +77,69 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
               ),
             ),
             Row(
-              mainAxisAlignment: messageModel.idUser == userId ? MainAxisAlignment.start : MainAxisAlignment.end,
-
+              mainAxisAlignment: messageModel.idUser == userId
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.end,
               children: [
                 widgetLeft,
-                SizedBox(width: width(10),),
+                SizedBox(
+                  width: width(10),
+                ),
                 widgetRight
               ],
             ),
             sendMessageState(messageModel),
             Visibility(
-              visible: messageModel.sendMessageStatus ?? false,
-                child: errorMessageState(messageModel)
-            )
+                visible: messageModel.sendMessageStatus ?? false,
+                child: errorMessageState(messageModel))
           ],
         ),
       ),
     );
   }
-  Widget chatContent (MessageModel messageModel){
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: ( messageModel.idUser == userId ? Colors.grey.shade200 : Colors.blue[200]),
-      ),
-      padding: EdgeInsets.all(width(8)),
-      child: Text( messageModel.message ?? "", style: AppStyles.textSmallBlackRegular),
-    );
+
+  Widget chatContent(MessageModel messageModel) {
+    switch (messageModel.type) {
+      case "text":
+        {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: (messageModel.idUser == userId
+                  ? Colors.grey.shade200
+                  : Colors.blue[200]),
+            ),
+            padding: EdgeInsets.all(width(8)),
+            child: Text(messageModel.message ?? "",
+                style: AppStyles.textSmallBlackRegular),
+          );
+        }
+      case "image":
+        {
+          return Container(
+
+            padding: EdgeInsets.all(width(8)),
+            child: buildMediaContent(messageModel),
+          );
+        }
+      case "video":
+        {
+          return Container(
+            padding: EdgeInsets.all(width(8)),
+            child: buildMediaVideo(messageModel),
+          );
+        }
+
+      default:
+        {
+          return Container();
+        }
+    }
   }
 
-  Widget sendMessageState(
-      MessageModel messageModel) {
-    if((messageModel.sendMessageStatus ?? true) && messageModel.idUser == userId) {
+  Widget sendMessageState(MessageModel messageModel) {
+    if ((messageModel.sendMessageStatus ?? true) &&
+        messageModel.idUser == userId) {
       return Container(
         margin: EdgeInsets.only(
           right: width(7),
@@ -123,13 +164,12 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
           ],
         ),
       );
-    }else {
+    } else {
       return Container();
     }
   }
 
-  Widget errorMessageState(
-      MessageModel mess) {
+  Widget errorMessageState(MessageModel mess) {
     String textError = "Gửi không thành công. Nhấn để gửi lại!";
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -155,7 +195,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
       },
       child: Container(
         margin: EdgeInsets.only(
-          right:  width(7),
+          right: width(7),
           top: height(6),
           bottom: height(10),
         ),
@@ -177,6 +217,94 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
         ),
       ),
     );
+  }
+
+  Widget buildMediaContent(MessageModel messageModel) {
+
+    if (messageModel.fileElement?.file != null) {
+      return Container(
+          constraints:
+          BoxConstraints(maxWidth: Get.width * 0.7, maxHeight: height(160)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.file(messageModel.fileElement?.file ?? File("")),
+          ));
+    }
+
+
+    // build Image
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DetailMedia(
+              urlMedia: messageModel.media?.fileDownloadUri ,
+              tag: 'image' + (messageModel.id.toString() ));
+        }));
+      },
+      child: Hero(
+        tag: 'image' +
+            DateTime.now().microsecond.toString() +
+            (messageModel.id.toString()),
+        child: Container(
+          constraints: BoxConstraints(
+              maxWidth: Get.width * 0.7, maxHeight: height(160)),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                  imageUrl: messageModel.media?.fileDownloadUri ?? "",
+                  placeholder: (context, image) {
+                    return SizedBox(
+                      child: const CircularProgressIndicator(),
+                      height: width(25),
+                      width: width(25),
+                    );
+                  },
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.grey[400],
+                    constraints: BoxConstraints(
+                        maxWidth: Get.width * 0.7,
+                        maxHeight: height(160)),
+                    child: const Center(
+                        child: Text(
+                          'Lỗi tải ảnh!',
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  ))),
+        ),
+      ),
+    );
+  }
+
+  Widget buildMediaVideo(MessageModel messageModel) {
+    if (messageModel.fileElement?.file != null) {
+      return Container(
+          constraints:
+          BoxConstraints(maxWidth: Get.width * 0.7, maxHeight: height(160)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.file(messageModel.fileElement?.file ?? File("")),
+          ));
+    }
+    // build video
+    return Container(
+      constraints:
+      BoxConstraints(maxWidth: Get.width * 0.75, maxHeight: height(205)),
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: VideoPlayerComponent(
+             url: messageModel.media?.fileDownloadUri ?? "",
+            isOpenFullScreen: false,
+            onOpenFullScreen: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DetailMedia(
+                   urlMedia: messageModel.media?.fileDownloadUri ?? "",
+                  tag: 'video',
+                );
+              }));
+            },
+          )),
+    );
+    return Container();
   }
 
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:do_an/config/config.dart';
 import 'package:do_an/modules/splash/bindings/root_bindings.dart';
-import 'package:do_an/utils/common/web_socket.dart';
+import 'package:do_an/service/web_socket.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

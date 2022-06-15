@@ -7,10 +7,14 @@ import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/chat_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
+import 'package:stomp_dart_client/stomp_frame.dart';
 
 import '../../../models/chat/chat_users_model.dart';
 import '../../../models/chat/message_model.dart';
 import '../../../service/service.dart';
+import '../../../service/web_socket.dart';
 import '../../../utils/common/common_util.dart';
 
 class ChatDetailController extends GetxController {
@@ -59,13 +63,20 @@ class ChatDetailController extends GetxController {
 
   ScrollController scrollController = ScrollController();
 
+
   @override
   void onInit() async {
     chatRoomModel = Get.arguments;
     await getDetailChatRoom();
     await getListMessage();
+
+    onSocket();
+
+
     super.onInit();
   }
+
+
 
   Future<void> getDetailChatRoom() async {
     try {
@@ -155,4 +166,36 @@ class ChatDetailController extends GetxController {
   void initScrollController() {
     scrollController.addListener(_scrollListener);
   }
+
+  onSocket() {
+    String token = GlobalData.getUserModel().token ?? "";
+    int userId = GlobalData.getUserModel().id ?? 0;
+    MyWebSocket.streamChat.stream.listen((event) {
+      MessageModel messageModel = MessageModel.fromJson(event);
+      if(messageModel.idChatRoom == chatRoomModel.id && messageModel.idUser != userId){
+        listMessage.insert(0,messageModel);
+        listMessage.refresh();
+      }
+    });
+  }
+  Future<void> sendTestMessage() async{
+    String token = GlobalData.getUserModel().token ?? "";
+    int userId = GlobalData.getUserModel().id ?? 0;
+    Map<String, dynamic> param =  {
+      "token":token,
+      "userId": userId,
+      "message": textEditingController.text.trim(),
+      "dateTime": "",
+      "isReading":false,
+      "type": "text",
+      "idChatRoom": chatRoomModel.id,
+      "media":"",
+      "userIdCustomer": chatRoomModel.idCustomer
+    };
+
+    MyWebSocket.sendMessage(param);
+
+  }
+
+
 }

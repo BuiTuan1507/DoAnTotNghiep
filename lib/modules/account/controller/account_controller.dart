@@ -49,9 +49,11 @@ class AccountController extends GetxController {
         Get.offAll(()=> LoginPage());
       }else {
         MyDialog.popUpErrorMessage(buildContext: context, content: model.message, tittle: "Có lỗi xảy ra");
+        Get.offAll(()=> LoginPage());
       }
     } catch (e){
       MyDialog.popUpErrorMessage(buildContext: context, content: "Lỗi không xác định", tittle: "Lỗi");
+      Get.offAll(()=> LoginPage());
       log(e.toString());
     }
   }

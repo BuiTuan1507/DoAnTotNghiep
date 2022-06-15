@@ -227,19 +227,9 @@ class ChatDetailPage extends GetView<ChatDetailController>{
             ),
             InkWell(
               onTap: () async {
-                String message = controller.textEditingController.text.trim();
-                ChatMessage chatMessage = ChatMessage(messageContent: message, messageType: "sender", sendMessageStatus: true);
-                controller.messages.add(chatMessage);
-
+                controller.sendTestMessage();
                 controller.textEditingController.clear();
-
                 FocusScope.of(context).unfocus();
-
-                await Future.delayed(const Duration(seconds: 2), (){
-                  controller.messages.remove(chatMessage);
-                  chatMessage.sendMessageStatus = false;
-                  controller.messages.add(chatMessage);
-                });
               } ,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: width(10)),

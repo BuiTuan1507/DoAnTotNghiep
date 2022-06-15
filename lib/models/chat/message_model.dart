@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class MessageModel {
   int? id;
   String? message;
@@ -8,6 +10,7 @@ class MessageModel {
   int? idUser;
   Media? media;
   bool? sendMessageStatus;
+  FileElementModel? fileElement;
 
   MessageModel(
       {this.id,
@@ -69,7 +72,32 @@ class Media {
     data['id'] = this.id;
     data['fileName'] = this.fileName;
     data['fileDownloadUri'] = this.fileDownloadUri;
-    data['fileType'] = this.fileType;
+    data['fileType'] = fileType;
     return data;
   }
+}
+class FileElementModel {
+  FileElementModel({
+    this.linkFile,
+    this.name,
+    this.type,
+    this.file,
+  });
+
+  final String? linkFile;
+  final String? name;
+  final String? type;
+  final File? file;
+
+  factory FileElementModel.fromJson(Map<String, dynamic> json) => FileElementModel(
+    linkFile: json["link_file"],
+    name: json["name"],
+    type: json["type"] ?? null,
+  );
+
+  Map<String, dynamic> toJson() => {
+    "link_file": linkFile,
+    "name": name,
+    "type": type,
+  };
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:do_an/respository/login_repository.dart';
+import 'package:do_an/service/web_socket.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import '../../../models/login/login_model.dart';
 import '../../../models/models.dart';
 import '../../../models/user/user_model.dart';
 import '../../../service/share_prefencers/global_data.dart';
-import '../../../utils/common/dart_notification_center.dart';
+
 
 class LoginController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
@@ -26,7 +27,6 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    onSocket();
     super.onInit();
   }
 
@@ -93,12 +93,4 @@ class LoginController extends GetxController {
     if (isLoginSuccess) Get.toNamed(RouterLink.main);
   }
 
-  onSocket() {
-    DartNotificationCenter.subscribe(
-        channel: '/topic/messages',
-        observer: this,
-        onNotification: (data) {
-          log(data);
-        });
-  }
 }
