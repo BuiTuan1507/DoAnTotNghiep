@@ -88,7 +88,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
             ),
             sendMessageState(messageModel),
             Visibility(
-                visible: messageModel.sendMessageStatus ?? false,
+                visible: messageModel.sendMessageStatus == Constants.commentSendFailed,
                 child: errorMessageState(messageModel))
           ],
         ),
@@ -136,7 +136,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
   }
 
   Widget sendMessageState(MessageModel messageModel) {
-    if ((messageModel.sendMessageStatus ?? true) &&
+    if ((messageModel.sendMessageStatus == Constants.commentIsSending) &&
         messageModel.idUser != userId) {
       return Container(
         margin: EdgeInsets.only(

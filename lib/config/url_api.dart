@@ -1,6 +1,6 @@
 
  // const baseUrl = "http://10.0.2.2:8088";
- const baseUrl = "https://0c9d-42-115-113-236.ap.ngrok.io";
+ const baseUrl = "https://cb37-42-115-113-236.ap.ngrok.io";
 class ProdAppChatEnvironment{
 
   final baseApi = "/api";

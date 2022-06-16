@@ -39,9 +39,14 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               children: [
                 SizedBox(height : height(30)),
                 Center(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: height(10)),
-                    child: Text("Xoá trò chuyện", style: AppStyles.textSmallBlackRegular,),
+                  child: InkWell(
+                    onTap: (){
+                      controller.deleteChatRoom();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: height(10)),
+                      child: Text("Xoá trò chuyện", style: AppStyles.textSmallBlackRegular,),
+                    ),
                   ),
                 ),
                 Divider(
@@ -81,11 +86,6 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               buildProductView(),
 
               const BodyChatWidget(),
-              Visibility(
-                visible: controller.messages.isNotEmpty,
-                child: sendModelWithFile(fileModel: controller.fileImage),
-              ),
-
             ],
           ),
           Obx(() => Visibility(
@@ -186,64 +186,125 @@ class ChatDetailPage extends GetView<ChatDetailController>{
   }
 
   Widget sendMessageField(BuildContext context){
-   return  Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        padding: EdgeInsets.all(height(10)),
-        height: 50,
-        width: double.infinity,
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.all(height(5)),
-                height: height(30),
-                width: height(30),
-                child: SvgPicture.asset(MyIcon.cameraIcon, fit: BoxFit.cover,color: greenMoney,),
-              ),
+   return  Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     mainAxisSize: MainAxisSize.max,
+     mainAxisAlignment: MainAxisAlignment.end,
+     children: [
+       Visibility(
+         visible: (controller.file?.length ?? 0) > 0,
+         child: SizedBox(
+           height: height(100),
+           child: ListView.builder(
+             physics: BouncingScrollPhysics(),
+             shrinkWrap: true,
+             scrollDirection: Axis.horizontal,
+             itemCount: controller.file?.length ?? 0,
+             itemBuilder: (context ,  index) => Container(
+               constraints: BoxConstraints(
+                   maxHeight: height(100), maxWidth: width(100)),
+               child: Stack(
+                   children: [
+                     (controller.file?.length ?? 0) > 0
+                         ?
+                     Container(
+                       margin: EdgeInsets.only(right: width(10)),
+                       width: width(100),
+                       height: height(100),
+                       child: ClipRRect(
+                         child: Image.file(
+                           controller.file?[index].file ?? File(''),
+                           fit: BoxFit.cover,
+                         ),
+                       ),
+                     )
+                         : Container(),
+                     Align(
+                       alignment: Alignment.topRight,
+                       child: IconButton(
+                         onPressed: () {
+                           controller.file?[index].file = File('');
+                           controller.file?.removeAt(index);
+
+                           if(CommonUtil.isEmpty(controller.textEditingController.text) && (controller.file?.length ?? 0) == 0) {
+                             controller.isShowSendButton.value = false;
+                           }
+                         },
+                         icon: const Icon(Icons.cancel),
+                       ),
+                     )
+                   ]),
+             ),
+           ),
+
+         ),
+       ),
+
+       Align(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            padding: EdgeInsets.all(height(10)),
+            height: 50,
+            width: double.infinity,
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    controller.openImage();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(height(5)),
+                    height: height(30),
+                    width: height(30),
+                    child: SvgPicture.asset(MyIcon.cameraIcon, fit: BoxFit.cover,color: greenMoney,),
+                  ),
+                ),
+                SizedBox(
+                  width: width(10),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: controller.textEditingController,
+                    maxLines: 5,
+                    minLines: 1,
+                      decoration: InputDecoration(
+                        counterText: "",
+                        border: InputBorder.none,
+                        hintText: 'Nhập tin nhắn ',
+                        isDense: true,
+                        suffixIconConstraints: BoxConstraints(
+                            maxHeight: height(24), maxWidth: width(24)),
+                        contentPadding: EdgeInsets.zero,
+                        hintStyle: GoogleFonts.sarabun(
+                            fontSize: 14, color: grey_3),
+                        disabledBorder: InputBorder.none,
+                      )
+                  ),
+                ),
+                SizedBox(
+                  width: width(10),
+                ),
+                InkWell(
+                  onTap: () async {
+                   if(controller.textEditingController.text != ""){
+                     controller.sendTestMessage(context);
+                   }
+                   if((controller.file?.length ?? 0) > 0){
+                     controller.sendMediaMessage(context);
+                   }
+                  } ,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width(10)),
+                    child: SvgPicture.asset(MyIcon.sendMessageIcon),
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              width: width(10),
-            ),
-            Expanded(
-              child: TextField(
-                controller: controller.textEditingController,
-                maxLines: 5,
-                minLines: 1,
-                  decoration: InputDecoration(
-                    counterText: "",
-                    border: InputBorder.none,
-                    hintText: 'Nhập tin nhắn ',
-                    isDense: true,
-                    suffixIconConstraints: BoxConstraints(
-                        maxHeight: height(24), maxWidth: width(24)),
-                    contentPadding: EdgeInsets.zero,
-                    hintStyle: GoogleFonts.sarabun(
-                        fontSize: 14, color: grey_3),
-                    disabledBorder: InputBorder.none,
-                  )
-              ),
-            ),
-            SizedBox(
-              width: width(10),
-            ),
-            InkWell(
-              onTap: () async {
-                controller.sendTestMessage();
-                controller.textEditingController.clear();
-                FocusScope.of(context).unfocus();
-              } ,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width(10)),
-                child: SvgPicture.asset(MyIcon.sendMessageIcon),
-              ),
-            )
-          ],
+          ),
         ),
-      ),
-    );  }
+     ],
+   );  }
 
 
 
@@ -298,61 +359,8 @@ class ChatDetailPage extends GetView<ChatDetailController>{
   }
 
 
-  Widget sendModelWithFile({required List<File> fileModel}) {
-    return Container(
-      height: height(60),
-      width: Get.width,
-      padding: EdgeInsets.symmetric(horizontal: width(5)),
-      alignment: Alignment.centerLeft,
-      child: ListView.separated(
-        physics: BouncingScrollPhysics(),
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: fileModel.length,
-        itemBuilder: (context, index) => Container(
-          padding: const EdgeInsets.all(5.0),
-          width: height(60),
-          height: height(60),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius(5)),
-          ),
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                color: blue,
-                child: CachedNetworkImage(
-                  imageUrl: "",
-                ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    //   _controller.deleteItemModelImage(index);
-                  },
-                  child: Container(
-                    color: black,
-                    height: height(15),
-                    width: height(15),
-                    child: SvgPicture.asset(
-                      MyIcon.closeIcon,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: 10,
-          );
-        },
-      ),
-    );
-  }
+
+
+
 
 }

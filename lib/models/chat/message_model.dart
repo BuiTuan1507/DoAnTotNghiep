@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import '../../utils/constants/constant.dart';
+
 class MessageModel {
   int? id;
   String? message;
@@ -9,7 +11,7 @@ class MessageModel {
   int? idChatRoom;
   int? idUser;
   Media? media;
-  bool? sendMessageStatus;
+  String? sendMessageStatus;
   FileElementModel? fileElement;
 
   MessageModel(
@@ -21,7 +23,8 @@ class MessageModel {
         this.idChatRoom,
         this.idUser,
         this.media,
-        this.sendMessageStatus
+        this.sendMessageStatus,
+        this.fileElement
       });
 
   MessageModel.fromJson(Map<String, dynamic> json) {
@@ -33,7 +36,8 @@ class MessageModel {
     idChatRoom = json['idChatRoom'];
     idUser = json['idUser'];
     media = json['media'] != null ? new Media.fromJson(json['media']) : null;
-    sendMessageStatus = false;
+    sendMessageStatus = Constants.commentSendSuccess;
+    fileElement = FileElementModel();
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +54,28 @@ class MessageModel {
     }
     return data;
   }
+  MessageModel copyWith({
+    int? id,
+    String? message,
+    String? dateTime,
+    bool? isReading,
+    String? type,
+    int? idChatRoom,
+    int? idUser,
+    Media? media,
+    String? sendMessageStatus,
+    FileElementModel? fileElement
+  }) => MessageModel(
+      id: id ?? this.id,
+      message: message ?? this.message,
+      dateTime: dateTime ?? this.dateTime,
+      isReading: isReading ?? this.isReading,
+      type: type ?? this.type,
+      idChatRoom: idChatRoom ?? this.idChatRoom,
+      idUser: idUser ?? this.idUser,
+      media: media ?? this.media,
+      sendMessageStatus: sendMessageStatus ?? this.sendMessageStatus,
+  );
 }
 
 class Media {
@@ -84,10 +110,10 @@ class FileElementModel {
     this.file,
   });
 
-  final String? linkFile;
-  final String? name;
-  final String? type;
-  final File? file;
+   String? linkFile;
+   String? name;
+   String? type;
+   File? file;
 
   factory FileElementModel.fromJson(Map<String, dynamic> json) => FileElementModel(
     linkFile: json["link_file"],

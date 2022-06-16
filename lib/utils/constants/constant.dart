@@ -12,5 +12,11 @@ class Constants{
 
   static const currency = " ₫";
 
+  static const String commentIsSending = 'Sending';
+  static const String commentSendFailed = 'SendFailed';
+  static const String commentSendSuccess = 'SendSuccess';
+  static const String contentTypeImage = 'image';
+  static const String contentTypeVideo = 'video';
+
 
 }
