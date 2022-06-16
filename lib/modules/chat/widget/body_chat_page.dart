@@ -351,12 +351,15 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
   Widget buildMediaVideo(MessageModel messageModel) {
     if (messageModel.fileElement?.file != null) {
       return Container(
+          color: Colors.grey[400],
           constraints:
           BoxConstraints(maxWidth: Get.width * 0.7, maxHeight: height(160)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.file(messageModel.fileElement?.file ?? File("")),
-          ));
+          child: Center(
+              child: Text(
+                'Đang gửi video',
+                style: TextStyle(color: greenMoney),
+              ))
+      );
     }
     // build video
     return Container(

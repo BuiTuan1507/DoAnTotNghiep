@@ -212,12 +212,16 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                        margin: EdgeInsets.only(right: width(10)),
                        width: width(100),
                        height: height(100),
-                       child: ClipRRect(
+                       child: controller.file?[index].type == "image" ? ClipRRect(
                          child: Image.file(
                            controller.file?[index].file ?? File(''),
                            fit: BoxFit.cover,
                          ),
-                       ),
+                       ) : Center(
+                           child: Text(
+                             'Video',
+                             style: TextStyle(color: greenMoney),
+                           )),
                      )
                          : Container(),
                      Align(
