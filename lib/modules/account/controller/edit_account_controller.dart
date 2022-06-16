@@ -217,7 +217,7 @@ class EditAccountController extends GetxController{
 
   Future<void> updateBirthDay (BuildContext context) async {
     if(validateBirthDay()){
-      String _date = DateFormat('yyyy-MM-dd kk:mm:ss').format(dateTime.value);
+      String _date = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.value);
       SetUserInfomation setUserInfomation = SetUserInfomation(
           firstName: infoUser.value.firstName,
           lastName: infoUser.value.lastName,
@@ -275,7 +275,7 @@ class EditAccountController extends GetxController{
         break;
     }
 
-    DateTime birthDayTime =  DateFormat("yyyy-MM-dd hh:mm:ss").parse(infoUser.value.birthDay ?? "");
+    DateTime birthDayTime =  DateFormat("yyyy-MM-dd HH:mm:ss").parse(infoUser.value.birthDay ?? "");
 
     birthDay.value = DateFormat("dd-MM-yyyy").format(birthDayTime);
 

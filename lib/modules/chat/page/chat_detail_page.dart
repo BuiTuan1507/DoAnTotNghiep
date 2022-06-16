@@ -86,13 +86,14 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               buildProductView(),
 
               const BodyChatWidget(),
+              Obx(() => Visibility(
+                  visible: controller.isLoading.value,
+                  child: Padding(padding: EdgeInsets.only(bottom: height(10)),child: loadingLogin(controller.isLoading.value),))),
+
+              sendMessageField(context)
             ],
           ),
-          Obx(() => Visibility(
-              visible: controller.isLoading.value,
-              child: Padding(padding: EdgeInsets.only(bottom: height(10)),child: loadingLogin(controller.isLoading.value),))),
 
-          sendMessageField(context)
 
         ],
       ),
@@ -191,7 +192,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
      mainAxisSize: MainAxisSize.max,
      mainAxisAlignment: MainAxisAlignment.end,
      children: [
-       Visibility(
+       Obx(()=> Visibility(
          visible: (controller.file?.length ?? 0) > 0,
          child: SizedBox(
            height: height(100),
@@ -238,7 +239,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
            ),
 
          ),
-       ),
+       ),),
 
        Align(
           alignment: Alignment.bottomLeft,
@@ -251,13 +252,27 @@ class ChatDetailPage extends GetView<ChatDetailController>{
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    controller.openImage();
+                    controller.openImage(true);
                   },
                   child: Container(
                     margin: EdgeInsets.all(height(5)),
                     height: height(30),
                     width: height(30),
                     child: SvgPicture.asset(MyIcon.cameraIcon, fit: BoxFit.cover,color: greenMoney,),
+                  ),
+                ),
+                SizedBox(
+                  width: width(10),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    controller.openImage(false);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(height(5)),
+                    height: height(30),
+                    width: height(30),
+                    child: SvgPicture.asset(MyIcon.videoIcon, fit: BoxFit.cover,color: greenMoney,),
                   ),
                 ),
                 SizedBox(

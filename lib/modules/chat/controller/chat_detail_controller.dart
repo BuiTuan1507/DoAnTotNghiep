@@ -60,11 +60,11 @@ class ChatDetailController extends GetxController {
     super.onInit();
   }
 
-  openImage() async {
+  openImage(bool isVideo) async {
     if (file?.isEmpty == true) {
-      file?.value = await takeFile(takeImage: true) ?? <FileElementModel>[];
+      file?.value = await takeFile(takeImage: isVideo) ?? <FileElementModel>[];
     } else {
-      List<FileElementModel>? selectedFile = await takeFile(takeImage: true);
+      List<FileElementModel>? selectedFile = await takeFile(takeImage: isVideo);
       file?.addAll((selectedFile ?? []).toList());
     }
   }
@@ -72,25 +72,31 @@ class ChatDetailController extends GetxController {
   Future<List<FileElementModel>?> takeFile({required bool takeImage}) async {
     List<FileElementModel> fileElement = <FileElementModel>[];
     List<XFile>? pickedFiles;
+    try{
 
-    if (takeImage) {
-      pickedFiles = await picker.pickMultiImage(imageQuality: 100);
-      if (pickedFiles != null) {
-        for (var element in pickedFiles) {
-          FileElementModel fileElementModel = FileElementModel(type: "image", file: File(element.path));
-          fileElement.add(fileElementModel);
+      if (takeImage) {
+        pickedFiles = await picker.pickMultiImage(imageQuality: 100);
+        if (pickedFiles != null) {
+          for (var element in pickedFiles) {
+            FileElementModel fileElementModel = FileElementModel(type: "image", file: File(element.path));
+            fileElement.add(fileElementModel);
+          }
+        } else {
+          fileElement = <FileElementModel>[];
+
         }
+
       } else {
-        fileElement = <FileElementModel>[];
-
+        XFile? video =
+        await picker.pickVideo(source: ImageSource.gallery);
+        String path = video?.path ?? "";
+        FileElementModel fileElementModel = FileElementModel(type: "video", file: File(path));
+        fileElement.add(fileElementModel);
       }
-
-    } else {
-      pickedFiles?.first =
-          (await picker.pickVideo(source: ImageSource.gallery))!;
-      FileElementModel fileElementModel = FileElementModel(type: "video", file: File(pickedFiles?.first.path ?? ''));
-      fileElement.add(fileElementModel);
+    }catch(e){
+      log(e.toString());
     }
+
 
 
     return fileElement;
@@ -213,7 +219,7 @@ class ChatDetailController extends GetxController {
       }
     } else {
       String dateTime =
-          DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
       MessageModel messageModel = MessageModel(
         message: textEditingController.text.trim(),
         dateTime: dateTime,
@@ -223,8 +229,8 @@ class ChatDetailController extends GetxController {
         idUser: userId,
         sendMessageStatus: Constants.commentIsSending,
       );
-      listMessage.add(messageModel);
-      textEditingController.text = '';
+      listMessage.insert(0, messageModel);
+
     }
     Map<String, dynamic> param = {
       "token": token,
@@ -235,8 +241,9 @@ class ChatDetailController extends GetxController {
       "type": "text",
       "idChatRoom": chatRoomModel.id,
       "media": "",
-      "userIdCustomer": chatRoomModel.idCustomer
+      "idCustomer": chatRoomModel.idCustomer
     };
+    textEditingController.text = '';
 
     MyWebSocket.sendMessage(param);
   }
@@ -244,17 +251,21 @@ class ChatDetailController extends GetxController {
   onSocket() {
     int userId = GlobalData.getUserModel().id ?? 0;
     MyWebSocket.streamChat.stream.listen((event) {
+      log("socket" + event.toString());
       MessageModel messageModel = MessageModel.fromJson(event);
       if (messageModel.idChatRoom == chatRoomModel.id &&
           messageModel.idUser == userId) {
         int index =
-            listMessage.indexWhere((element) => element.id == messageModel.id);
+            listMessage.indexWhere((element) => element.sendMessageStatus == Constants.commentIsSending);
         if (index != -1) {
-          listMessage[index] = listMessage[index]
-              .copyWith(sendMessageStatus: Constants.commentSendSuccess);
-        } else {
-          listMessage[index] = listMessage[index]
-              .copyWith(sendMessageStatus: Constants.commentSendFailed);
+          if(messageModel.id != null){
+            listMessage[index] = listMessage[index]
+                .copyWith(sendMessageStatus: Constants.commentSendSuccess, media: messageModel.media);
+          }else{
+            listMessage[index] = listMessage[index]
+                .copyWith(sendMessageStatus: Constants.commentSendFailed, media: messageModel.media);
+          }
+
         }
       }
 
@@ -277,6 +288,35 @@ class ChatDetailController extends GetxController {
             element.file?.readAsBytesSync().lengthInBytes.toDouble() ?? 0.0;
         double fileSize = fileSizeByte / (1024 * 1024);
         if (fileSize < 10) {
+          MessageModel? newMessage;
+          if (resend) {
+            newMessage = resendMessage;
+            newMessage?.sendMessageStatus = Constants.commentIsSending;
+            if (newMessage != null) {
+              listMessage.insert(
+                  listMessage.indexOf(resendMessage), newMessage);
+              listMessage.remove(resendMessage);
+            }
+          } else {
+            String dateTime =
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+            MessageModel messageModel = MessageModel(
+              message: "",
+              dateTime: dateTime,
+              isReading: true,
+              type: element.type ?? "",
+              idChatRoom: chatRoomModel.id,
+              idUser: userId,
+              media: Media(
+                  fileDownloadUri: ""
+              ),
+              fileElement:element,
+              sendMessageStatus: Constants.commentIsSending,
+            );
+            listMessage.insert(0, messageModel);
+            listMessage.refresh();
+            textEditingController.text = '';
+          }
           String imageUrl = await getImageUrl(element.file!);
           bool uploadFileSuccess = !CommonUtil.isEmpty(imageUrl);
           if (uploadFileSuccess) {
@@ -289,33 +329,10 @@ class ChatDetailController extends GetxController {
               "type": element.type ?? "",
               "idChatRoom": chatRoomModel.id,
               "media": imageUrl,
-              "userIdCustomer": chatRoomModel.idCustomer
+              "idCustomer": chatRoomModel.idCustomer
             };
 
-            MessageModel? newMessage;
-            if (resend) {
-              newMessage = resendMessage;
-              newMessage?.sendMessageStatus = Constants.commentIsSending;
-              if (newMessage != null) {
-                listMessage.insert(
-                    listMessage.indexOf(resendMessage), newMessage);
-                listMessage.remove(resendMessage);
-              }
-            } else {
-              String dateTime =
-                  DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
-              MessageModel messageModel = MessageModel(
-                message: "",
-                dateTime: dateTime,
-                isReading: true,
-                type: element.type ?? "",
-                idChatRoom: chatRoomModel.id,
-                idUser: userId,
-                sendMessageStatus: Constants.commentIsSending,
-              );
-              listMessage.add(messageModel);
-              textEditingController.text = '';
-            }
+
 
             MyWebSocket.sendMessage(param);
           }

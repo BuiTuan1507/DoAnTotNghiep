@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../service/share_prefencers/global_data.dart';
 import '../../../utils/utils.dart';
+import 'blurry_effect.dart';
 
 class BodyChatWidget extends StatefulWidget {
   const BodyChatWidget({Key? key}) : super(key: key);
@@ -21,8 +22,70 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
   ChatDetailController controller = Get.find();
   int userId = GlobalData.getUserModel().id ?? 0;
 
+  GlobalKey widgetCommentKey = GlobalKey();
+
+  bool isVideoPlaying = false;
+  double currentTime = 0;
+  bool sizeChange = false;
+  bool first = true;
+  double commentHeight = 0;
+  double heightWidget = 0;
+  double btnHeight = 0;
+  double btnDeleteHeight = 0;
+  double btnHideCommentWidth = 0;
+  Color? commentColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback(_afterLayout);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+  // update widget when state change
+  @override
+  void didUpdateWidget(covariant BodyChatWidget oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    WidgetsBinding.instance?.addPostFrameCallback(_afterLayout);
+  }
+  // get comment height
+  _afterLayout(_) {
+    try {
+      commentHeight = _getSizesWidget(
+          widgetCommentKey.currentContext, commentHeight, false);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    setState(() {});
+    first = false;
+  }
+  // get size comment
+  double _getSizesWidget(BuildContext? context, double value, bool isWidth) {
+    final RenderBox renderBoxRed = context?.findRenderObject() as RenderBox;
+    final sizeRed = renderBoxRed.size;
+    if (isWidth && value != renderBoxRed.size.width ||
+        !isWidth && value != renderBoxRed.size.height) {
+      sizeChange = true;
+    } else
+      sizeChange = false;
+
+    if (isWidth)
+      value = sizeRed.width;
+    else
+      value = sizeRed.height;
+    return value;
+  }
+
   @override
   Widget build(BuildContext context) {
+    commentColor = HexColor("#F4F4F4");
     return Expanded(
       child: Obx(() => ListView(
             controller: controller.scrollController,
@@ -63,6 +126,13 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
           children: [
             Visibility(
               visible: true,
+              child: Container(
+                  height: commentHeight,
+                  width: Get.width,
+                  child: BlurryEffect(0.7, 0.0, HexColor("#F4F4F4"))),
+            ),
+            Visibility(
+              visible: true,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: height(10)),
                 child: Text(
@@ -74,22 +144,25 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: messageModel.idUser != userId
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.end,
-              children: [
-                widgetLeft,
-                SizedBox(
-                  width: width(10),
-                ),
-                widgetRight
-              ],
+            Container(
+              child: Row(
+                mainAxisAlignment: messageModel.idUser != userId
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.end,
+                children: [
+                  widgetLeft,
+                  SizedBox(
+                    width: width(10),
+                  ),
+                  widgetRight
+                ],
+              ),
             ),
             sendMessageState(messageModel),
             Visibility(
                 visible: messageModel.sendMessageStatus == Constants.commentSendFailed,
-                child: errorMessageState(messageModel))
+                child: errorMessageState(messageModel)),
+
           ],
         ),
       ),
@@ -101,6 +174,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
       case "text":
         {
           return Container(
+
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: (messageModel.idUser != userId
@@ -123,6 +197,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
       case "video":
         {
           return Container(
+
             padding: EdgeInsets.all(width(8)),
             child: buildMediaVideo(messageModel),
           );
@@ -137,7 +212,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
 
   Widget sendMessageState(MessageModel messageModel) {
     if ((messageModel.sendMessageStatus == Constants.commentIsSending) &&
-        messageModel.idUser != userId) {
+        messageModel.idUser == userId) {
       return Container(
         margin: EdgeInsets.only(
           right: width(7),
@@ -249,7 +324,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                  imageUrl: messageModel.media?.fileDownloadUri ?? "",
+                  imageUrl: messageModel.media?.fileDownloadUri ?? Constants.PRODUCT_URL,
                   placeholder: (context, image) {
                     return SizedBox(
                       child: const CircularProgressIndicator(),
@@ -262,9 +337,9 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
                     constraints: BoxConstraints(
                         maxWidth: Get.width * 0.7,
                         maxHeight: height(160)),
-                    child: const Center(
+                    child:  Center(
                         child: Text(
-                          'Lỗi tải ảnh!',
+                          'Lỗi tải ảnh!' + (url),
                           style: TextStyle(color: Colors.red),
                         )),
                   ))),
