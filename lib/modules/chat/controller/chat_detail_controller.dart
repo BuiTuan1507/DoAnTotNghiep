@@ -7,9 +7,6 @@ import 'package:do_an/models/models.dart';
 import 'package:do_an/respository/chat_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stomp_dart_client/stomp.dart';
-import 'package:stomp_dart_client/stomp_config.dart';
-import 'package:stomp_dart_client/stomp_frame.dart';
 
 import '../../../models/chat/chat_users_model.dart';
 import '../../../models/chat/message_model.dart';
@@ -66,6 +63,7 @@ class ChatDetailController extends GetxController {
 
   @override
   void onInit() async {
+    initScrollController();
     chatRoomModel = Get.arguments;
     await getDetailChatRoom();
     await getListMessage();

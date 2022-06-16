@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:do_an/models/chat/chat_users_model.dart';
 import 'package:do_an/models/chat/message_model.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../service/share_prefencers/global_data.dart';
 import '../../../utils/utils.dart';
-import 'avatar_widget.dart';
 
 class BodyChatWidget extends StatefulWidget {
   const BodyChatWidget({Key? key}) : super(key: key);
@@ -44,21 +42,21 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
     Widget widgetLeft;
     Widget widgetRight;
 
-    widgetLeft = messageModel.idUser == userId
+    widgetLeft = messageModel.idUser != userId
         ? buildAvatarUser(imageUrl: '', size: 20)
         : chatContent(messageModel);
-    widgetRight = messageModel.idUser != userId
+    widgetRight = messageModel.idUser == userId
         ? buildAvatarUser(imageUrl: '', size: 20)
         : chatContent(messageModel);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width(8), vertical: height(6)),
       child: Align(
-        alignment: (messageModel.idUser == userId
+        alignment: (messageModel.idUser != userId
             ? Alignment.topLeft
             : Alignment.topRight),
         child: Column(
-          crossAxisAlignment: messageModel.idUser == userId
+          crossAxisAlignment: messageModel.idUser != userId
               ? CrossAxisAlignment.start
               : CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -77,7 +75,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
               ),
             ),
             Row(
-              mainAxisAlignment: messageModel.idUser == userId
+              mainAxisAlignment: messageModel.idUser != userId
                   ? MainAxisAlignment.start
                   : MainAxisAlignment.end,
               children: [
@@ -105,7 +103,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: (messageModel.idUser == userId
+              color: (messageModel.idUser != userId
                   ? Colors.grey.shade200
                   : Colors.blue[200]),
             ),
@@ -139,7 +137,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
 
   Widget sendMessageState(MessageModel messageModel) {
     if ((messageModel.sendMessageStatus ?? true) &&
-        messageModel.idUser == userId) {
+        messageModel.idUser != userId) {
       return Container(
         margin: EdgeInsets.only(
           right: width(7),

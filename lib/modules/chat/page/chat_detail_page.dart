@@ -79,6 +79,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
           Column(
             children: [
               buildProductView(),
+
               const BodyChatWidget(),
               Visibility(
                 visible: controller.messages.isNotEmpty,
@@ -87,6 +88,9 @@ class ChatDetailPage extends GetView<ChatDetailController>{
 
             ],
           ),
+          Obx(() => Visibility(
+              visible: controller.isLoading.value,
+              child: Padding(padding: EdgeInsets.only(bottom: height(10)),child: loadingLogin(controller.isLoading.value),))),
 
           sendMessageField(context)
 
