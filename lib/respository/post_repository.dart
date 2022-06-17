@@ -69,7 +69,24 @@ class PostRepository{
         method: MethodType.post, url: url, token: token,param: param);
     return res;
   }
-
+  Future<ResponseModel> getListPostSell({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostSell;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> getListPostBuy({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostBuy;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
+  Future<ResponseModel> getListPostLike({required Map<String, dynamic> param,required String token}) async {
+    var url = UrlApi.getListPostLike;
+    var res = await _request.requestBearerApi(
+        method: MethodType.post, url: url, token: token,param: param);
+    return res;
+  }
 
 
 }

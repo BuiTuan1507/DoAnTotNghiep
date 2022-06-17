@@ -1,6 +1,6 @@
 
  // const baseUrl = "http://10.0.2.2:8088";
- const baseUrl = "https://97bc-42-115-113-236.ap.ngrok.io";
+ const baseUrl = "https://81ee-42-115-113-236.ap.ngrok.io";
 class ProdAppChatEnvironment{
 
   final baseApi = "/api";
@@ -57,4 +57,7 @@ class UrlApi{
   static const String getListMessage = "/get_list_message";
   static const String deleteChatRoom = "/delete_chat_room";
   static const String searchChatRoom = "/search_chat_room";
+  static const String getListPostSell = "/get_list_post_sell";
+  static const String getListPostBuy = "/get_list_post_buy";
+  static const String getListPostLike = "/get_list_post_like";
 }
