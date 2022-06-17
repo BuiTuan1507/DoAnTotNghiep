@@ -10,6 +10,7 @@ import 'package:do_an/respository/post_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/post/detail_post_model.dart';
 import '../../../service/service.dart';
@@ -220,6 +221,15 @@ class ProductDetailController extends GetxController {
       log(e.toString());
       CommonUtil.showToast("Lỗi gửi thêm room chat");
     }
+  }
+
+  void callPhone(){
+    String phoneNumber = detailPostModel.value.userPostData?.phoneNumber ?? "";
+    launch("tel://$phoneNumber");
+  }
+  void sendSms(){
+    String phoneNumber = detailPostModel.value.userPostData?.phoneNumber ?? "";
+    launch("sms://$phoneNumber");
   }
 
 }

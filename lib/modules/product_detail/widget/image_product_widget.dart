@@ -146,9 +146,13 @@ class _ImageProductWidgetState extends State<ImageProductWidget> {
       child: Column(
         children: [
           SizedBox(height: height(20),),
-          buildItemContact("Gọi điện",Icons.phone_in_talk, (){Get.back();}),
+          buildItemContact("Gọi điện",Icons.phone_in_talk, (){
+            productDetailController.callPhone();
+          }),
           SizedBox(height: height(10),),
-          buildItemContact("Nhắn tin SMS",Icons.sms, (){Get.back();}),
+          buildItemContact("Nhắn tin SMS",Icons.sms, (){
+            productDetailController.sendSms();
+          }),
           SizedBox(height: height(10),),
           buildItemContact("Chat",Icons.message_rounded, (){productDetailController.addChatRoom();}),
         ],

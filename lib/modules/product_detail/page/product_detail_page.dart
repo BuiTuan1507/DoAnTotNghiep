@@ -162,7 +162,11 @@ class ProductDetailPage extends GetView<ProductDetailController>{
         children: [
           Flexible(
             flex: 1,
-              child: buildItemBottomBar("Gọi điện", Icons.phone_in_talk)
+              child: InkWell(
+                onTap: (){
+                  controller.callPhone();
+                },
+                  child: buildItemBottomBar("Gọi điện", Icons.phone_in_talk))
           ),
           VerticalDivider(
             indent: height(10),
@@ -172,7 +176,11 @@ class ProductDetailPage extends GetView<ProductDetailController>{
           ),
           Flexible(
             flex: 1,
-              child: buildItemBottomBar("Nhắn tin", Icons.sms)),
+              child: InkWell(
+                onTap: (){
+                  controller.sendSms();
+                },
+                  child: buildItemBottomBar("Nhắn tin", Icons.sms))),
           VerticalDivider(
             indent: height(10),
             endIndent: height(10),
