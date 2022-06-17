@@ -67,6 +67,7 @@ class ChatDetailController extends GetxController {
       List<FileElementModel>? selectedFile = await takeFile(takeImage: isVideo);
       file?.addAll((selectedFile ?? []).toList());
     }
+    checkButton();
   }
 
   Future<List<FileElementModel>?> takeFile({required bool takeImage}) async {
@@ -366,4 +367,13 @@ class ChatDetailController extends GetxController {
       CommonUtil.showToast("Lỗi khi xoá room chat");
     }
   }
+
+  void checkButton(){
+    if(textEditingController.text.trim() != "" || file?.isNotEmpty == true){
+      isShowSendButton.value = true;
+    }else{
+      isShowSendButton.value = false;
+    }
+  }
+
 }

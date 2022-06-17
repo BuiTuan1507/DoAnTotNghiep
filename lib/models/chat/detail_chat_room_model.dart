@@ -53,18 +53,21 @@ class InfoPostChat {
 class InfoUserChat {
   String? avatar;
   String? name;
+  String? phoneNumber;
 
-  InfoUserChat({this.avatar, this.name});
+  InfoUserChat({this.avatar, this.name, this.phoneNumber});
 
   InfoUserChat.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];
     name = json['name'];
+    phoneNumber = json['phoneNumber'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['avatar'] = this.avatar;
     data['name'] = this.name;
+    data['phoneNumber'] = this.phoneNumber;
     return data;
   }
 }

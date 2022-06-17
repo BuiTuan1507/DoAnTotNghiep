@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/chat/chat_users_model.dart';
 import '../../../utils/utils.dart';
@@ -160,15 +161,27 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width(8)),
-                child: SvgPicture.asset(MyIcon.callPhoneIcon),
+              InkWell(
+                onTap: (){
+                  String phoneNumber = controller.detailChatRoomModel.value.infoUserChat?.phoneNumber ?? "";
+                  launch("tel://$phoneNumber");
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width(8)),
+                  child: SvgPicture.asset(MyIcon.callPhoneIcon),
+                ),
               ),
-              Container(
-                height:height(30),
-                width: height(30),
-                margin: EdgeInsets.symmetric(horizontal: width(8)),
-                child: Image.asset(MyIcon.smsIcon, fit: BoxFit.cover,),
+              InkWell(
+                onTap: (){
+                  String phoneNumber = controller.detailChatRoomModel.value.infoUserChat?.phoneNumber ?? "";
+                  launch("sms://$phoneNumber");
+                },
+                child: Container(
+                  height:height(30),
+                  width: height(30),
+                  margin: EdgeInsets.symmetric(horizontal: width(8)),
+                  child: Image.asset(MyIcon.smsIcon, fit: BoxFit.cover,),
+                ),
               ),
               InkWell(
                 onTap: (){
@@ -287,6 +300,9 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                     controller: controller.textEditingController,
                     maxLines: 5,
                     minLines: 1,
+                      onChanged: (value){
+                      controller.checkButton();
+                      },
                       decoration: InputDecoration(
                         counterText: "",
                         border: InputBorder.none,
@@ -313,10 +329,10 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                      controller.sendMediaMessage(context);
                    }
                   } ,
-                  child: Padding(
+                  child: Obx(() => Padding(
                     padding: EdgeInsets.symmetric(horizontal: width(10)),
-                    child: SvgPicture.asset(MyIcon.sendMessageIcon),
-                  ),
+                    child: SvgPicture.asset(MyIcon.sendMessageIcon, color: controller.isShowSendButton.value ? greenMoney : grey_3,),
+                  )),
                 )
               ],
             ),
