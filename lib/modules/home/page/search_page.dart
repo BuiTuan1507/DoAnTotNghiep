@@ -226,14 +226,18 @@ class SearchPage extends GetView<SearchController> {
   }
 
   Widget buildListPostSearch({required List<Posts> listPost}) {
-    return Container(
+    return (listPost.isEmpty && controller.searchController.text != "" && controller.isLoading.value == false)  ? Container(
+      child: Center(
+        child: Text("Không có bài đăng nào được tìm thấy" , style: AppStyles.textSmallBlackRegular,),
+      ),
+    ) : Container(
       padding:
           EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
       child: Column(
         children: List.generate(listPost.length,
             (index) => buildItemPostSearch(index, listPost[index])),
       ),
-    );
+    ) ;
   }
 
   Widget buildItemPostSearch(int index, Posts posts) {
