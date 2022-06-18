@@ -42,15 +42,13 @@ class _ListItemFeatureState extends State<ListItemFeature> {
 
   Widget buildItem(IconFeature iconFeature){
     return InkWell(
-      onTap: (){
-        iconFeature.onClick;
-      },
+      onTap: iconFeature.onClick,
       child: Container(
         child: Column(
           children: [
             Container(
-                height: width(32),
-                width: width(32),
+                height: width(36),
+                width: width(36),
                 padding: EdgeInsets.all(width(6)),
                 decoration: BoxDecoration(shape: BoxShape.circle, color: iconFeature.color),
                 child: SvgPicture.asset(

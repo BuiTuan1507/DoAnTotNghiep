@@ -65,7 +65,7 @@ class HomePage extends GetView<HomeController> {
         children: [
           ListView(
             physics:
-            BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             controller: controller.scrollController,
             children: [
               Padding(
@@ -81,8 +81,8 @@ class HomePage extends GetView<HomeController> {
               SizedBox(
                 height: height(20),
               ),
-              ListItemFeature(),
-              ListCategoryHome(),
+              const ListItemFeature(),
+              const ListCategoryHome(),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: width(20), vertical: height(15)),
@@ -114,15 +114,17 @@ class HomePage extends GetView<HomeController> {
       visible: controller.listPriorityPost.isNotEmpty,
       child: Container(
             padding:
-                EdgeInsets.symmetric(horizontal: width(20), vertical: height(1)),
+                EdgeInsets.symmetric(horizontal: width(10), vertical: height(1)),
             height: width(240),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: controller.listPriorityPost.length,
               physics:
-                  BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemBuilder: (context, index) {
                 return Container(
+                  width: width(180),
+                  padding: EdgeInsets.only(right: width(10)),
                   child: ItemProductWidget(
                     post: controller.listPriorityPost[index],
                   ),
@@ -137,7 +139,6 @@ class HomePage extends GetView<HomeController> {
     return Obx(() => Container(
         padding: EdgeInsets.all(width(5)),
         child: GridView.count(
-         // scrollDirection: Axis.vertical,
           physics:
           ScrollPhysics(),
           shrinkWrap: true,

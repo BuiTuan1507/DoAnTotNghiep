@@ -5,6 +5,7 @@ import 'package:do_an/respository/post_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../models/user/post_user_model.dart';
 import '../../../service/service.dart';
 import '../../../utils/utils.dart';
@@ -21,27 +22,37 @@ class HomeController extends GetxController {
     IconFeature(
         icon: MyIcon.postSellIcon,
         name: "Đơn  mua",
-        onClick: () {},
+        onClick: () {
+          Get.toNamed(RouterLink.purchaseOrderPage);
+        },
         color: Colors.green.withOpacity(0.4)),
     IconFeature(
         icon: MyIcon.postBuyIcon,
         name: "Đơn  bán",
-        onClick: () {},
+        onClick: () {
+          Get.toNamed(RouterLink.sellOrderPage);
+        },
         color: Colors.blue.withOpacity(0.4)),
     IconFeature(
         icon: MyIcon.loveIcon,
         name: "Tin lưu",
-        onClick: () {},
+        onClick: () {
+          Get.toNamed(RouterLink.savePostPage);
+        },
         color: Colors.red.withOpacity(0.4)),
     IconFeature(
         icon: MyIcon.friendsUser,
         name: "Bạn bè",
-        onClick: () {},
+        onClick: () {
+          Get.toNamed(RouterLink.friendUserPage);
+        },
         color: Colors.amber.withOpacity(0.4)),
     IconFeature(
         icon: MyIcon.settingIcon,
         name: "Cài đặt",
-        onClick: () {},
+        onClick: () {
+          Get.toNamed(RouterLink.addAddressPage);
+        },
         color: Colors.grey.withOpacity(0.4)),
   ];
 

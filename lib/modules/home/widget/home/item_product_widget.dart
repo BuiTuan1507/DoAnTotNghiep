@@ -82,25 +82,20 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
                 lengthImage,
                 style: AppStyles.textSmallGreenRegular,
               ),
-            )),
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            margin: EdgeInsets.only(right: width(4)),
-            padding: EdgeInsets.symmetric(
-                horizontal: height(7), vertical: height(7)),
-            child: Icon(
-              Icons.favorite_border,
-              color: red,
-              size: size(20),
-            ),
-          ),
-        )
+            ))
       ],
     );
   }
 
   Widget buildStatusPost() {
+    String likes = "0";
+    String watches = "0";
+    if(widget.post.liked != null){
+      likes = widget.post.liked.toString();
+    }
+    if(widget.post.watch != null){
+      watches = widget.post.watch.toString();
+    }
     return Container(
       height: height(26),
       padding: EdgeInsets.only(left: width(5), right:width(5) ,top: height(4)),
@@ -119,7 +114,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
           Padding(
             padding: EdgeInsets.only(right: width(5)),
             child: Text(
-              "1",
+              likes,
               style: AppStyles.textSmallBlackRegular,
             ),
           ),
@@ -136,7 +131,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
           Padding(
             padding: EdgeInsets.only(right: width(5)),
             child: Text(
-              "5",
+              watches,
               style: AppStyles.textSmallBlackRegular,
             ),
           ),

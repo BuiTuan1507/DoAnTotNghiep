@@ -19,14 +19,13 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
   Widget build(BuildContext context) {
     return Container(
 
-      padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(padding: EdgeInsets.symmetric(vertical: height(10), horizontal: width(5)),child: Text("Danh mục", style: AppStyles.textNormalGreenSemiBold,),),
+          Padding(padding: EdgeInsets.symmetric(vertical: height(10), horizontal: width(20)),child: Text("Danh mục", style: AppStyles.textNormalGreenSemiBold,),),
           Container(
-            height: height(300),
+            height: height(250),
             child: GridView.count(
               physics:  ScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -35,7 +34,7 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
               crossAxisCount: 2,
               crossAxisSpacing: width(10),
               mainAxisSpacing: width(10),
-              childAspectRatio: 1,
+              childAspectRatio: 0.8,
               children: <Widget>[
                 buildItemCategory(MyImage.bikeImage,"Xe cộ", (){
                   Get.toNamed(RouterLink.listCategoryPostPage, arguments: {
@@ -121,22 +120,21 @@ class _ListCategoryHomeState extends State<ListCategoryHome> {
     return InkWell(
       onTap:  onClick,
       child: SizedBox(
-       // margin: EdgeInsets.only(right: width(10)),
-        width: width(130),
+        width: width(80),
        child: Column(
+         crossAxisAlignment: CrossAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.start,
          children: [
-           Container(
-             height: width(60),
-             width: width(90),
-             decoration: BoxDecoration(
-               borderRadius: BorderRadius.circular(15),
-             ),
+           SizedBox(
+             height: width(50),
+             width: width(80),
+
              child: ClipRRect(
                child: Image.asset(
                  image,
                  fit: BoxFit.cover,
                ),
-               borderRadius: BorderRadius.circular(20),
+               borderRadius: BorderRadius.circular(5),
              ),
            ),
            Container(
