@@ -44,11 +44,12 @@ Widget buildTextPasswordField(
                 border: AppStyles.borderDark,
                 focusedBorder: AppStyles.borderGreen,
                 enabledBorder: AppStyles.borderDark,
+                prefixIcon:  Icon(Icons.lock_outline, color: greenMoney, size: size(20)),
                 suffixIcon: (isVisibility != null) ?  IconButton(
                     icon: Icon(
                         isVisibility
                             ? Icons.visibility
-                            : Icons.visibility_off),color: isVisibility ? greenMoney : lightDarkHintText,
+                            : Icons.visibility_off, size: size(20),),color: isVisibility ? greenMoney : lightDarkHintText,
                     onPressed: () {
                       changeVisibility();
                     }) : Container()) ,

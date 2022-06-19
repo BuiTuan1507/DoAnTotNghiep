@@ -18,6 +18,7 @@ class MyImage{
  static const String storeImage = "assets/images/van_phong_pham.png";
  static const String bikeImage = "assets/images/xeco.png";
  static const String manyImage = "assets/images/xemthem.png";
+ static const String logoLogin = "assets/images/logo_login.png";
 }
 
 class MyIcon{

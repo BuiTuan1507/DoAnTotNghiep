@@ -22,9 +22,8 @@ class LoginPage extends GetView<LoginController> {
             children: [
               buildLogoLogin(),
               SizedBox(
-                height: height(30),
+                height: height(20),
               ),
-              buildTittle(),
               BuildTextEmailField(
                   tittle: "Số điện thoại",
                   textEditingController: controller.phoneController,
@@ -39,9 +38,9 @@ class LoginPage extends GetView<LoginController> {
                   hintText: "Nhập mật khẩu",
                   isVisibility: controller.isVisibilityPassword.value,
                   changeVisibility: controller.changeVisibility)),
+              const SizedBox(height: 7),
               buildForgetPassword(),
               Obx(()=> buttonLogin(context, controller.isValidateLogin.value ? greenMoney : grey_3),),
-              buildLoginAnotherMethod(),
               textHaveAccount(),
               Obx(() => loadingLogin(controller.isLoading.value))
             ],
@@ -52,19 +51,22 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget buildLogoLogin() {
-    return Container();
-  }
-
-  Widget buildTittle() {
     return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: paddingMedium, vertical: paddingMedium),
-      child: Text(
-        "Đăng nhập",
-        style: AppStyles.textXLBlackSemiBold,
+      height: height(200),
+      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(child: Text("Chợ Bách Khoa", style: AppStyles.textXLGreenSemiBold,)),
+          Expanded(child: Center(
+            child: Image.asset(MyImage.logoLogin, fit: BoxFit.cover,),
+          ))
+        ],
       ),
     );
   }
+
 
   Widget buildForgetPassword() {
     return Align(
@@ -96,51 +98,6 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
-  Widget buildLoginAnotherMethod() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: width(25),
-        ),
-        Center(
-          child:
-              Text("Hoặc đăng nhập với", style: AppStyles.textSmallDarkRegular),
-        ),
-        SizedBox(
-          height: height(20),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-                height: width(40),
-                width: width(40),
-                child: InkWell(
-                  child: SvgPicture.asset(
-                    MyIcon.googleIcon,
-                    fit: BoxFit.contain,
-                  ),
-                )),
-            SizedBox(
-              width: width(30),
-            ),
-            SizedBox(
-                height: width(45),
-                width: width(45),
-                child: InkWell(
-                  child: SvgPicture.asset(
-                    MyIcon.facebookIcon,
-                    fit: BoxFit.contain,
-                  ),
-                )),
-          ],
-        )
-      ],
-    );
-  }
 
   Widget textHaveAccount() {
     return Center(
@@ -152,7 +109,7 @@ class LoginPage extends GetView<LoginController> {
               style: AppStyles.textSmallDarkRegular,
               children: <TextSpan>[
                 TextSpan(
-                  text: 'Đăng kí',
+                  text: ' Đăng kí',
                   style: AppStyles.textSmallGreenSemiBold,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => Get.toNamed(RouterLink.registerTittle),
