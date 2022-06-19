@@ -72,7 +72,9 @@ class LoginPage extends GetView<LoginController> {
     return Align(
       alignment: Alignment.centerRight,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(RouterLink.forgetPasswordPage);
+        },
         child: Padding(
           padding: EdgeInsets.only(
               top: height(0), bottom: height(42), right: width(16)),
