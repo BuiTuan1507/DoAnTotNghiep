@@ -3,7 +3,9 @@ import 'package:do_an/modules/add_post/page/loading_post_page.dart';
 import 'package:do_an/modules/list_category/binding/list_category_post_bindings.dart';
 import 'package:do_an/modules/list_category/page/list_category_post_page.dart';
 import 'package:do_an/modules/login/bindings/forget_password_bindings.dart';
+import 'package:do_an/modules/login/bindings/otp_bindings.dart';
 import 'package:do_an/modules/login/page/forget_password_page.dart';
+import 'package:do_an/modules/login/page/otp_page.dart';
 import 'package:do_an/modules/notification/bindings/rating_bindings.dart';
 import 'package:do_an/modules/notification/controller/rating_post_controller.dart';
 import 'package:do_an/modules/notification/page/rating_post_page.dart';
@@ -187,6 +189,11 @@ class AppRouters {
           name: RouterLink.forgetPasswordPage,
           page: () =>   ForgetPasswordPage(),
           binding: ForgetPasswordBindings()
+      ),
+      GetPage(
+          name: RouterLink.otpPage,
+          page: () =>   OTPPage(),
+          binding: OTPBindings()
       ),
     ];
   }

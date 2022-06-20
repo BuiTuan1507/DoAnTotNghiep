@@ -55,7 +55,7 @@ class ForgetPasswordPage extends GetView<ForgetPasswordController>{
   }
   Widget buttonForgetPassword(BuildContext context, HexColor color) {
     return ButtonApply(
-      tittle: "Đăng nhập",
+      tittle: "Gửi",
       style: AppStyles.textNormalWhiteSemiBold,
       onClick:() => controller.getOTP(),
       width: double.infinity,
