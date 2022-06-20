@@ -6,11 +6,13 @@ import 'package:do_an/modules/login/bindings/forget_password_bindings.dart';
 import 'package:do_an/modules/login/bindings/otp_bindings.dart';
 import 'package:do_an/modules/login/page/forget_password_page.dart';
 import 'package:do_an/modules/login/page/otp_page.dart';
+import 'package:do_an/modules/login/page/reset_password_page.dart';
 import 'package:do_an/modules/notification/bindings/rating_bindings.dart';
 import 'package:do_an/modules/notification/controller/rating_post_controller.dart';
 import 'package:do_an/modules/notification/page/rating_post_page.dart';
 import 'package:do_an/modules/product_detail/page/watch_user_page.dart';
 import 'package:get/get.dart';
+import '../modules/login/bindings/reset_password_bindings.dart';
 import '../modules/modules.dart';
 import '../modules/product_detail/bindings/report_post_binding.dart';
 import '../modules/product_detail/bindings/watch_user_bindings.dart';
@@ -194,6 +196,11 @@ class AppRouters {
           name: RouterLink.otpPage,
           page: () =>   OTPPage(),
           binding: OTPBindings()
+      ),
+      GetPage(
+          name: RouterLink.resetPassword,
+          page: () =>   ResetPasswordPage(),
+          binding: ResetPasswordBindings()
       ),
     ];
   }

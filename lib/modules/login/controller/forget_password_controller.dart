@@ -7,8 +7,10 @@ class ForgetPasswordController extends GetxController {
 
   RxBool isValidateLogin = false.obs;
 
-  void validateLogin(){
-
+  void validateLogin(String text){
+    if(text != ""){
+      isValidateLogin.value = true;
+    }
   }
   Future<void> getOTP() async {
   Get.toNamed(RouterLink.otpPage, arguments: phoneController.text.trim());

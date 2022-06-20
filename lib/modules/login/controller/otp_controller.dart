@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../config/routes_link.dart';
+
 class OTPController extends GetxController{
   String phoneNumber = "";
   final TextEditingController pinCodeTextFieldController = TextEditingController();
@@ -11,12 +13,13 @@ class OTPController extends GetxController{
 
   Timer? timer;
 
-  String otp = "";
+  Rx<String> otp = "".obs;
   @override
   void onInit() {
     if(Get.arguments != null){
       phoneNumber = Get.arguments;
     }
+    startTimer();
     super.onInit();
   }
   void startTimer() {
@@ -31,5 +34,9 @@ class OTPController extends GetxController{
         }
       },
     );
+  }
+  
+  void sendOTP(){
+    Get.toNamed(RouterLink.resetPassword);
   }
 }

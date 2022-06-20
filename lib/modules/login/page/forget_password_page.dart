@@ -32,7 +32,7 @@ class ForgetPasswordPage extends GetView<ForgetPasswordController>{
                 textEditingController: controller.phoneController,
                 hintText: "Nhập số điện thoại",
                 onChanged: (text) {
-                  controller.validateLogin();
+                  controller.validateLogin(text);
                 }
             ),
             SizedBox(

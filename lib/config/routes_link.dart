@@ -10,6 +10,7 @@ class RouterLink {
   static const String registerLoading = '/loadingRegister';
   static const String forgetPasswordPage = "/forgetPasswordPage";
   static const String otpPage = "/otpPage";
+  static const String resetPassword = "/resetPassword";
   static const String main = '/main';
   static const String homePage = '/homePage';
   static const String postPage = '/postPage';
