@@ -8,7 +8,7 @@ import 'package:do_an/respository/post_repository.dart';
 import 'package:do_an/utils/common/common_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
+import 'package:intl/intl.dart';
 
 import '../../../service/service.dart';
 
@@ -50,11 +50,11 @@ class SearchController extends GetxController {
     listPosts.clear();
     FocusManager.instance.primaryFocus?.unfocus();
 
-    if(keyword.value == "") {
+    if (keyword.value == "") {
       listPostSearch.value = ListPostModel();
       return;
     }
-    if(currentKeyword.value == keyword.value){
+    if (currentKeyword.value == keyword.value) {
       return;
     }
 
@@ -97,37 +97,35 @@ class SearchController extends GetxController {
   }
 
   Future<void> getListHistorySearch() async {
-    try{
+    try {
       String token = GlobalData.getUserModel().token ?? "";
       int userId = GlobalData.getUserModel().id ?? 0;
-      Map<String, dynamic> param = {
-        "token": token,
-        "userId": userId
-      };
+      Map<String, dynamic> param = {"token": token, "userId": userId};
 
-      ResponseModel responseModel = await postRepository.apiGetListHistorySearch(param: param, token: token);
+      ResponseModel responseModel = await postRepository
+          .apiGetListHistorySearch(param: param, token: token);
 
-      if(responseModel.status){
+      if (responseModel.status) {
         historySearch.value = HistorySearch.fromJson(responseModel.data);
-      }else{
+      } else {
         CommonUtil.showToast(responseModel.message);
       }
-
-    }catch(e){
+    } catch (e) {
       CommonUtil.showToast("Lỗi khi lấy lịch sử");
     }
   }
 
-  void setListHistorySearch(){
-    if(historySearch.value.listSearch?.isNotEmpty == true){
+  void setListHistorySearch() {
+    if (historySearch.value.listSearch?.isNotEmpty == true) {
       historySearch.value.listSearch?.forEach((element) {
         element.isSelected = !element.isSelected!;
       });
       historySearch.refresh();
     }
   }
-  Future<void> deleteHistorySearch(ListSearch listSearch) async{
-    try{
+
+  Future<void> deleteHistorySearch(ListSearch listSearch) async {
+    try {
       String token = GlobalData.getUserModel().token ?? "";
       int userId = GlobalData.getUserModel().id ?? 0;
       Map<String, dynamic> param = {
@@ -135,15 +133,36 @@ class SearchController extends GetxController {
         "userId": userId,
         "historySearchId": listSearch.id
       };
-      ResponseModel responseModel = await postRepository.deleteHistorySearch(param: param, token: token);
-      if(responseModel.status){
+      ResponseModel responseModel =
+          await postRepository.deleteHistorySearch(param: param, token: token);
+      if (responseModel.status) {
         historySearch.value.listSearch?.remove(listSearch);
         historySearch.refresh();
-      }else {
+      } else {
         CommonUtil.showToast(responseModel.message);
       }
-    }catch(e){
+    } catch (e) {
       CommonUtil.showToast("Lỗi khi xoá lịch sử");
+    }
+  }
+
+  void sortMoneyListPost() {
+    listPosts.sort((a, b) => (a.money ?? 0).compareTo(b.money ?? 1));
+    listPosts.value = listPosts.reversed.toList();
+    listPosts.refresh();
+  }
+
+  void sortTimeListPost() {
+    try {
+      listPosts.sort((a, b) =>
+          (DateFormat("yyyy-MM-dd HH:mm:ss").parse(a.createTime ?? ""))
+              .compareTo(
+                  DateFormat("yyyy-MM-dd HH:mm:ss").parse(b.createTime ?? "")));
+      listPosts.value = listPosts.reversed.toList();
+      listPosts.refresh();
+    } catch (e) {
+      log(e.toString());
+      CommonUtil.showToast("Lỗi khi sắp xếp danh sách");
     }
   }
 }

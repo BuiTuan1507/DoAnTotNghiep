@@ -39,6 +39,7 @@ class SearchPage extends GetView<SearchController> {
                       children: [
                         Obx(() => buildTextSearch(controller.keyword.value)),
                         buildSortPost(),
+                        SizedBox(height:height(50)),
                         Obx(() =>
                             buildListPostSearch(listPost: controller.listPosts))
                       ],
@@ -193,30 +194,40 @@ class SearchPage extends GetView<SearchController> {
               style: AppStyles.textNormalBlackMedium,
             ),
           ),
-          Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: grey_5),
-            child: Center(
-              child: Text(
-                "Giá",
-                style: AppStyles.textSmallBlackRegular,
+          InkWell(
+            onTap: (){
+              controller.sortMoneyListPost();
+            },
+            child: Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: width(12), vertical: height(5)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20), color: grey_5),
+              child: Center(
+                child: Text(
+                  "Giá",
+                  style: AppStyles.textSmallBlackRegular,
+                ),
               ),
             ),
           ),
           SizedBox(
             width: width(10),
           ),
-          Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: width(5), vertical: height(5)),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: grey_5),
-            child: Center(
-              child: Text(
-                "Thời gian",
-                style: AppStyles.textSmallBlackRegular,
+          InkWell(
+            onTap: (){
+              controller.sortTimeListPost();
+            },
+            child: Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: width(12), vertical: height(5)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20), color: grey_5),
+              child: Center(
+                child: Text(
+                  "Thời gian",
+                  style: AppStyles.textSmallBlackRegular,
+                ),
               ),
             ),
           ),

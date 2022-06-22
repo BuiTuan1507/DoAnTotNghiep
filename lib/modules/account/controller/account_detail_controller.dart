@@ -63,9 +63,9 @@ class AccountDetailController extends GetxController {
         break;
     }
     try {
-      DateTime joinTimeDate = DateFormat("yyyy-MM-dd hh:mm:ss")
+      DateTime joinTimeDate = DateFormat("yyyy-MM-dd HH:mm:ss")
           .parse(userInfoModel.value.created ?? "");
-      DateTime birthDayTime = DateFormat("yyyy-MM-dd hh:mm:ss")
+      DateTime birthDayTime = DateFormat("yyyy-MM-dd HH:mm:ss")
           .parse(userInfoModel.value.birthDay ?? "");
 
       joinTime.value = DateFormat("dd-MM-yyyy").format(joinTimeDate);
