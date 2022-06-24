@@ -90,13 +90,13 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
                   margin: EdgeInsets.only(right: width(20)) ,
                   height: width(50),
                   width: width(50),
-                  child: CacheImage(imageUrl: post.avatarUser ?? ""),
+                  child: buildAvatarProduct(imageUrl: post.avatarUser ?? "", borderRadius: 25, urlDefault: Constants.AVATAR_URL),
                 ),
                 Row(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: height(10)),
-                      child: Expanded(child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,)),
+                      child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular ,overflow: TextOverflow.ellipsis,),
                     ),
                   ],
                 )
@@ -139,7 +139,7 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
                   margin: EdgeInsets.only(right: width(20)) ,
                   height: width(60),
                   width: width(60),
-                  child: buildAvatarProduct(imageUrl: post.imagePost ?? ""),
+                  child: buildAvatarProduct(imageUrl: post.imagePost ?? "", borderRadius: 5, urlDefault: Constants.PRODUCT_URL),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: height(10)),
@@ -154,7 +154,7 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
     );
   }
 
-  Widget buildAvatarProduct({required String imageUrl}){
+  Widget buildAvatarProduct({required String imageUrl,required double borderRadius, required String urlDefault}){
     return (imageUrl != "")
         ? CachedNetworkImage(
       imageUrl: imageUrl,
@@ -164,7 +164,7 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
           width: width(40),
           decoration: BoxDecoration(
               image: DecorationImage(image: image, fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(borderRadius)
           ),
         );
       },
@@ -174,9 +174,9 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
           width: width(40),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+                  image: CachedNetworkImageProvider(urlDefault),
                   fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(borderRadius)
           ),
         );
       },
@@ -186,9 +186,9 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
       width: width(40),
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+              image: CachedNetworkImageProvider(urlDefault),
               fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(borderRadius)
       ),
     );
   }

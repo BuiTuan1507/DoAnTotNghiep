@@ -88,17 +88,22 @@ class SellOrderPage extends GetView<SellOrderController>{
               children: [
                 Container(
                   margin: EdgeInsets.only(right: width(20)) ,
-                  height: width(60),
-                  width: width(60),
-                  child: buildAvatarProduct(imageUrl: post.imagePost ?? ""),
+                  height: width(50),
+                  width: width(50),
+                  child: buildAvatarProduct(imageUrl: post.avatarUser ?? "", borderRadius: 25, urlDefault: Constants.AVATAR_URL),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: height(10)),
-                  child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: height(10)),
+                      child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,overflow: TextOverflow.ellipsis,),
+                    ),
+                  ],
                 )
               ],
             ),
           ),
+
           Flexible(
             flex: 2,
             child: Column(
@@ -107,11 +112,19 @@ class SellOrderPage extends GetView<SellOrderController>{
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: height(5)),
-                  child: Text("Ngày mua :" + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
+                  child: Text("Ngày mua : " + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: height(5)),
-                  child: Text("Đánh giá :" + rating, style: AppStyles.textSmallBlackRegular,),
+                  child: Row(
+                    children: [
+                      Text("Đánh giá : " + rating, style: AppStyles.textSmallBlackRegular,),
+                      Padding(
+                        padding: EdgeInsets.only(left: width(5)),
+                        child: Icon(Icons.star, color: amber,size: size(16),),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -126,11 +139,11 @@ class SellOrderPage extends GetView<SellOrderController>{
                   margin: EdgeInsets.only(right: width(20)) ,
                   height: width(60),
                   width: width(60),
-                  child: CacheImage(imageUrl: post.avatarUser ?? ""),
+                  child: buildAvatarProduct(imageUrl: post.imagePost ?? "", borderRadius: 5, urlDefault: Constants.PRODUCT_URL),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: height(10)),
-                  child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,),
+                  child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
                 )
               ],
             ),
@@ -141,7 +154,7 @@ class SellOrderPage extends GetView<SellOrderController>{
     );
   }
 
-  Widget buildAvatarProduct({required String imageUrl}){
+  Widget buildAvatarProduct({required String imageUrl,required double borderRadius, required String urlDefault}){
     return (imageUrl != "")
         ? CachedNetworkImage(
       imageUrl: imageUrl,
@@ -151,7 +164,7 @@ class SellOrderPage extends GetView<SellOrderController>{
           width: width(40),
           decoration: BoxDecoration(
               image: DecorationImage(image: image, fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(borderRadius)
           ),
         );
       },
@@ -161,9 +174,9 @@ class SellOrderPage extends GetView<SellOrderController>{
           width: width(40),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+                  image: CachedNetworkImageProvider(urlDefault),
                   fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(borderRadius)
           ),
         );
       },
@@ -173,9 +186,9 @@ class SellOrderPage extends GetView<SellOrderController>{
       width: width(40),
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: CachedNetworkImageProvider(Constants.PRODUCT_URL),
+              image: CachedNetworkImageProvider(urlDefault),
               fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(borderRadius)
       ),
     );
   }

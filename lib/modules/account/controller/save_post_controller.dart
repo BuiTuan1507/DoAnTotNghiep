@@ -1,4 +1,5 @@
 import 'package:do_an/models/post/post_user_like_model.dart';
+import 'package:do_an/respository/detail_post_repository.dart';
 import 'package:get/get.dart';
 
 import '../../../models/response_model.dart';
@@ -12,6 +13,8 @@ class SavePostController extends GetxController{
   RxList<PostUserLikeModel> listPostUserData = <PostUserLikeModel>[].obs;
 
   PostRepository postRepository = PostRepository();
+
+  DetailPostRepository detailPostRepository = DetailPostRepository();
 
 
   @override
@@ -48,6 +51,53 @@ class SavePostController extends GetxController{
       isLoading.value = false;
 
       CommonUtil.showToast("Lỗi lấy danh sách tin đã mua");
+    }
+  }
+
+  Future<void> likePost(PostUserLikeModel post) async {
+    try {
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "idPost": post.id
+      };
+      ResponseModel responseModel = await detailPostRepository.apiLikePost(
+          param: param, token: token);
+      if (responseModel.status) {
+        int index = listPostUserData.indexOf(post);
+        if(index == -1) return;
+        listPostUserData[index] = post.copyWith(isLike: true);
+        listPostUserData.refresh();
+      } else {
+        CommonUtil.showToast(responseModel.message);
+      }
+    } catch (e) {
+      CommonUtil.showToast("Thích bài đăng thất bại");
+    }
+  }
+  Future<void> unLikePost(PostUserLikeModel post) async {
+    try {
+      String token = GlobalData.getUserModel().token ?? "";
+      int userId = GlobalData.getUserModel().id ?? 0;
+      Map<String, dynamic> param = {
+        "token": token,
+        "userId": userId,
+        "idPost": post.id
+      };
+      ResponseModel responseModel = await detailPostRepository.apiUnLikePost(
+          param: param, token: token);
+      if (responseModel.status) {
+        int index = listPostUserData.indexOf(post);
+        if(index == -1) return;
+        listPostUserData[index] = post.copyWith(isLike: false);
+        listPostUserData.refresh();
+      } else {
+        CommonUtil.showToast(responseModel.message);
+      }
+    } catch (e) {
+      CommonUtil.showToast("Lỗi lấy thông tin bài đăng");
     }
   }
 }
