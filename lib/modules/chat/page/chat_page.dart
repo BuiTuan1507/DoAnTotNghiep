@@ -80,57 +80,63 @@ class ChatPage extends GetView<ChatController> {
   }
 
   Widget buildChatUserChat(List<ChatRoomModel> listChat) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    top: height(13), left: width(12), right: width(12)),
-                child: TextField(
-                  controller: controller.searchController,
-                  onChanged: (value) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        controller.page = 0;
+        controller.getListRoomChat();
+      },
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: height(13), left: width(12), right: width(12)),
+                  child: TextField(
+                    controller: controller.searchController,
+                    onChanged: (value) {
                       controller.searchPost();
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Tìm kiếm",
-                    hintStyle: TextStyle(color: Colors.grey.shade600),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey.shade600,
-                      size: size(18),
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Tìm kiếm",
+                      hintStyle: TextStyle(color: Colors.grey.shade600),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey.shade600,
+                        size: size(18),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey.shade100,
+                      contentPadding: EdgeInsets.all(width(5)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.grey.shade100)),
                     ),
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                    contentPadding: EdgeInsets.all(width(5)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.grey.shade100)),
                   ),
                 ),
-              ),
-              ListView.builder(
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                controller: controller.scrollController,
-                itemCount: listChat.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 16),
-                itemBuilder: (context, index) {
-                  return ChatItemWidget(
-                    chatUser: listChat[index],
-                  );
-                },
-              ),
-            ],
-          ),
-          Obx(() => Align(
-            alignment: Alignment.bottomCenter,
-              child: loadingLogin(controller.isLoading.value)))
-        ],
+                ListView.builder(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  controller: controller.scrollController,
+                  itemCount: listChat.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 16),
+                  itemBuilder: (context, index) {
+                    return ChatItemWidget(
+                      chatUser: listChat[index],
+                    );
+                  },
+                ),
+              ],
+            ),
+            Obx(() => Align(
+                alignment: Alignment.bottomCenter,
+                child: loadingLogin(controller.isLoading.value)))
+          ],
+        ),
       ),
     );
   }

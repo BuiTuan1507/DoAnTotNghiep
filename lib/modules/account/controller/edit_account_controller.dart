@@ -288,11 +288,11 @@ class EditAccountController extends GetxController{
     }
     ListAddress address = infoUser.value.listAddress?.firstWhere((element) => element.id == infoUser.value.selectedId, orElse:() => ListAddress()) ?? ListAddress();
     
-    addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
+    addressUser.value = (address.street ?? "") + ", " + (address.ward ?? "") + ", "+ (address.district ?? "") + ", " + (address.province ?? "");
   }
 
   void getAddress (ListAddress address){
-    addressUser.value = (address.street ?? "") + "," + (address.ward ?? "") + ","+ (address.district ?? "") + "," + (address.province ?? "");
+    addressUser.value = (address.street ?? "") + ", " + (address.ward ?? "") + ", "+ (address.district ?? "") + ", " + (address.province ?? "");
   }
 
 

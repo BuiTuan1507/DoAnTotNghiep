@@ -36,7 +36,7 @@ class ChatDetailController extends GetxController {
 
   int page = 0;
 
-  int pageSize = 6;
+  int pageSize = Constants.sizePage;
 
   bool isLoadMore = false;
 

@@ -9,7 +9,7 @@ import '../../../models/chat/chat_room_model.dart';
 
 import '../../../models/response_model.dart';
 import '../../../service/service.dart';
-import '../../../utils/common/common_util.dart';
+import '../../../utils/utils.dart';
 
 class ChatController extends GetxController {
   RxInt currentIndex = 0.obs;
@@ -26,7 +26,7 @@ class ChatController extends GetxController {
 
   int page = 0;
 
-  int pageSize = 6;
+  int pageSize = Constants.sizePage;
 
   bool isLoadMore = false;
 

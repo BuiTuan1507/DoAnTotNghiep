@@ -51,7 +51,7 @@ class HomeController extends GetxController {
         icon: MyIcon.settingIcon,
         name: "Cài đặt",
         onClick: () {
-          Get.toNamed(RouterLink.addAddressPage);
+          Get.toNamed(RouterLink.editProfileDetailPage);
         },
         color: Colors.grey.withOpacity(0.4)),
   ];
@@ -66,7 +66,7 @@ class HomeController extends GetxController {
 
   int page = 0;
 
-  int pageSize = 6;
+  int pageSize = Constants.sizePage;
 
   bool isLoadMore = false;
 

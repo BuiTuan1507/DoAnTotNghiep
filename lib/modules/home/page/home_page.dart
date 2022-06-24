@@ -59,6 +59,7 @@ class HomePage extends GetView<HomeController> {
   Widget buildBodyHome() {
     return RefreshIndicator(
       onRefresh: () async {
+        controller.page = 0;
         controller.getListPostNoFilter();
       },
       child: Stack(

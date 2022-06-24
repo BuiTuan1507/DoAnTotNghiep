@@ -172,7 +172,9 @@ class MyDialog{
                                 onTap: () {
                                   Get.back();
                                 },
-                                child: Icon(Icons.close, size: size(20),),
+                                child: Padding(
+                                  padding: EdgeInsets.all(width(5)),
+                                    child: Icon(Icons.close, size: size(20),)),
                               )
                             ]),
                       ),

@@ -1,7 +1,5 @@
 import 'package:do_an/utils/widget/cache_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -105,10 +103,14 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
         children: [
           Padding(
             padding: EdgeInsets.only(left: width(10)),
-            child: Icon(
+            child: widget.post.isLike! ? Icon(
+              Icons.favorite,
+              size: size(20),
+              color: red.withOpacity(0.7),
+            ) :  Icon(
               Icons.favorite_border,
               size: size(20),
-              color: red,
+              color: red.withOpacity(0.7),
             ),
           ),
           Padding(

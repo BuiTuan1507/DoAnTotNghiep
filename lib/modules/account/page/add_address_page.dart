@@ -245,6 +245,9 @@ class AddAddressPage extends GetView<AddAddressController>{
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: height(30),
+            ),
             buildAddressField(),
             Obx(() => buildItemProvince( tittle: "Chọn tỉnh/thành phố", selected: () {
               modalSelectedProvince(context, "Chọn tỉnh");
