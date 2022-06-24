@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/config.dart';
 import '../../../models/user/post_user_model.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/cache_image.dart';
@@ -39,7 +40,7 @@ class SearchPage extends GetView<SearchController> {
                       children: [
                         Obx(() => buildTextSearch(controller.keyword.value)),
                         buildSortPost(),
-                        SizedBox(height:height(50)),
+                        SizedBox(height:height(10)),
                         Obx(() =>
                             buildListPostSearch(listPost: controller.listPosts))
                       ],
@@ -237,7 +238,8 @@ class SearchPage extends GetView<SearchController> {
   }
 
   Widget buildListPostSearch({required List<Posts> listPost}) {
-    return (listPost.isEmpty && controller.searchController.text != "" && controller.isLoading.value == false)  ? Container(
+    return (listPost.isEmpty && controller.searchController.text != "" && controller.isLoading.value == false)  ? Padding(
+      padding: EdgeInsets.only(top: height(60)),
       child: Center(
         child: Text("Không có bài đăng nào được tìm thấy" , style: AppStyles.textSmallBlackRegular,),
       ),
@@ -256,63 +258,67 @@ class SearchPage extends GetView<SearchController> {
     if (posts.media?.isNotEmpty == true) {
       image = posts.media?.first.fileDownloadUri ?? MyImage.imageBanner;
     }
-    return Container(
-      height: height(140),
-      //width: double.infinity,
-      padding:
-          EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: width(60),
-            width: width(80),
-            child: CacheImage(
-              imageUrl: image,
-              boxFit: BoxFit.cover,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: width(10)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          posts.content ?? '',
-                          style: AppStyles.textNormalBlackMedium,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: height(10),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        CommonUtil.formatMoney(posts.money ?? 0),
-                        style: AppStyles.textSmallRedMedium,
-                      ),
-                      Text(
-                        CommonUtil.parseDateTime(posts.createTime ?? ""),
-                        style: AppStyles.textSmallDarkNormal,
-                      )
-                    ],
-                  )
-                ],
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.productDetailPage, arguments: posts.id);
+      },
+      child: Container(
+        height: height(120),
+        padding:
+            EdgeInsets.symmetric(horizontal: width(10), vertical: height(10)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: width(60),
+              width: width(80),
+              child: CacheImage(
+                imageUrl: image,
+                boxFit: BoxFit.cover,
               ),
             ),
-          )
-        ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: width(10)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            posts.content ?? '',
+                            style: AppStyles.textNormalBlackMedium,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: height(10),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          CommonUtil.formatMoney(posts.money ?? 0),
+                          style: AppStyles.textSmallRedMedium,
+                        ),
+                        Text(
+                          CommonUtil.parseDateTime(posts.createTime ?? ""),
+                          style: AppStyles.textSmallDarkNormal,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -88,17 +88,22 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
               children: [
                 Container(
                   margin: EdgeInsets.only(right: width(20)) ,
-                  height: width(60),
-                  width: width(60),
-                  child: buildAvatarProduct(imageUrl: post.imagePost ?? ""),
+                  height: width(50),
+                  width: width(50),
+                  child: CacheImage(imageUrl: post.avatarUser ?? ""),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: height(10)),
-                  child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: height(10)),
+                      child: Expanded(child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,)),
+                    ),
+                  ],
                 )
               ],
             ),
           ),
+
           Flexible(
             flex: 2,
             child: Column(
@@ -107,11 +112,19 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: height(5)),
-                  child: Text("Ngày mua :" + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
+                  child: Text("Ngày mua : " + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: height(5)),
-                  child: Text("Đánh giá :" + rating, style: AppStyles.textSmallBlackRegular,),
+                  child: Row(
+                    children: [
+                      Text("Đánh giá : " + rating, style: AppStyles.textSmallBlackRegular,),
+                      Padding(
+                        padding: EdgeInsets.only(left: width(5)),
+                        child: Icon(Icons.star, color: amber,size: size(16),),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -126,11 +139,11 @@ class PurchaseOrderPage extends GetView<PurchaseOrderController>{
                   margin: EdgeInsets.only(right: width(20)) ,
                   height: width(60),
                   width: width(60),
-                  child: CacheImage(imageUrl: post.avatarUser ?? ""),
+                  child: buildAvatarProduct(imageUrl: post.imagePost ?? ""),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: height(10)),
-                  child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,),
+                  child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
                 )
               ],
             ),

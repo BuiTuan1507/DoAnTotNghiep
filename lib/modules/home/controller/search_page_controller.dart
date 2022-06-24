@@ -144,6 +144,7 @@ class SearchController extends GetxController {
     } catch (e) {
       CommonUtil.showToast("Lỗi khi xoá lịch sử");
     }
+    setListHistorySearch();
   }
 
   void sortMoneyListPost() {
