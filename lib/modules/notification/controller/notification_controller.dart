@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:do_an/config/config.dart';
+import 'package:do_an/models/chat/chat_room_model.dart';
 import 'package:do_an/models/models.dart';
 import 'package:do_an/models/post/list_notification_model.dart';
 import 'package:do_an/modules/main/controller/main_controller.dart';
 import 'package:do_an/modules/modules.dart';
 import 'package:do_an/respository/chat_repository.dart';
 import 'package:do_an/respository/notification_repository.dart';
-import 'package:do_an/utils/common/common_util.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -29,6 +29,8 @@ class NotificationController extends GetxController {
   Rx<ListNotificationModel> listNotificationData = ListNotificationModel().obs;
 
   ChatRepository chatRepository = ChatRepository();
+
+   Rx<ChatRoomModel> chatRoomModel = ChatRoomModel().obs;
   @override
   void onInit() async {
     await getListNotification();
@@ -307,7 +309,8 @@ class NotificationController extends GetxController {
 
       if(responseModel.status){
         // to list room
-        Get.toNamed(RouterLink.chatPage);
+       chatRoomModel.value = ChatRoomModel.fromJson(responseModel.data);
+        Get.toNamed(RouterLink.chatDetailPage, arguments: chatRoomModel.value);
       }else{
         CommonUtil.showToast(responseModel.message);
       }

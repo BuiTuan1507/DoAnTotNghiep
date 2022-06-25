@@ -12,6 +12,7 @@ class ChatRoomModel {
   String? avatarPost;
   LastMessage? lastMessage;
   int? countReadMessage;
+  String? patternMessage;
 
   ChatRoomModel(
       {this.id,
@@ -24,7 +25,9 @@ class ChatRoomModel {
         this.tittlePost,
         this.avatarPost,
         this.lastMessage,
-        this.countReadMessage});
+        this.countReadMessage,
+        this.patternMessage
+      });
 
   ChatRoomModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,6 +43,7 @@ class ChatRoomModel {
         ? new LastMessage.fromJson(json['lastMessage'])
         : null;
     countReadMessage = json['countReadMessage'];
+    patternMessage = "";
   }
 
   Map<String, dynamic> toJson() {

@@ -54,6 +54,9 @@ class ChatDetailController extends GetxController {
     chatRoomModel = Get.arguments;
     await getDetailChatRoom();
     await getListMessage();
+    if(chatRoomModel.patternMessage != "" && chatRoomModel.patternMessage != null){
+      textEditingController.text = chatRoomModel.patternMessage ?? "";
+    }
 
     onSocket();
 

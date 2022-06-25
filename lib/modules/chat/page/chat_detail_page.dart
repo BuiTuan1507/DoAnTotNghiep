@@ -279,7 +279,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                   ),
                 ),
                 SizedBox(
-                  width: width(10),
+                  width: width(5),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -312,7 +312,7 @@ class ChatDetailPage extends GetView<ChatDetailController>{
                             maxHeight: height(24), maxWidth: width(24)),
                         contentPadding: EdgeInsets.zero,
                         hintStyle: GoogleFonts.sarabun(
-                            fontSize: 14, color: grey_3),
+                            fontSize: size(13), color: grey_3),
                         disabledBorder: InputBorder.none,
                       )
                   ),

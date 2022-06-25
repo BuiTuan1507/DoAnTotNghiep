@@ -154,7 +154,7 @@ class _ImageProductWidgetState extends State<ImageProductWidget> {
             productDetailController.sendSms();
           }),
           SizedBox(height: height(10),),
-          buildItemContact("Chat",Icons.message_rounded, (){productDetailController.addChatRoom();}),
+          buildItemContact("Chat",Icons.message_rounded, (){productDetailController.addChatRoom("");}),
         ],
       ),
     );
