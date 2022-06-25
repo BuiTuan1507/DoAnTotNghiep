@@ -109,7 +109,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
               color: red.withOpacity(0.7),
             ) :  Icon(
               Icons.favorite_border,
-              size: size(20),
+              size: size(17),
               color: red.withOpacity(0.7),
             ),
           ),
@@ -128,7 +128,7 @@ class _ItemProductWidgetState extends State<ItemProductWidget> {
           ),
           Padding(
             padding: EdgeInsets.only(left: width(10)),
-            child: SvgPicture.asset(MyIcon.watchIcon, color: black,),
+            child: SvgPicture.asset(MyIcon.watchIcon, color:widget.post.isLike! ? greenMoney : black,),
           ),
           Padding(
             padding: EdgeInsets.only(right: width(5)),
