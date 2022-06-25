@@ -1,6 +1,5 @@
 import 'package:do_an/models/post/history_search_model.dart';
 import 'package:do_an/modules/home/controller/search_page_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

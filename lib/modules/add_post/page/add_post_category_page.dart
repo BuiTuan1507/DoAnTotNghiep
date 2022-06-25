@@ -22,72 +22,74 @@ class AddPostCategoryPage extends GetView<AddPostCategoryController> {
         ),
         backgroundColor: greenMoney
       ),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height(10),
-            ),
-            Obx(() => Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: width(10), vertical: height(20)),
-              child: ListView.separated(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
+      body: SingleChildScrollView(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height(10),
+              ),
+              Obx(() => Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width(10), vertical: height(10)),
+                child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
 
-                itemCount: controller.listSubCategory.length,
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                itemBuilder: (context, index) {
-                  return buildItemCategorylv2(context, controller.listSubCategory[index] );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    indent: width(12),
-                    endIndent: width(12),
-                    height: height(1),
-                  );
-                },
-              ),
-            )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: height(50)),
-                child: Obx(() => loadingLogin(controller.isLoading.value)),
-              ),
-            )
-          ]),
+                  itemCount: controller.listSubCategory.length,
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  itemBuilder: (context, index) {
+                    return buildItemCategorylv2(context, controller.listSubCategory[index] );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      indent: width(12),
+                      endIndent: width(12),
+                      height: height(1),
+                    );
+                  },
+                ),
+              )),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: height(50)),
+                  child: Obx(() => loadingLogin(controller.isLoading.value)),
+                ),
+              )
+            ]),
+      ),
     );
   }
 
   Widget buildItemCategorylv2(BuildContext context,SubCategory subCategory) {
-    return Container(
-      padding:
-      EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
-      color: (subCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
-      child: InkWell(
-        onTap: (){
-          if(controller.state == 0) {
-            Get.toNamed(
-                RouterLink.addPostInfoPage, arguments: {
-              "mainCategory": controller.mainCategory.value,
-              "subCategory":subCategory
-            }
-            );
-          }else{
-            Get.back(result: subCategory);
+    return InkWell(
+      onTap: (){
+        if(controller.state == 0) {
+          Get.toNamed(
+              RouterLink.addPostInfoPage, arguments: {
+            "mainCategory": controller.mainCategory.value,
+            "subCategory":subCategory
           }
+          );
+        }else{
+          Get.back(result: subCategory);
+        }
 
-        },
+      },
+      child: Container(
+        padding:
+        EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        color: (subCategory.isSelected ?? false) ? greenMoney.withOpacity(0.5) : Colors.transparent,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               subCategory.sName ?? " ",
-              style: AppStyles.textSmallBlackRegular,
+              style: AppStyles.textNormalBlackRegular,
             ),
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))
           ],

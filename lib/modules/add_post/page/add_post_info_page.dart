@@ -179,10 +179,13 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: height(20),
+            ),
             buildCategory(),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: width(20), vertical: height(10)),
+                  horizontal: width(20), vertical: height(15)),
               child: Text(
                 "Thông tin chi tiết",
                 style: AppStyles.textSmallBlackMedium,
@@ -223,7 +226,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
           children: <TextSpan>[
             TextSpan(
               text: ' *',
-              style: AppStyles.textTinyRedMedium,
+              style: AppStyles.textSmallRedRegular,
             ),
           ],
         ),
@@ -241,6 +244,7 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buildTittleField("Danh mục"),
+          SizedBox(height: height(10),),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -624,36 +628,37 @@ class AddPostInfoPage extends GetView<AddPostInfoController> {
   }
 
   Widget buildPriorityItem(SexType sexType) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            sexType.tittle ?? "",
-            style: AppStyles.textSmallGreenRegular,
-          ),
-          SizedBox(width: width(10),),
-          InkWell(
-              onTap: () {
-                controller.changeTypePriority(sexType);
-              },
+    return InkWell(
+      onTap: (){
+        controller.changeTypePriority(sexType);
+      },
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              sexType.tittle ?? "",
+              style: AppStyles.textSmallGreenRegular,
+            ),
+            SizedBox(width: width(10),),
+            Container(
+              height: width(17),
+              width: width(17),
+              margin: EdgeInsets.all(height(1)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: width(1.5), color: greenMoney)),
               child: Container(
-                height: width(17),
-                width: width(17),
-                margin: EdgeInsets.all(height(1)),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: width(1.5), color: greenMoney)),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border:
-                    Border.all(color: Colors.white, width: width(2)),
-                    shape: BoxShape.circle,
-                    color: (sexType.isSelected ?? false ? greenMoney : Colors.white),
-                  ),
+                  border:
+                  Border.all(color: Colors.white, width: width(2)),
+                  shape: BoxShape.circle,
+                  color: (sexType.isSelected ?? false ? greenMoney : Colors.white),
                 ),
-              ))
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -26,6 +26,15 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
       body: ListView(
         children: [
           buildSelectCategory(context),
+          Obx(()=> Visibility(
+            visible: controller.listPosts.isEmpty && controller.isLoading.value == false,
+            child: Container(
+              padding: EdgeInsets.only(top: height(50)),
+              child: Center(
+                child: Text("Không tìm thấy bài đăng nào", style: AppStyles.textSmallBlackRegular,),
+              ),
+            ),
+          ),),
           Obx(()=> buildListPostFilter(listPost: controller.listPosts)),
           Obx(() => loadingLogin(controller.isLoading.value))
         ],
@@ -92,7 +101,7 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
   Widget buildListPostFilter({required List<Posts> listPost}) {
     return Container(
       padding:
-      EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
+      EdgeInsets.symmetric(horizontal: width(10), vertical: height(10)),
       child: Column(
         children: List.generate(
             listPost.length,
@@ -107,10 +116,9 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
       image = posts.media?.first.fileDownloadUri ?? MyImage.imageBanner;
     }
     return Container(
-      height: height(140),
-      //width: double.infinity,
+      height: height(125),
       padding:
-      EdgeInsets.symmetric(horizontal: width(10), vertical: height(20)),
+      EdgeInsets.symmetric(horizontal: width(10), vertical: height(00)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
