@@ -1,4 +1,5 @@
 import 'package:do_an/modules/chat/controller/chat_controller.dart';
+import 'package:do_an/modules/chat/widget/search_chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,6 @@ class ChatPage extends GetView<ChatController> {
                     onTap: (int index) {
                       controller.currentIndex.value = index;
                     },
-                    // isScrollable: true,
                     indicatorColor: amber,
                     indicatorWeight: 2,
                     indicatorPadding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -95,27 +95,11 @@ class ChatPage extends GetView<ChatController> {
                 Padding(
                   padding: EdgeInsets.only(
                       top: height(13), left: width(12), right: width(12)),
-                  child: TextField(
-                    controller: controller.searchController,
-                    onChanged: (value) {
-                      controller.searchPost();
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Tìm kiếm",
-                      hintStyle: TextStyle(color: Colors.grey.shade600),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.grey.shade600,
-                        size: size(18),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey.shade100,
-                      contentPadding: EdgeInsets.all(width(5)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Colors.grey.shade100)),
-                    ),
-                  ),
+                  child: SearchChatWidget(
+                      textEditingController: controller.searchController,
+                      onChanged: (text) {
+                        controller.searchPost();
+                      }),
                 ),
                 ListView.builder(
                   physics: const BouncingScrollPhysics(
