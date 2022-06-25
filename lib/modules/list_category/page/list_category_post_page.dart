@@ -24,6 +24,9 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
       automaticallyImplyLeading: true,
     ),
       body: ListView(
+        controller: controller.scrollController,
+        physics:
+        const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
           buildSelectCategory(context),
           Obx(()=> Visibility(
@@ -54,8 +57,11 @@ class ListCategoryPostPage extends GetView <ListCategoryPostController>{
        )?.then((value)
            async {
              if(value != null) {
+               controller.page = 0;
+
                controller.selectedCategory.value = value;
                controller.selectedMainCategoryName.value = controller.selectedCategory.value.sName ?? "";
+
                await controller.getListPostSubCategory();
              }
            }
