@@ -62,6 +62,8 @@ class NotificationController extends GetxController {
               activeNotification.add(element);
             }
           });
+          notification.value = notification.reversed.toList();
+          activeNotification.value = activeNotification.reversed.toList();
         }
       } else {
         CommonUtil.showToast(responseModel.message);

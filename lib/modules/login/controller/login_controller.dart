@@ -88,6 +88,8 @@ class LoginController extends GetxController {
         log(e.toString());
       }
     }
+    phoneController.clear();
+    passwordController.clear();
 
 
     if (isLoginSuccess) Get.toNamed(RouterLink.main);
