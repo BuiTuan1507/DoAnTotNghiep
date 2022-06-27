@@ -1,4 +1,5 @@
 class UserModel{
+  int? idDb;
   int? id;
   String? firstName;
   String? lastName;
@@ -7,9 +8,10 @@ class UserModel{
   bool? active;
   String? phoneNumber;
   UserModel(
-      {this.id, this.firstName,this.lastName, this.token, this.avatar, this.active,this.phoneNumber});
+      {this.idDb ,this.id, this.firstName,this.lastName, this.token, this.avatar, this.active,this.phoneNumber});
 
   UserModel.fromJson(Map<String, dynamic> json) {
+    idDb = json['idDb'];
     id = json['id'];
     firstName = json['firstName'];
     lastName = json['lastName'];
@@ -20,7 +22,8 @@ class UserModel{
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['idDb'] = this.idDb;
     data['id'] = this.id;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;

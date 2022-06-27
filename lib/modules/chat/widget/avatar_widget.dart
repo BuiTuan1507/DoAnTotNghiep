@@ -21,7 +21,7 @@ Widget buildAvatarUser({required String imageUrl, required double size}){
       return Container(
         height: width(size),
         width: width(size),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: CachedNetworkImageProvider(Constants.AVATAR_URL),
                 fit: BoxFit.cover),
@@ -32,7 +32,7 @@ Widget buildAvatarUser({required String imageUrl, required double size}){
       : Container(
     height: width(size),
     width: width(size),
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         image: DecorationImage(
             image: CachedNetworkImageProvider(Constants.AVATAR_URL),
             fit: BoxFit.cover),

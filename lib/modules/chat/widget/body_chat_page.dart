@@ -22,70 +22,10 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
   ChatDetailController controller = Get.find();
   int userId = GlobalData.getUserModel().id ?? 0;
 
-  GlobalKey widgetCommentKey = GlobalKey();
 
-  bool isVideoPlaying = false;
-  double currentTime = 0;
-  bool sizeChange = false;
-  bool first = true;
-  double commentHeight = 0;
-  double heightWidget = 0;
-  double btnHeight = 0;
-  double btnDeleteHeight = 0;
-  double btnHideCommentWidth = 0;
-  Color? commentColor;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(_afterLayout);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-  // update widget when state change
-  @override
-  void didUpdateWidget(covariant BodyChatWidget oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    WidgetsBinding.instance?.addPostFrameCallback(_afterLayout);
-  }
-  // get comment height
-  _afterLayout(_) {
-    try {
-      commentHeight = _getSizesWidget(
-          widgetCommentKey.currentContext, commentHeight, false);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    setState(() {});
-    first = false;
-  }
-  // get size comment
-  double _getSizesWidget(BuildContext? context, double value, bool isWidth) {
-    final RenderBox renderBoxRed = context?.findRenderObject() as RenderBox;
-    final sizeRed = renderBoxRed.size;
-    if (isWidth && value != renderBoxRed.size.width ||
-        !isWidth && value != renderBoxRed.size.height) {
-      sizeChange = true;
-    } else
-      sizeChange = false;
-
-    if (isWidth)
-      value = sizeRed.width;
-    else
-      value = sizeRed.height;
-    return value;
-  }
 
   @override
   Widget build(BuildContext context) {
-    commentColor = HexColor("#F4F4F4");
     return Expanded(
       child: Obx(() => ListView(
             controller: controller.scrollController,
@@ -106,10 +46,10 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
     Widget widgetRight;
 
     widgetLeft = messageModel.idUser != userId
-        ? buildAvatarUser(imageUrl: '', size: 20)
+        ? buildAvatarUser(imageUrl: '', size: 25)
         : chatContent(messageModel);
     widgetRight = messageModel.idUser == userId
-        ? buildAvatarUser(imageUrl: '', size: 20)
+        ? buildAvatarUser(imageUrl: '', size: 25)
         : chatContent(messageModel);
 
     return Container(
@@ -124,13 +64,7 @@ class _BodyChatWidgetState extends State<BodyChatWidget> {
               : CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Visibility(
-              visible: true,
-              child: Container(
-                  height: commentHeight,
-                  width: Get.width,
-                  child: BlurryEffect(0.7, 0.0, HexColor("#F4F4F4"))),
-            ),
+
             Visibility(
               visible: true,
               child: Padding(

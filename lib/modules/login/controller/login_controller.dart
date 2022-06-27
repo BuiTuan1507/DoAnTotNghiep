@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:do_an/respository/login_repository.dart';
+import 'package:do_an/service/local_data/local_data_app.dart';
 import 'package:do_an/service/web_socket.dart';
 import 'package:do_an/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,6 +68,7 @@ class LoginController extends GetxController {
 
           LoginDataResponse dataResponse =
               LoginDataResponse.fromJson(responseModel.data);
+
           UserModel newUser = UserModel(
               id: dataResponse.id,
               token: dataResponse.token,
@@ -76,6 +78,10 @@ class LoginController extends GetxController {
               active: dataResponse.active,
             phoneNumber: dataResponse.phoneNumber
           );
+
+          // save user
+         // MoneyManageDB.createItem(newUser);
+
           GlobalData.setUserLogin(newUser);
           isLoginSuccess = true;
         }else{
