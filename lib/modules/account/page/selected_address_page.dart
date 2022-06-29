@@ -40,7 +40,11 @@ class SelectedAddressPage extends GetView<SelectedAddressController> {
                       ),
                 (controller.infoUser.value.listAddress?.isNotEmpty ?? false)
                     ? buildButtonApply()
-                    : Container()
+                    : Container(),
+                 SizedBox(
+                   height: height(50),
+                 ),
+                loadingLogin(controller.isLoading.value)
               ],
             ),
           )),

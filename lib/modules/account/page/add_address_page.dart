@@ -32,7 +32,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 16,
+                      fontSize: size(16),
                       fontWeight: FontWeight.w500,
                       color: black,
                     ),
@@ -48,7 +48,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                       Get.back();
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
                       child: Text(controller.listProvince[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
                     ),
                   )),
@@ -105,7 +105,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 16,
+                      fontSize: size(16),
                       fontWeight: FontWeight.w500,
                       color: black,
                     ),
@@ -121,7 +121,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                       Get.back();
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
                       child: Text(controller.listDistrict[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
                     ),
                   )),
@@ -178,7 +178,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                   child: Text(
                     tittle,
                     style: GoogleFonts.sarabun(
-                      fontSize: 16,
+                      fontSize: size(16),
                       fontWeight: FontWeight.w500,
                       color: black,
                     ),
@@ -194,7 +194,7 @@ class AddAddressPage extends GetView<AddAddressController>{
                       Get.back();
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+                      padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(20)),
                       child: Text(controller.listWard[index].sName ?? "",style: AppStyles.textSmallDarkNormal,),
                     ),
                   )),
@@ -311,7 +311,7 @@ class AddAddressPage extends GetView<AddAddressController>{
     return InkWell(
       onTap: selected,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(15)),
+        padding: EdgeInsets.symmetric(horizontal: width(20), vertical: height(25)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -319,13 +319,13 @@ class AddAddressPage extends GetView<AddAddressController>{
               padding: EdgeInsets.only(right: width(15)),
               child: Text(
                 tittle ,
-                style: AppStyles.textSmallBlackRegular,
+                style: AppStyles.textNormalBlackRegular,
               ),
             ),
             Expanded(
               child: Text(
                 name ,
-                style: AppStyles.textSmallBlackRegular,
+                style: AppStyles.textNormalBlackRegular,
               ),
             ),
             SvgPicture.asset(MyImage.rightArrow, color: HexColor("#6492BC"))

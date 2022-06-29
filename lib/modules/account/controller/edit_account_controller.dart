@@ -346,6 +346,7 @@ class EditAccountController extends GetxController{
         passwordController.clear();
         if(responseModel.status){
           CommonUtil.showToast("Thay đổi mật khẩu thành công", isSuccessToast: true);
+          Get.back();
         }else {
           MyDialog.popUpErrorMessage(buildContext: context, content: "Lỗi thay đổi mật khẩu", tittle: responseModel.message);
         }

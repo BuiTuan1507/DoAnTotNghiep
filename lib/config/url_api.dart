@@ -1,6 +1,6 @@
 
  // const baseUrl = "http://10.0.2.2:8088";
- const baseUrl = "https://c7e3-42-115-113-141.ap.ngrok.io";
+ const baseUrl = "https://6df9-42-115-113-141.ap.ngrok.io";
 
  //const baseUrl = "http://doanserver-env.eba-r5zsksr3.ap-southeast-1.elasticbeanstalk.com";
 class ProdAppChatEnvironment{

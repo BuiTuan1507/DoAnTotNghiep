@@ -224,7 +224,7 @@ class BirthDayRegisterPage extends GetView<BirthdayRegisterController>{
       if(controller.dateTime.value.isBefore(controller.checkTime) && controller.isCheckSelectedSex.value ) {
         RegisterUserModel registerUserModel = RegisterSingleton.getModel();
 
-        registerUserModel.birthDay = DateFormat('yyyy-MM-dd kk:mm:ss').format(controller.dateTime.value);
+        registerUserModel.birthDay = DateFormat('yyyy-MM-dd HH:mm:ss').format(controller.dateTime.value);
 
         SexType sexType = controller.listSexType.firstWhere((element) => element.isSelected == true,orElse:() => SexType());
 

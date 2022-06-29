@@ -13,7 +13,7 @@ class MyWebSocket extends GetxService {
   static final streamChat = StreamController<dynamic>.broadcast();
 // static const String url = "ws://doanserver-env.eba-r5zsksr3.ap-southeast-1.elasticbeanstalk.com/chat";
  // static const String url = "ws://10.0.2.2:8088/chat";
-   static const String url = "wss://c7e3-42-115-113-141.ap.ngrok.io/chat";
+   static const String url = "wss://6df9-42-115-113-141.ap.ngrok.io/chat";
 
   static final stompClient = StompClient(
     config: StompConfig(
