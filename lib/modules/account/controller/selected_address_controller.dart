@@ -115,6 +115,7 @@ class SelectedAddressController extends GetxController {
         if(responseModel.status){
           listAddress.removeWhere((element) => element.id == address.id);
           listAddress.refresh();
+          CommonUtil.showToast("Xoá địa chỉ thành công",isSuccessToast: true);
         }else{
           CommonUtil.showToast("Lỗi server");
         }

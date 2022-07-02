@@ -89,17 +89,23 @@ class EditAccountPage extends GetView<EditAccountController> {
                       Text(
                         "Chọn giới tính",
                         style: GoogleFonts.sarabun(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                          fontSize: size(16),
+                          fontWeight: FontWeight.w600,
                           color: black,
                         ),
                       ),
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: height(10),
+                ),
                 Divider(
                   color: grey_5,
                   height: 1,
+                ),
+                SizedBox(
+                  height: height(15),
                 ),
                 Obx(() => Column(
                       mainAxisSize: MainAxisSize.min,

@@ -80,7 +80,7 @@ class AccountPage extends GetView<AccountController> {
                   Get.toNamed(RouterLink.profileDetailPage, arguments: controller.infoUser.value);
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width(15)),
+                  padding: EdgeInsets.symmetric(horizontal: width(15), vertical: height(10)),
                   child: Text(
                     "Xem thông tin cá nhân của bạn",
                     maxLines: 1,

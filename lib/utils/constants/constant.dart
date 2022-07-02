@@ -18,7 +18,7 @@ class Constants{
   static const String contentTypeImage = 'image';
   static const String contentTypeVideo = 'video';
 
-  static const int sizePage = 5;
+  static const int sizePage = 10;
 
 
 }

@@ -13,8 +13,7 @@ import '../../../models/user/set_user_infomation.dart';
 import '../../../models/user/user_info_model.dart';
 import '../../../service/service.dart';
 import '../../../utils/widget/dialog.dart';
-import '../../../utils/widget/loading_toast.dart';
-import '../../../utils/widget/toast_widget.dart';
+
 
 class EditAccountController extends GetxController{
   final TextEditingController firstNameController = TextEditingController();
@@ -227,6 +226,9 @@ class EditAccountController extends GetxController{
           sexUser: infoUser.value.sex
       );
       await  setUserInfo(setUserInfomation, context);
+      DateTime birthDayTime =  DateFormat("yyyy-MM-dd HH:mm:ss").parse(infoUser.value.birthDay ?? "");
+
+      birthDay.value = DateFormat("dd-MM-yyyy").format(birthDayTime);
     }else {
       CommonUtil.showToast("Bạn phải trên 13 tuổi" );
     }
@@ -258,6 +260,18 @@ class EditAccountController extends GetxController{
         sexUser: _sex
     );
     await  setUserInfo(setUserInfomation, context);
+
+    switch (infoUser.value.sex){
+      case 0 :
+        sexUser.value = "Nam";
+        break;
+      case 1 :
+        sexUser.value = "Nữ";
+        break;
+      case 2 :
+        sexUser.value = "Khác";
+        break;
+    }
   }
 
 
@@ -346,6 +360,15 @@ class EditAccountController extends GetxController{
         passwordController.clear();
         if(responseModel.status){
           CommonUtil.showToast("Thay đổi mật khẩu thành công", isSuccessToast: true);
+          // update password
+          if((infoUser.value.latitude ?? 0) > 0){
+            int lengthPassword = infoUser.value.latitude ?? 0;
+            password.value = "";
+            for(int i = 0; i < lengthPassword; i++){
+              password.value += "*";
+            }
+          }
+
           Get.back();
         }else {
           MyDialog.popUpErrorMessage(buildContext: context, content: "Lỗi thay đổi mật khẩu", tittle: responseModel.message);

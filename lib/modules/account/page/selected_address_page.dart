@@ -44,7 +44,7 @@ class SelectedAddressPage extends GetView<SelectedAddressController> {
                  SizedBox(
                    height: height(50),
                  ),
-                loadingLogin(controller.isLoading.value)
+                Obx(()=> loadingLogin(controller.isLoading.value))
               ],
             ),
           )),

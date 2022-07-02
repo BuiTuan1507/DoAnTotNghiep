@@ -1,5 +1,6 @@
 
 import 'package:do_an/modules/main/controller/main_controller.dart';
+import 'package:do_an/modules/modules.dart';
 import 'package:do_an/utils/theme/app_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,10 @@ class _LoadingPostPageState extends State<LoadingPostPage> {
         MainController mainController = Get.put(MainController());
         mainController.currentIndex.value = 1;
       }
+
+      PostController postController = Get.find();
+      postController.getListPostPersonal();
+
 
 
       Get.toNamed(RouterLink.main);

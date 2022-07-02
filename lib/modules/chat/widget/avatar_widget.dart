@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/utils.dart';
 
-Widget buildAvatarUser({required String imageUrl, required double size}){
+Widget buildAvatarUser({required String imageUrl, required double size})
+{
   return (imageUrl != "")
       ? CachedNetworkImage(
     imageUrl: imageUrl,
