@@ -32,7 +32,7 @@ class SavePostController extends GetxController{
         "token": token,
         "userId": userId
       };
-      ResponseModel responseModel = await postRepository.getListPostSell(param: param, token: token);
+      ResponseModel responseModel = await postRepository.getListPostLike(param: param, token: token);
       if(responseModel.status){
         dynamic data = responseModel.data;
         if(data.length > 0){
@@ -77,6 +77,7 @@ class SavePostController extends GetxController{
       CommonUtil.showToast("Thích bài đăng thất bại");
     }
   }
+
   Future<void> unLikePost(PostUserLikeModel post) async {
     try {
       String token = GlobalData.getUserModel().token ?? "";

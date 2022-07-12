@@ -101,7 +101,4 @@ class AccountController extends GetxController {
     Get.toNamed(RouterLink.editProfileDetailPage);
   }
 
-
-
-
 }
