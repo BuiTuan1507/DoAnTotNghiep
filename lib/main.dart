@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             child: GetMaterialApp(
               enableLog: true,
               debugShowCheckedModeBanner: false,
-              title: 'Market',
+              title: 'Chợ Bách Khoa',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,

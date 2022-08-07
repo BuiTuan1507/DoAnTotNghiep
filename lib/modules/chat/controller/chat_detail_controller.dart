@@ -269,10 +269,8 @@ class ChatDetailController extends GetxController {
             listMessage[index] = listMessage[index]
                 .copyWith(sendMessageStatus: Constants.commentSendFailed, media: messageModel.media);
           }
-
         }
       }
-
       if (messageModel.idChatRoom == chatRoomModel.id &&
           messageModel.idUser != userId) {
         listMessage.insert(0, messageModel);

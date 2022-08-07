@@ -59,6 +59,13 @@ dependencies:
   path: ^1.8.0
   flutter_rating_bar: ^4.0.1
   pin_code_fields: ^7.4.0
+  flutter_launcher_icons: ^0.9.3
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+
 
 dev_dependencies:
   flutter_test:
