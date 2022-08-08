@@ -257,9 +257,13 @@ class SearchPage extends GetView<SearchController> {
     if (posts.media?.isNotEmpty == true) {
       image = posts.media?.first.fileDownloadUri ?? MyImage.imageBanner;
     }
+     var  data = {
+      "idPost" : posts.id,
+      "status" : 0
+   };
     return InkWell(
       onTap: (){
-        Get.toNamed(RouterLink.productDetailPage, arguments: posts.id);
+        Get.toNamed(RouterLink.productDetailPage, arguments: data);
       },
       child: Container(
         height: height(120),

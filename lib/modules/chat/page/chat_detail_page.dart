@@ -345,9 +345,13 @@ class ChatDetailPage extends GetView<ChatDetailController>{
 
 
   Widget buildProductView(){
+    var  data = {
+      "idPost" : controller.detailChatRoomModel.value.infoPostChat?.id ?? 0,
+      "status" : 0
+   };
     return Obx(() => InkWell(
       onTap: (){
-        Get.toNamed(RouterLink.productDetailPage, arguments: controller.detailChatRoomModel.value.infoPostChat?.id ?? 0);
+        Get.toNamed(RouterLink.productDetailPage, arguments: data);
       },
       child: Container(
         height: height(70),

@@ -17,7 +17,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
             Text("Chi tiết tin đăng", style: AppStyles.textNormalWhiteSemiBold),
         backgroundColor: greenMoney,
         actions: [
-          InkWell(
+          controller.statusWatchPost.value == 0 ? InkWell(
             onTap: () {
               modalOptional(context);
             },
@@ -30,7 +30,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                 color: Colors.white,
               ),
             ),
-          )
+          ) : Container()
         ],
       ),
       body: RefreshIndicator(
@@ -57,6 +57,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                         width: double.infinity,
                                         isIndicator: 1,
                                         isAutoPlay: true,
+                                  isUserPost: controller.statusWatchPost.value,
                                       )
                                     : Container())),
                             SizedBox(
@@ -102,13 +103,13 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                 color: grey_3,
                               ),
                             ),
-                            buildSupportChat(),
-                            buildListSamePost()
+                           controller.statusWatchPost.value == 0 ? buildSupportChat() : Container(),
+                            controller.statusWatchPost.value == 0 ?  buildListSamePost() : Container()
                           ],
                         ),
                       ),
                     )),
-              SafeArea(child: buildBottomBar())
+              SafeArea(child: (controller.statusWatchPost.value == 0) ? buildBottomBar() : Container())
             ],
           )),
     );
@@ -298,8 +299,10 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                 flex: 1,
                 child: buildItemStatusDetailPage(
                     "Báo cáo", Icons.report_problem_outlined, () {
-                  Get.toNamed(RouterLink.reportPostPage,
-                      arguments: controller.detailPostModel.value.post?.id);
+                  if(controller.statusWatchPost.value == 0){
+                    Get.toNamed(RouterLink.reportPostPage,
+                        arguments: controller.detailPostModel.value.post?.id);
+                  }
                 }),
               ),
             ],
@@ -371,56 +374,69 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                   ),
                 ],
               )),
-          Row(
+
+          controller.statusWatchPost.value == 0 ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Obx(
-                () => Text(
+                    () => Text(
                   CommonUtil.parseDateTime(
                       controller.detailPostModel.value.post?.createTime ?? ""),
                   style: AppStyles.textSmallDarkRegular,
                 ),
               ),
               Obx(() => InkWell(
-                    onTap: () {
-                      if ((controller.detailPostModel.value.post?.isLike ??
-                          false)) {
-                        controller.unLikePost();
-                      } else {
-                        controller.likePost();
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: width(8), vertical: height(4)),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            width: height(1),
-                            color: (controller
-                                        .detailPostModel.value.post?.isLike ??
-                                    false)
-                                ? Colors.white
-                                : red),
-                        color: (controller.detailPostModel.value.post?.isLike ??
-                                false)
-                            ? red.withOpacity(0.7)
-                            : Colors.white,
-                      ),
-                      child: (controller.detailPostModel.value.post?.isLike ??
-                              false)
-                          ? Text(
-                              "Đã lưu tin",
-                              style: AppStyles.textSmallWhiteRegular,
-                            )
-                          : Text(
-                              "Lưu tin",
-                              style: AppStyles.textSmallRedRegular,
-                            ),
-                    ),
-                  ))
+                onTap: () {
+                  if ((controller.detailPostModel.value.post?.isLike ??
+                      false)) {
+                    controller.unLikePost();
+                  } else {
+                    controller.likePost();
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width(8), vertical: height(4)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                        width: height(1),
+                        color: (controller
+                            .detailPostModel.value.post?.isLike ??
+                            false)
+                            ? Colors.white
+                            : red),
+                    color: (controller.detailPostModel.value.post?.isLike ??
+                        false)
+                        ? red.withOpacity(0.7)
+                        : Colors.white,
+                  ),
+                  child: (controller.detailPostModel.value.post?.isLike ??
+                      false)
+                      ? Text(
+                    "Đã lưu tin",
+                    style: AppStyles.textSmallWhiteRegular,
+                  )
+                      : Text(
+                    "Lưu tin",
+                    style: AppStyles.textSmallRedRegular,
+                  ),
+                ),
+              ))
+            ],
+          ) : Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Obx(
+                    () => Text(
+                  CommonUtil.parseDateTime(
+                      controller.detailPostModel.value.post?.createTime ?? ""),
+                  style: AppStyles.textSmallDarkRegular,
+                ),
+              ),
             ],
           ),
+
           Obx(() => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -532,7 +548,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                             )),
                           ),
                           SizedBox(height: height(10)),
-                          InkWell(
+                          controller.statusWatchPost.value == 0 ? InkWell(
                             onTap: () {
                               Get.toNamed(RouterLink.watchUserPage,
                                   arguments: controller
@@ -546,11 +562,11 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                   border: Border.all(color: greenMoney)),
                               child: Center(
                                   child: Text(
-                                "Xem trang",
-                                style: AppStyles.textTinyDarkRegular,
-                              )),
+                                    "Xem trang",
+                                    style: AppStyles.textTinyDarkRegular,
+                                  )),
                             ),
-                          ),
+                          ) : Container(),
                         ],
                       ),
                     )
@@ -614,7 +630,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                 controller.detailPostModel.value.post?.content ?? "",
                 maxLines: 20,
                 overflow: TextOverflow.ellipsis,
-                style: AppStyles.textTinyStrongDarkRegular,
+                style: AppStyles.textSmallBlackRegular,
               ),
               SizedBox(
                 height: height(10),

@@ -17,6 +17,7 @@ class ImageProductWidget extends StatefulWidget {
   final int? isIndicator;
   final bool? isAutoPlay;
   final Function(int index)? onTap;
+  final int? isUserPost;
   const ImageProductWidget(
       {Key? key,
         required this.imageList,
@@ -25,7 +26,7 @@ class ImageProductWidget extends StatefulWidget {
         this.isIndicator,
         this.isAutoPlay,
         this.height,
-        this.onTap})
+        this.onTap, this.isUserPost})
       : super(key: key);
 
   @override
@@ -89,7 +90,7 @@ class _ImageProductWidgetState extends State<ImageProductWidget> {
                 child:(currentIndexPage == ((widget.imageList?.length ?? 0) - 1)) ? Column(
                 //  mainAxisSize: MainAxisSize.max,
                   children: [
-                      buildListContact() ,
+                     widget.isUserPost == 0 ? buildListContact() : Container(),
                     SizedBox(height: height(30),),
                     AnimatedSmoothIndicator(
                       duration: const Duration(milliseconds: 350),

@@ -233,12 +233,15 @@ class NotificationController extends GetxController {
   }
 
   Future<void> watchNotification(ListNotification listNotification, BuildContext context) async {
-
+ var  data = {
+      "idPost" : listNotification.idPost,
+      "status" : 0
+   };
 
     switch (listNotification.typeNotification) {
       case 0:
         {
-          Get.toNamed(RouterLink.productDetailPage, arguments:listNotification.idPost);
+          Get.toNamed(RouterLink.productDetailPage, arguments: data);
         }
         break;
 

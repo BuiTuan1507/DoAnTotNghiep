@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/config.dart';
 import '../../../models/post/post_user_data_model.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widget/cache_image.dart';
@@ -74,82 +75,91 @@ class SellOrderPage extends GetView<SellOrderController>{
     }else{
       rating = post.rating.toString();
     }
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: height(5)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Flexible(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: width(20)) ,
-                  height: width(50),
-                  width: width(50),
-                  child: buildAvatarProduct(imageUrl: post.avatarUser ?? "", borderRadius: 25, urlDefault: Constants.AVATAR_URL),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: height(10)),
-                      child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,overflow: TextOverflow.ellipsis,),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-
-          Flexible(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: height(5)),
-                  child: Text("Ngày mua : " + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: height(5)),
-                  child: Row(
-                    children: [
-                      Text("Đánh giá : " + rating, style: AppStyles.textSmallBlackRegular,),
-                      Padding(
-                        padding: EdgeInsets.only(left: width(5)),
-                        child: Icon(Icons.star, color: amber,size: size(16),),
-                      )
-                    ],
+    var  data = {
+      "idPost" : post.id,
+      "status" : 1
+    };
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouterLink.productDetailPage, arguments: data);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: height(5)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: width(20)) ,
+                    height: width(50),
+                    width: width(50),
+                    child: buildAvatarProduct(imageUrl: post.avatarUser ?? "", borderRadius: 25, urlDefault: Constants.AVATAR_URL),
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: height(10)),
+                        child: Text(post.nameUser ?? "", style: AppStyles.textSmallBlackRegular,overflow: TextOverflow.ellipsis,),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: width(20)) ,
-                  height: width(60),
-                  width: width(60),
-                  child: buildAvatarProduct(imageUrl: post.imagePost ?? "", borderRadius: 5, urlDefault: Constants.PRODUCT_URL),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: height(10)),
-                  child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
-                )
-              ],
-            ),
-          ),
 
-        ],
+            Flexible(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: height(5)),
+                    child: Text("Ngày mua : " + CommonUtil.parseDateTime(post.editTime ?? ""), style: AppStyles.textSmallBlackRegular,),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: height(5)),
+                    child: Row(
+                      children: [
+                        Text("Đánh giá : " + rating, style: AppStyles.textSmallBlackRegular,),
+                        Padding(
+                          padding: EdgeInsets.only(left: width(5)),
+                          child: Icon(Icons.star, color: amber,size: size(16),),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: width(20)) ,
+                    height: width(60),
+                    width: width(60),
+                    child: buildAvatarProduct(imageUrl: post.imagePost ?? "", borderRadius: 5, urlDefault: Constants.PRODUCT_URL),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: height(10)),
+                    child: Text(post.tittle ?? "", style: AppStyles.textSmallBlackRegular,),
+                  )
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

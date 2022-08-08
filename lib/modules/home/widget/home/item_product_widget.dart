@@ -18,9 +18,13 @@ class ItemProductWidget extends StatefulWidget {
 class _ItemProductWidgetState extends State<ItemProductWidget> {
   @override
   Widget build(BuildContext context) {
+     var  data = {
+      "idPost" : widget.post.id,
+      "status" : 0
+   };
     return InkWell(
       onTap: (){
-        Get.toNamed(RouterLink.productDetailPage, arguments: widget.post.id);
+        Get.toNamed(RouterLink.productDetailPage, arguments: data);
       },
       child: Container(
         height: width(120),

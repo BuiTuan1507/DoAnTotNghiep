@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../config/routes_link.dart';
 import '../../../models/user/post_user_model.dart';
 import '../../../utils/utils.dart';
 
@@ -106,23 +107,59 @@ class PostPage extends GetView<PostController>{
             itemCount: posts.length,
             itemBuilder: (context , index) {
               if(state == 1) {
-                return Padding(padding: EdgeInsets.symmetric(vertical: height(7)),
-                    child: buildItemPost(posts[index] , context));
+                return Padding(padding: EdgeInsets.symmetric(vertical: height(5)),
+                    child: InkWell(
+                      onTap: (){
+                        var  data = {
+                          "idPost" : posts[index].id,
+                          "status" : 1
+                        };
+                        Get.toNamed(RouterLink.productDetailPage, arguments: data);
+                      },
+                      child: buildItemPost(posts[index] , context),
+                    ));
               }else if (state == 2){
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: height(7)),
-                  child: buildItemPostExtend(posts[index] , context),
+                  child: InkWell(
+                    onTap: (){
+                      var  data = {
+                        "idPost" : posts[index].id,
+                        "status" : 1
+                      };
+                      Get.toNamed(RouterLink.productDetailPage, arguments: data);
+                    },
+                    child: buildItemPostExtend(posts[index] , context),
+                  ),
                 );
               } else if( state == 3) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: height(7)),
-                  child: buildItemPostCancel(posts[index] , context),
+                  child: InkWell(
+                    onTap: (){
+                      var  data = {
+                        "idPost" : posts[index].id,
+                        "status" : 1
+                      };
+                      Get.toNamed(RouterLink.productDetailPage, arguments: data);
+                    },
+                    child: buildItemPostCancel(posts[index] , context),
+                  )
                 );
               }
               else if( state == 4) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: height(7)),
-                  child: buildItemPostSell(posts[index] , context),
+                  child: InkWell(
+                    onTap: (){
+                      var  data = {
+                        "idPost" : posts[index].id,
+                        "status" : 1
+                      };
+                      Get.toNamed(RouterLink.productDetailPage, arguments: data);
+                    },
+                    child: buildItemPostSell(posts[index] , context),
+                  )
                 );
               }
               return Padding(

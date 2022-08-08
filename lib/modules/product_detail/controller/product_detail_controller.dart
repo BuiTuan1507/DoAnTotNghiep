@@ -22,6 +22,8 @@ import '../../../service/service.dart';
 class ProductDetailController extends GetxController {
   RxInt post = 0.obs;
 
+  RxInt statusWatchPost = 0.obs;
+
   RxList<String> listImage = <String>[].obs;
 
   Rx<String> dateJoin = " ".obs;
@@ -47,7 +49,8 @@ class ProductDetailController extends GetxController {
   @override
   void onInit() async {
     if (Get.arguments != null) {
-      post.value = Get.arguments;
+      post.value = Get.arguments['idPost'];
+      statusWatchPost.value = Get.arguments['status'];
     }
     await getProductDetail();
     await getListPostMainCategory();
