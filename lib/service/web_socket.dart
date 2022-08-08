@@ -11,8 +11,8 @@ import 'package:stomp_dart_client/stomp_frame.dart';
 class MyWebSocket extends GetxService {
  // static const String url = "ws://10.0.2.2:5000/chat";
   static final streamChat = StreamController<dynamic>.broadcast();
-  static const String url = "wss://ce4f-42-115-125-6.ap.ngrok.io/chat";
-  //static const String url = "ws://doanserver-env.eba-r5zsksr3.ap-southeast-1.elasticbeanstalk.com/chat";
+ // static const String url = "wss://ce4f-42-115-125-6.ap.ngrok.io/chat";
+  static const String url = "ws://doanserver-env.eba-r5zsksr3.ap-southeast-1.elasticbeanstalk.com/chat";
   static final stompClient = StompClient(
     config: StompConfig(
       url: url,
